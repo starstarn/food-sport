@@ -1,0 +1,55 @@
+<template>
+  <div>
+    <x-header style="background-color:green; color:white;"></x-header>
+    <x-progress percent="40"></x-progress>
+    <flexbox orient="vertical">
+      <h3>你的出生日期是？</h3>
+      <label>年龄不同，热量消耗不同，请准确选择</label>
+      <p class="info" style="font-size:30px;color:green;">{{ value }}</p>
+    </flexbox>
+    <DatetimeView v-model="value"></DatetimeView>
+    <x-button
+      text="下一步"
+      link="/weight"
+      type="primary"
+      style="border-radius:99px; position:fixed; width:300px; left:10%; bottom:80px;"
+    ></x-button>
+  </div>
+</template>
+
+<script>
+import { DatetimeView } from "vux";
+
+export default {
+  components: {
+    DatetimeView
+  },
+  data() {
+    return {
+      value: "2021-6-10",
+      showPopup: false,
+      format: "YYYY-MM-DD"
+    };
+  }
+};
+
+/* import { Group, Cell } from 'vux'
+
+export default {
+  components: {
+    Group,
+    Cell
+  },
+  data () {
+    return {
+      // note: changing this line won't causes changes
+      // with hot-reload because the reloaded component
+      // preserves its current state and we are modifying
+      // its initial state.
+      msg: 'Hello World!'
+    }
+  }
+} */
+</script>
+
+<style></style>
