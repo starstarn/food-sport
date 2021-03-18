@@ -33,23 +33,13 @@ export default {
   }
 };
 
-/* import { Group, Cell } from 'vux'
-
-export default {
-  components: {
-    Group,
-    Cell
-  },
-  data () {
-    return {
-      // note: changing this line won't causes changes
-      // with hot-reload because the reloaded component
-      // preserves its current state and we are modifying
-      // its initial state.
-      msg: 'Hello World!'
-    }
-  }
-} */
 </script>
 
-<style></style>
+<style>
+h3 {
+  margin: 20px 0;
+}
+label {
+  font-size: 14px;
+}
+</style>

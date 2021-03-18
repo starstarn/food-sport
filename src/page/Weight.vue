@@ -5,7 +5,7 @@
     <flexbox orient="vertical">
       <h3>你今天的体重是？</h3>
       <label>体重仅自己可见，请放心填写</label>
-      <p class="info" style="font-size:30px;color:green;">{{ value }}公斤</p>
+      <p class="info">{{ value }}.0<span>公斤</span></p>
     </flexbox>
     <Range v-model="value" :min="30" :max="100" :range-bar-height="4"></Range>
     <x-button
@@ -29,4 +29,21 @@ export default {
   }
 };
 </script>
-<style lang=""></style>
+<style lang="css">
+h3 {
+  margin-top: 15px;
+}
+label {
+  margin: 20px 0;
+  font-size: 14px;
+}
+p {
+  font-size: 30px;
+  color: green;
+  margin-bottom: 15px;
+}
+span {
+  font-size: 1px;
+  color: green;
+}
+</style>

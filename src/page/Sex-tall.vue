@@ -11,7 +11,7 @@
     <Range v-model="value" :min="60" :max="220" :range-bar-height="4"></Range>
     <x-button
       text="下一步"
-      link="/"
+      link="/birthday"
       type="primary"
       style="border-radius:99px; position:fixed; width:300px; left:10%; bottom:80px;"
     ></x-button>
@@ -30,4 +30,16 @@ export default {
   }
 };
 </script>
-<style lang=""></style>
+<style lang="css">
+h3 {
+  margin-top: 15px;
+}
+span {
+  font-size: 14px;
+  color: gray;
+  margin: 20px 0;
+}
+p {
+  margin: 20px 0;
+}
+</style>

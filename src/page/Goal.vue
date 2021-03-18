@@ -3,7 +3,7 @@
     <x-header style="background-color:green; color:white;"></x-header>
     <x-progress percent="80"></x-progress>
     <flexbox orient="vertical">
-      <h4>你的体重管理目标是？</h4>
+      <h3>你的体重管理目标是？</h3>
       1 2 3
     </flexbox>
     <x-button
@@ -17,4 +17,8 @@
 <script>
 export default {};
 </script>
-<style lang=""></style>
+<style lang="css">
+h3 {
+  margin-top: 15px;
+}
+</style>

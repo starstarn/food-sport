@@ -10,6 +10,9 @@ import Weight from "./page/Weight";
 import Goal from "./page/Goal";
 import Finish from "./page/Finish";
 import Login from "./page/Login";
+import Register from "./page/Register";
+import Main from "./page/Main";
+import Search from "./page/Search";
 // 在入口文件全局引入
 import { XHeader, Flexbox, FlexboxItem, XProgress, XButton } from "vux";
 
@@ -17,18 +20,25 @@ Vue.component("x-button", XButton);
 Vue.component("x-progress", XProgress);
 Vue.component("flexbox", Flexbox);
 Vue.component("flexbox-item", FlexboxItem);
-
 Vue.component("x-header", XHeader);
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
-    component: Birthday
+    component: Main
   },
   {
     path: "/login",
     component: Login
+  },
+  {
+    path: "/register",
+    component: Register
+  },
+  {
+    path: "/search",
+    component: Search
   },
   {
     path: "/birthday",
