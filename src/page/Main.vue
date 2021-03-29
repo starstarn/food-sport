@@ -19,38 +19,32 @@
     <div class="card">
       <span class="head">体重管理</span> <span class="danwei">单位：公斤</span>
       <br />
-      <flexbox style="margin:20px 0 0 34px;">
-        <flexbox-item
-          ><div>
-            <span class="weight">90</span>
-            <br />
-            <label>当前</label>
-          </div></flexbox-item
-        >
-        <flexbox-item
-          ><div>
-            <div style="width:80px;height:80px;margin:auto;">
-              <x-circle
-                :percent="percent"
-                :stroke-width="6"
-                :trail-width="6"
-                :stroke-color="['#36D1DC', '#5B86E5']"
-                trail-color="#ececec"
-              >
-                <span style="color:#36D1DC">{{ percent }}%</span>
-              </x-circle>
-            </div>
-            <label>已减去</label>
-          </div></flexbox-item
-        >
-        <flexbox-item
-          ><div>
-            <span class="weight">80</span>
-            <br />
-            <label>目标</label>
-          </div></flexbox-item
-        >
-      </flexbox>
+      <div style="position: absolute;left:30px;top:70px;">
+        <span class="weight">90</span>
+        <br />
+        <label>当前</label>
+      </div>
+
+      <div style="position: absolute;left:120px;top:40px;text-align:center;">
+        <div style="width:80px;height:80px;margin:auto;">
+          <x-circle
+            :percent="percent"
+            :stroke-width="6"
+            :trail-width="6"
+            :stroke-color="['#36D1DC', '#5B86E5']"
+            trail-color="#ececec"
+          >
+            <span style="color:#36D1DC">{{ percent }}%</span>
+          </x-circle>
+        </div>
+        <label>已减去</label>
+      </div>
+
+      <div style="position: absolute;right:30px;top:70px;">
+        <span class="weight">80</span>
+        <br />
+        <label>目标</label>
+      </div>
     </div>
 
     <div>
@@ -110,6 +104,8 @@ export default {
   border-radius: 12px;
   color: white;
   position: relative;
+  display: flex;
+  flex-direction: row;
 }
 .head {
   position: absolute;

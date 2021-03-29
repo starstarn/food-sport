@@ -1,6 +1,5 @@
 <template lang="">
   <div>
-    4232
     <x-header
       style="background-color:green; color:white;"
       title="体重记录"

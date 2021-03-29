@@ -14,12 +14,19 @@ import Register from "./page/Register";
 import Main from "./page/Main";
 import Search from "./page/Search";
 import My from "./page/My";
+import Myinfo from "./page/Myinfo";
+import Set from "./page/Set";
+import Username from "./page/Username";
+import Userpassword from "./page/Userpassword";
+import Userbasic from "./page/Userbasic";
 /* import FoodClass from "./page/Food-class";
 import FoodList from "./page/Food-list";
  */
 import WeightJilu from "./page/Weightjilu";
 import WeightChart from "./page/Weightchart";
 import FoodAnalyse from "./page/Foodanalyse";
+import FoodSportjilu from "./page/Foodsportjilu";
+import Healthreport from "./page/Healthreport";
 // 在入口文件全局引入
 import { XHeader, Flexbox, FlexboxItem, XProgress, XButton } from "vux";
 
@@ -58,6 +65,30 @@ const routes = [
     component: My
   },
   {
+    path: "/health-report",
+    component: Healthreport
+  },
+  {
+    path: "/my-info",
+    component: Myinfo
+  },
+  {
+    path: "/user-basic",
+    component: Userbasic
+  },
+  {
+    path: "/set",
+    component: Set
+  },
+  {
+    path: "/user-name",
+    component: Username
+  },
+  {
+    path: "/user-password",
+    component: Userpassword
+  },
+  {
     path: "/weightjilu",
     component: WeightJilu
   },
@@ -68,6 +99,10 @@ const routes = [
   {
     path: "/food-analyse",
     component: FoodAnalyse
+  },
+  {
+    path: "/jilu-food-sport",
+    component: FoodSportjilu
   },
   /* {
     path: "/food-class",
