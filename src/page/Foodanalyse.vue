@@ -5,75 +5,75 @@
       title="营养分析"
     ></x-header>
 
-    <!-- <flexbox orient="vertical">
-  </flexbox> -->
-    <!-- 热量分析 -->
-    <div>
-      <span class="head">热量分析</span>
-      <div class="rl">
-        <span class="titler">热量比及摄入</span>
-        <v-chart :data="data" :padding="[20, 'auto']">
-          <v-tooltip disabled />
-          <v-scale y :options="yOptions" />
-          <v-pie
-            :radius="0.65"
-            :inner-radius="0.4"
-            series-field="name"
-            :colors="['#FE5D4D', '#3BA4FF', '#737DDE']"
-          />
-          <v-legend :options="legendOptions" />
-          <v-guide type="html" :options="htmlOptions" />
-        </v-chart>
+    <flexbox orient="vertical">
+      <!-- 热量分析 -->
+      <div>
+        <span class="head">热量分析</span>
+        <div class="rl">
+          <span class="titler">热量比及摄入</span>
+          <v-chart :data="data" :padding="[20, 'auto']">
+            <v-tooltip disabled />
+            <v-scale y :options="yOptions" />
+            <v-pie
+              :radius="0.65"
+              :inner-radius="0.4"
+              series-field="name"
+              :colors="['#9999FF', '#FF8800', '#00BBFF']"
+            />
+            <v-legend :options="legendOptions" />
+            <v-guide type="html" :options="htmlOptions" />
+          </v-chart>
 
-        <div>
-          <group>
-            <cell
-              title="总摄入(千卡)"
-              value="2000"
-              style="widht:90%;height:40px;border-radius: 25px 25px 0 0;background-color: rgb(240, 242, 243);"
-            ></cell>
-            <cell-form-preview
-              :list="list"
-              style="background-color: rgb(240, 242, 243);"
-            ></cell-form-preview>
-          </group>
+          <div>
+            <group>
+              <cell
+                title="总摄入(千卡)"
+                value="2000"
+                style="widht:90%;height:40px;border-radius: 25px 25px 0 0;background-color: rgb(240, 242, 243);"
+              ></cell>
+              <cell-form-preview
+                :list="list"
+                style="background-color: rgb(240, 242, 243);"
+              ></cell-form-preview>
+            </group>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- 三大营养素分析 -->
-    <div>
-      <span class="head">三大营养素分析</span>
-      <div class="rl">
-        <span class="titler">供能比及摄入</span>
-        <v-chart :data="data" :padding="[20, 'auto']">
-          <v-tooltip disabled />
-          <v-scale y :options="yOptions" />
-          <v-pie
-            :radius="0.65"
-            :inner-radius="0.4"
-            series-field="name"
-            :colors="['#FE5D4D', '#3BA4FF', '#737DDE']"
-          />
-          <v-legend :options="legendOptions" />
-          <v-guide type="html" :options="htmlOptions" />
-        </v-chart>
+      <!-- 三大营养素分析 -->
+      <div>
+        <span class="head">三大营养素分析</span>
+        <div class="rl">
+          <span class="titler">供能比及摄入</span>
+          <v-chart :data="data" :padding="[20, 'auto']">
+            <v-tooltip disabled />
+            <v-scale y :options="yOptions" />
+            <v-pie
+              :radius="0.65"
+              :inner-radius="0.4"
+              series-field="name"
+              :colors="['#FE5D4D', '#3BA4FF', '#737DDE']"
+            />
+            <v-legend :options="legendOptions" />
+            <v-guide type="html" :options="htmlOptions" />
+          </v-chart>
 
-        <div>
-          <group>
-            <cell
-              title="总摄入(千卡)"
-              value="2000"
-              style="widht:90%;height:40px;border-radius: 25px 25px 0 0;background-color: rgb(240, 242, 243);"
-            ></cell>
-            <cell-form-preview
-              :list="list"
-              style="background-color: rgb(240, 242, 243);"
-            ></cell-form-preview>
-          </group>
+          <div>
+            <group>
+              <cell
+                title="总摄入(千卡)"
+                value="2000"
+                style="widht:90%;height:40px;border-radius: 25px 25px 0 0;background-color: rgb(240, 242, 243);"
+              ></cell>
+              <cell-form-preview
+                :list="list"
+                style="background-color: rgb(240, 242, 243);"
+              ></cell-form-preview>
+            </group>
+          </div>
         </div>
       </div>
-    </div>
+    </flexbox>
   </div>
 </template>
 <script>

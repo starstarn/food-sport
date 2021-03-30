@@ -5,9 +5,26 @@
       title="个人信息"
     ></x-header>
     <group style="font-size:18px;">
-      <cell title="头像" :value="imgUrl" is-link style="padding:25px 15px;"></cell>
-      <cell title="用户名/昵称" value="tiamo" is-link style="padding:15px 15px;"></cell>
-      <cell title="我的宣言" value="happy" is-link style="padding:15px 15px;"></cell>
+      <cell
+        title="头像"
+        :value="imgUrl"
+        is-link
+        style="padding:25px 15px;"
+      ></cell>
+      <cell
+        :link="{ path: '/user-name' }"
+        title="用户名/昵称"
+        value="tiamo"
+        is-link
+        style="padding:15px 15px;"
+      ></cell>
+      <cell
+      :link="{ path: '/user-declaration' }"
+        title="我的宣言"
+        value="happy"
+        is-link
+        style="padding:15px 15px;"
+      ></cell>
     </group>
   </div>
 </template>
@@ -20,11 +37,12 @@ export default {
     CellBox,
     Cell
   },
-   data() {
+  data() {
     return {
       imgUrl: require("../images/mika.jpg")
     };
-  }
+  },
+  methods: {}
 };
 </script>
 <style lang="css">

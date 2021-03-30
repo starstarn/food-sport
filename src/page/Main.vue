@@ -48,6 +48,7 @@
     </div>
 
     <div>
+      <div style="width:10px;height:20pxbackground-color:green;"></div>
       <group
         title="健康记录"
         style="background-color:white; border-radius:15px; padding: 10px 0; width: 330px"
@@ -72,10 +73,6 @@
           </div>
         </cell>
       </group>
-    </div>
-
-    <div>
-      <v-chart prevent-render @on-render="renderChart"></v-chart>
     </div>
   </div>
 </template>
@@ -106,12 +103,13 @@ export default {
   position: relative;
   display: flex;
   flex-direction: row;
+  margin: 20px auto;
 }
 .head {
   position: absolute;
   left: 10px;
   top: 5px;
-  font-size: 24px;
+  font-size: 22px;
 }
 .danwei {
   position: absolute;

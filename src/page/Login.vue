@@ -1,31 +1,34 @@
 <template lang="">
   <div class="nav">
-    登录
-    <tab>
-      <tab-item selected @on-item-click="onItemClick">注册</tab-item>
-      <tab-item @on-item-click="onItemClick">登录</tab-item>
-    </tab>
     <flexbox orient="vertical">
+      <span style="padding:15px 0 30px 0;">登录</span>
+      <span
+        @click="dl"
+        style="position:absolute; right:20px;top:20px;font-size:18px;"
+        >注册</span
+      >
+      <img :src="imgUrl" />
       <group>
         <x-input
           placeholder="请输入账号"
           v-model="login"
-          style="background-color:rgb(236, 238, 240);margin: 25px 0;width: 100%;border-radius:25px;"
+          style="font-size:18px; background-color:rgb(236, 238, 240);margin: 25px auto;width: 90%;  height:30px; border-radius:20px;"
         ></x-input>
         <x-input
           title="密码"
           type="password"
           placeholder="请输入密码"
           v-model="password"
-          style="background-color:rgb(236, 238, 240);width: 85%;border-radius:25px;"
+          style="font-size:18px; background-color:rgb(236, 238, 240);margin: 25px auto;width: 90%;  height:30px; border-radius:20px;"
         ></x-input>
       </group>
       <x-button
-        text=">"
+        text="登录"
         link="/"
         type="primary"
-        style="border-radius:100px; position:fixed; width:100px; height:100px;bottom:280px;"
+        style="width:300px; height:36px; background-color:white;color:black;border-radius:10px;margin:30px 0;"
       ></x-button>
+      <button>忘记密码</button>
     </flexbox>
   </div>
 </template>
@@ -40,9 +43,9 @@ export default {
   },
   data() {
     return {
-      name: null,
       login: null,
-      password: null
+      password: null,
+      imgUrl: require("../images/mika.jpg")
     };
   },
   methods: {
@@ -57,15 +60,25 @@ export default {
     },
     onEnter(val) {
       console.log("click enter!", val);
+    },
+    dl() {
+      this.$router.replace("/register");
     }
   }
 };
 </script>
-<style lang="">
-.nav {
-  background-color: white;
+<style lang="css">
+body {
+  background-color: rgb(146, 212, 175);
 }
+
 .in {
   color: rgb(236, 238, 240);
+}
+img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 2px white solid;
 }
 </style>

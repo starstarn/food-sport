@@ -7,7 +7,7 @@
     </flexbox>
     <x-button
       text="进入"
-      link="/home"
+      link="/"
       type="primary"
       style="border-radius:99px; position:fixed; width:300px; left:10%; bottom:80px;"
     ></x-button>

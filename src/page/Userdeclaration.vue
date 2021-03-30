@@ -5,16 +5,17 @@
       title="完善个人信息"
     ></x-header>
     <flexbox orient="vertical">
-      <h4>用户名/昵称</h4>
+      <h4>我的宣言</h4>
       <div>
         <group>
-          <x-input
-            title="name"
-            placeholder="请输入昵称"
-            :min="5"
-            :max="20"
-            style="width:90%;height:30px;border:1px gray solid;font-size:20px;"
-          ></x-input>
+          <group>
+            <x-textarea
+              :max="20"
+              placeholder="请输入宣言"
+              @on-focus="onEvent('focus')"
+              @on-blur="onEvent('blur')"
+            ></x-textarea>
+          </group>
         </group>
       </div>
 
@@ -28,11 +29,17 @@
   </div>
 </template>
 <script>
-import { XInput,Group } from "vux";
+import { XTextarea, Group } from "vux";
 
 export default {
   components: {
-    XInput,Group
+    XTextarea,
+    Group
+  },
+  methods: {
+    onEvent(event) {
+      console.log("on", event);
+    }
   }
 };
 </script>

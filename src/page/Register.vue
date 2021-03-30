@@ -1,30 +1,38 @@
 <template lang="">
   <div>
-    注册
-    <tab>
-      <tab-item selected @on-item-click="onItemClick">注册</tab-item>
-      <tab-item @on-item-click="onItemClick">登录</tab-item>
-    </tab>
     <flexbox orient="vertical">
+      <span style="margin:25px 0 20px 0;">注册</span>
       <group>
-        <x-input placeholder="请输入昵称" v-model="name"></x-input>
         <x-input
-          title="账号"
+          placeholder="请输入昵称"
+          v-model="name"
+          style="font-size:18px; background-color:rgb(236, 238, 240);margin: 25px auto;width: 90%;  height:30px; border-radius:20px;"
+        ></x-input>
+        <x-input
           placeholder="请输入账号"
           v-model="login"
+          style="font-size:18px; background-color:rgb(236, 238, 240);margin: 25px auto;width: 90%;  height:30px; border-radius:20px;"
         ></x-input>
         <x-input
           title="密码"
           type="password"
-          placeholder="必填"
+          placeholder="请输入密码"
           v-model="password"
+          style="font-size:18px; background-color:rgb(236, 238, 240);margin: 25px auto;width: 90%;  height:30px; border-radius:20px;"
         ></x-input>
         <x-input
           title="请再次输入"
           type="password"
           placeholder="必填"
           v-model="password"
+          style="font-size:18px; background-color:rgb(236, 238, 240);margin: 25px auto;width: 90%;  height:30px; border-radius:20px;"
         ></x-input>
+        <x-button
+          text="下一步"
+          link="/sex-tall"
+          type="primary"
+          style="width:300px; height:36px; background-color:white;color:black;border-radius:10px;margin:30px 0;"
+        ></x-button>
       </group>
     </flexbox>
   </div>

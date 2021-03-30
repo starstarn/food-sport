@@ -34,11 +34,11 @@
   </div>
 </template>
 <script>
-import { XInput } from "vux";
+import { XInput ,Group} from "vux";
 
 export default {
   components: {
-    XInput
+    XInput,Group
   }
 };
 </script>
