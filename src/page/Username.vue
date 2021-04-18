@@ -28,12 +28,33 @@
   </div>
 </template>
 <script>
-import { XInput,Group } from "vux";
+import { XInput, Group } from "vux";
 
 export default {
   components: {
-    XInput,Group
+    XInput,
+    Group
+  },
+  created() {
+    this.axios.get("/foods").then(function(res) {
+      console.log(res);
+    });
   }
+  /* mounted() {
+    axios
+      .get("http://localhost:8086/foods")
+      .then(response => (this.food = response));
+  } */
+  /* methods:{
+                get_weather(){
+                    axios.get("http://wthrcdn.etouch.cn/weather_mini?city="+this.city)
+                        .then(response=>{
+                            console.log(response);
+                        }).catch(error=>{
+                            console.log(error.response)
+                    });
+                }
+   }, */
 };
 </script>
 <style lang="css">

@@ -1,10 +1,13 @@
 <template lang="">
   <div>
     <x-header style="background-color:green; color:white;"></x-header>
-    <x-progress percent="80"></x-progress>
+    <x-progress :percent=80></x-progress>
     <flexbox orient="vertical">
       <h3>你的体重管理目标是？</h3>
       1 2 3
+      <button></button>
+      <button></button>
+      <button></button>
     </flexbox>
     <x-button
       text="下一步"

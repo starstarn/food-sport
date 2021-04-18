@@ -1,6 +1,8 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from "vue";
+import axios from "axios";
+
 import FastClick from "fastclick";
 import VueRouter from "vue-router";
 import App from "./App";
@@ -29,11 +31,11 @@ import FoodAnalyse from "./page/Foodanalyse";
 import FoodSportjilu from "./page/Foodsportjilu";
 import Healthreport from "./page/Healthreport";
 import Addfood from "./page/Addfood";
-import Addsport from "./page/Addsport"
+import Addsport from "./page/Addsport";
 // 在入口文件全局引入
 import { XHeader, Flexbox, FlexboxItem, XProgress, XButton } from "vux";
 
-import 'amfe-flexible'
+import "amfe-flexible";
 // import { Style, ScrollNav } from "cube-ui";
 
 Vue.component("x-button", XButton);
@@ -43,6 +45,10 @@ Vue.component("flexbox-item", FlexboxItem);
 Vue.component("x-header", XHeader);
 
 // Vue.use(ScrollNav);
+
+Vue.prototype.axios = axios;
+axios.defaults.baseURL = '/api'  //关键代码
+Vue.config.productionTip = false
 
 Vue.use(VueRouter);
 

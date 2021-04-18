@@ -15,18 +15,20 @@
     ></search>
     <!-- <flexbox orient="vertical">
       <flexbox> -->
+    <div class="header"></div>
+    <div class="nav"></div>
     <!-- 卡片 -->
     <div class="card">
       <span class="head">体重管理</span> <span class="danwei">单位：公斤</span>
       <br />
-      <div style="position: absolute;left:30px;top:70px;">
-        <span class="weight">90</span>
+      <div style="position: absolute;left:13%;top:70px;">
+        <span class="weight">{{ weight }}</span>
         <br />
         <label>当前</label>
       </div>
 
-      <div style="position: absolute;left:120px;top:40px;text-align:center;">
-        <div style="width:80px;height:80px;margin:auto;">
+      <div style="position: absolute;left:42%;top:38px;text-align:center;">
+        <div style="width:70px;height:70px;margin:auto;">
           <x-circle
             :percent="percent"
             :stroke-width="6"
@@ -40,39 +42,50 @@
         <label>已减去</label>
       </div>
 
-      <div style="position: absolute;right:30px;top:70px;">
-        <span class="weight">80</span>
+      <div style="position: absolute;right:13%;top:70px;">
+        <span class="weight">{{ s_weight }}</span>
         <br />
         <label>目标</label>
       </div>
     </div>
 
-    <div>
-      <div style="width:10px;height:20pxbackground-color:green;"></div>
-      <group
-        title="健康记录"
-        style="background-color:white; border-radius:15px; padding: 10px 0; width: 330px"
-      >
-        <cell is-link>
-          <div style="text-align:left;width:100%;">
-            <label>饮食&运动</label>
-            <br />
-            <label>还可以吃{{}}千卡</label>
-            <span class="vertical-middle">记饮食</span>
-          </div>
-        </cell>
-        <cell title="体重" is-link>
-          <div class="badge-value">
-            {{}}公斤
-            <span class="vertical-middle">&nbsp;</span>
-          </div>
-        </cell>
-        <cell title="基本信息" is-link>
-          <div class="badge-value">
-            <span class="vertical-middle">&nbsp;</span>
-          </div>
-        </cell>
-      </group>
+    <!-- 健康记录 -->
+    <div class="jilu">
+      <div class="neirong">
+        <div style="margin:0 0 5px 3px;">
+          <div
+            style="width:7px;height:17px;border-radius:5px;background-color:green;display:inline-block;"
+          ></div>
+          <span class="title">健康记录</span>
+        </div>
+        <div class="xiang">
+          <label>饮食&运动</label>
+          <br />
+          <label
+            >还可以吃<span> {{ 2085 }}</span
+            >千卡</label
+          >
+        </div>
+        <hr />
+        <div class="xiang">
+          <label>体重</label>
+          <br />
+          <label
+            ><span> {{ weight }}</span
+            >公斤</label
+          >
+        </div>
+        <hr />
+        <div class="xiang">
+          <label>心情</label>
+          <br />
+          <label
+            >还可以吃<span> {{ 2085 }}</span
+            >千卡</label
+          >
+        </div>
+        <hr />
+      </div>
     </div>
   </div>
 </template>
@@ -88,28 +101,98 @@ export default {
   },
   data() {
     return {
-      percent: 80
+      percent: 80,
+      weight: null,
+      s_weight: null,
+      intake: null
     };
+  },
+  created() {
+    /* this.axios.get("/foods").then(function(res) {
+      console.log(res);
+    }); */
+    const weight = localStorage.getItem("weight");
+    const s_weight = localStorage.getItem("s_weight");
+    console.log(weight + s_weight);
+    this.weight = weight;
+    this.s_weight = s_weight;
   }
 };
 </script>
 <style lang="css">
+.header {
+  width: 100%;
+  height: 200px;
+  background-color: rgb(49, 57, 73);
+  position: fixed;
+  top: 0;
+}
+.nav {
+  width: 100%;
+  height: 600px;
+  background-color: rgb(229, 230, 227);
+  position: fixed;
+  top: 200px;
+}
+.jilu {
+  width: 94%;
+  height: 400px;
+  position: absolute;
+  margin: 0 auto;
+  left: 3%;
+  background-color: rgb(241, 241, 241);
+  border-radius: 8px;
+}
+.neirong {
+  width: 92%;
+  height: 350px;
+  position: absolute;
+  top: 4%;
+  left: 4%;
+}
+.title {
+  font-weight: 500;
+  font-size: 18px;
+}
+.xiang {
+  width: 100%;
+  height: 80px;
+}
+.xiang label {
+  font-size: 14px;
+  color: gray;
+  margin: 5px 8px;
+}
+.xiang span {
+  color: black;
+  font-size: 18px;
+}
+hr {
+  color: rgb(200, 202, 202);
+  width: 85%;
+}
 .card {
   background-color: rgb(127, 197, 185);
   width: 85%;
-  height: 170px;
+  height: 155px;
   border-radius: 12px;
   color: white;
   position: relative;
   display: flex;
   flex-direction: row;
   margin: 20px auto;
+  margin-bottom: 10px;
 }
 .head {
   position: absolute;
-  left: 10px;
-  top: 5px;
-  font-size: 22px;
+  /* left: 0px;
+  top: 0px; */
+  padding: 4px 7px;
+  font-size: 18px;
+  font-family: "微软雅黑,宋体";
+  border-radius: 10px 0 10px 0;
+  border: 1px white solid;
+  box-shadow: 1px 1px 1px rgb(126, 168, 168);
 }
 .danwei {
   position: absolute;
@@ -133,5 +216,8 @@ label {
 }
 .part label {
   padding: 20px 0;
+}
+.vux-cell-bd vux-cell-primary {
+  width: 0;
 }
 </style>

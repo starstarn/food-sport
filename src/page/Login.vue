@@ -10,21 +10,27 @@
       <img :src="imgUrl" />
       <group>
         <x-input
+          @on-blur="onBlur"
+          @on-focus="onFocus"
+          @on-change="change"
           placeholder="请输入账号"
-          v-model="login"
+          v-model="info.user_name"
           style="font-size:18px; background-color:rgb(236, 238, 240);margin: 25px auto;width: 90%;  height:30px; border-radius:20px;"
         ></x-input>
         <x-input
+          @on-blur="onBlur"
+          @on-focus="onFocus"
+          @on-change="change"
           title="密码"
           type="password"
           placeholder="请输入密码"
-          v-model="password"
+          v-model="info.user_password"
           style="font-size:18px; background-color:rgb(236, 238, 240);margin: 25px auto;width: 90%;  height:30px; border-radius:20px;"
         ></x-input>
       </group>
       <x-button
+        @click.native="login()"
         text="登录"
-        link="/"
         type="primary"
         style="width:300px; height:36px; background-color:white;color:black;border-radius:10px;margin:30px 0;"
       ></x-button>
@@ -43,14 +49,22 @@ export default {
   },
   data() {
     return {
-      login: null,
-      password: null,
+      info: {
+        user_name: null,
+        user_password: null,
+        /* height: null,
+        weight: null,
+        birthday: null,
+        sex: null */
+      },
+
       imgUrl: require("../images/mika.jpg")
     };
   },
   methods: {
     change(val) {
       console.log("on change", val);
+      // console.log(this.number + this.password);
     },
     onBlur(val) {
       console.log("on blur", val);
@@ -58,11 +72,43 @@ export default {
     onFocus(val, $event) {
       console.log("on focus", val, $event);
     },
-    onEnter(val) {
-      console.log("click enter!", val);
-    },
     dl() {
       this.$router.replace("/register");
+    },
+    login() {
+      console.log(this.info);
+      if (!this.info.user_name || !this.info.user_password) {
+        console.log("账号或密码不能为空");
+      } else {
+        /* this.axios
+          .get("/test")
+          .then(response => {
+            console.log(response);
+          })
+          .catch(error => {
+            console.log(error.response);
+          }); */
+
+        this.axios({
+          method: "post",
+          url: "/user/login",
+          data: this.info
+        })
+          .then(res => {
+            console.log(res.data);
+            if (res.data.msg === "请求成功") {
+              alert("登录成功");
+              this.$router.replace("/");
+            } else {
+              alert("账号或密码错误");
+              console.log(error);
+            }
+          })
+          .catch(error => {
+            // alert("账号或密码错误");
+            console.log(error);
+          });
+      }
     }
   }
 };
