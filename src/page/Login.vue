@@ -51,7 +51,7 @@ export default {
     return {
       info: {
         user_name: null,
-        user_password: null,
+        user_password: null
         /* height: null,
         weight: null,
         birthday: null,
@@ -98,6 +98,7 @@ export default {
             console.log(res.data);
             if (res.data.msg === "请求成功") {
               alert("登录成功");
+              localStorage.setItem("user_name", this.info.user_name);
               this.$router.replace("/");
             } else {
               alert("账号或密码错误");

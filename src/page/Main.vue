@@ -58,7 +58,7 @@
           ></div>
           <span class="title">健康记录</span>
         </div>
-        <div class="xiang">
+        <div class="xiang" @click="jilu()">
           <label>饮食&运动</label>
           <br />
           <label
@@ -79,10 +79,7 @@
         <div class="xiang">
           <label>心情</label>
           <br />
-          <label
-            >还可以吃<span> {{ 2085 }}</span
-            >千卡</label
-          >
+          <label>：<span> 开心</span></label>
         </div>
         <hr />
       </div>
@@ -116,6 +113,11 @@ export default {
     console.log(weight + s_weight);
     this.weight = weight;
     this.s_weight = s_weight;
+  },
+  methods: {
+    jilu() {
+      this.$router.replace("/jilu-food-sport");
+    }
   }
 };
 </script>

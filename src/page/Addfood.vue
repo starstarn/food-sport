@@ -1,9 +1,21 @@
 <template lang="">
   <div>
     <x-header
+      v-if="type == '早饭'"
       style="background-color:green; color:white;"
       title="添加早餐"
     ></x-header>
+    <x-header
+      v-else-if="type == '午饭'"
+      style="background-color:green; color:white;"
+      title="添加午饭"
+    ></x-header>
+    <x-header
+      v-else
+      style="background-color:green; color:white;"
+      title="添加晚饭"
+    ></x-header>
+
     <search
       @result-click="resultClick"
       @on-change="getResult"
@@ -38,36 +50,73 @@
 
     <div>
       <hr />
-      <li>
-        <img :src="imgUrl" />
+      <div v-for="item in foodlist" :key="item" @click="add(item)">
+        <li>
+          <img :src="imgUrl" />
 
-        <span style="font-size:16px;position:absolute;left:78px;top:15px;"
-          >米饭</span
-        >
-        <span
-          style="font-size:12px;color:gray;position:absolute;left:78px;top:45px;"
-          ><span style="color:red;">116 </span>千卡/100克</span
-        >
-        <div
-          style="display:inline-block; background-color:green;width:10px;height:10px;border-radius:50%;position:absolute;top:35px;right:20px;"
-        ></div>
-      </li>
-      <hr />
-      <li>
-        <img :src="imgUrl" />
+          <span style="font-size:16px;position:absolute;left:78px;top:15px;">{{
+            item.name
+          }}</span>
+          <span
+            style="font-size:12px;color:gray;position:absolute;left:78px;top:45px;"
+            ><span style="color:red;">{{ item.rl }}</span
+            >千卡/100{{ item.danwei }}</span
+          >
+          <div
+            style="display:inline-block; background-color:green;width:10px;height:10px;border-radius:50%;position:absolute;top:35px;right:20px;"
+          ></div>
+        </li>
+        <hr />
+      </div>
+    </div>
 
-        <span style="font-size:16px;position:absolute;left:78px;top:15px;"
-          >米饭</span
-        >
-        <span
-          style="font-size:12px;color:gray;position:absolute;left:78px;top:45px;"
-          ><span style="color:red;">116 </span>千卡/100克</span
-        >
-        <div
-          style="display:inline-block; background-color:green;width:10px;height:10px;border-radius:50%;position:absolute;top:35px;right:20px;"
-        ></div>
-      </li>
-      <hr />
+    <!-- 弹出 -->
+    <div class="toast" v-show="show">
+      <p style="font-size:20px;color:gray;padding:15px 0;">
+        <span style="margin:10px 0 0 20px;" @click="close">取消</span>
+        <span style="margin:10px 0 0 50px;">{{ month }}月{{ day }}日/早餐</span>
+        <span style="margin:10px 20px 0 65px;" @click="addFood()">确认</span>
+      </p>
+      <div style="margin:20px 0;">
+        <div>
+          <li>
+            <img :src="imgUrl" />
+
+            <span
+              style="font-size:16px;position:absolute;left:78px;top:15px;"
+              >{{ addfood.name }}</span
+            >
+            <span
+              style="font-size:12px;color:gray;position:absolute;left:78px;top:45px;"
+              ><span style="color:red;">{{ addfood.rl }}</span
+              >千卡/100{{ addfood.danwei }}</span
+            >
+          </li>
+          <hr />
+        </div>
+      </div>
+
+      <div>
+        <br />
+
+        <!-- 数量选择 -->
+        <div>
+          <div style="text-align:center;">
+            <p style="font-size:16px;color:gray;margin:0 0 5px 0;">
+              {{ reliang }}千卡
+            </p>
+            <p style="font-size:16px;color:gray;margin:0 0 20px 0;">
+              {{ tiji }}克
+            </p>
+            <inline-x-number
+              v-model="num"
+              @on-change="changeNum()"
+              width="60px"
+              :min="1"
+            ></inline-x-number>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -80,7 +129,8 @@ import {
   Divider,
   XButton,
   Swiper,
-  SwiperItem
+  SwiperItem,
+  InlineXNumber
 } from "vux";
 
 const list = () => ["常见", "自定义", "收藏"];
@@ -93,20 +143,90 @@ export default {
     Divider,
     XButton,
     Swiper,
-    SwiperItem
+    SwiperItem,
+    InlineXNumber
   },
   data() {
     return {
       list2: list(),
-
+      foodlist: null,
       demoDisabled: "A",
       index: 0,
       getBarWidth: function(index) {
         return (index + 1) * 22 + "px";
       },
-      imgUrl: require("../images/mika.jpg")
+      imgUrl: require("../images/mika.jpg"),
+      addfood: {
+        danwei: "克",
+        name: "午餐肉",
+        rl: "366"
+      },
+      show: false,
+      num: 1,
+      reliang: 0,
+      tiji: 0,
+      type: null,
+      time: null,
+      month: null,
+      day: null
     };
+  },
+  created() {
+    this.axios.get("http://localhost:8087/api/foodlist").then(res => {
+      console.log(res.data);
+      this.foodlist = res.data;
+      console.log(this.foodlist);
+      const type = localStorage.getItem("type");
+      this.type = type;
+      console.log(this.type);
+
+      var aData = new Date();
+      console.log(aData); //Wed Aug 21 2019 10:00:58 GMT+0800 (中国标准时间)
+
+      this.time =
+        aData.getFullYear() +
+        "-" +
+        (aData.getMonth() + 1) +
+        "-" +
+        aData.getDate();
+      this.month = aData.getMonth() + 1;
+      this.day = aData.getDate();
+      console.log(this.time); //2019-8-20
+    });
+  },
+  methods: {
+    add(item) {
+      console.log("添加");
+      // console.log(item);
+      this.addfood = item;
+      console.log(this.addfood);
+      this.show = !this.show;
+      this.reliang = this.addfood.rl * this.num;
+      this.tiji = 100 * this.num;
+    },
+    close() {
+      this.show = !this.show;
+      this.num = 1;
+    },
+    addFood() {
+      //console.log(this.num);
+      const user_name = localStorage.getItem("user_name");
+      console.log(user_name);
+      console.log(this.reliang + this.addfood.name);
+      console.log(this.time);
+      //保存数据
+    },
+    changeNum() {
+      console.log(this.num);
+      this.reliang = this.addfood.rl * this.num;
+      this.tiji = 100 * this.num;
+    }
   }
+  /* updated() {
+    this.$nextTick(() => {});
+    this.reliang = this.item.rl * this.num;
+    this.tiji = this.item.danwei * this.num;
+  } */
 };
 </script>
 <style lang="css">
@@ -126,5 +246,12 @@ li {
   position: relative;
   margin: 0;
   height: 52px;
+}
+.toast {
+  width: 100%;
+  height: 400px;
+  background-color: aliceblue;
+  position: fixed;
+  top: 300px;
 }
 </style>

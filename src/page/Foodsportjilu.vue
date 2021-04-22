@@ -43,6 +43,9 @@
         </cell>
       </group>
     </div>
+    <div style="position:fixed; bottom:0;">
+    <img :src="zf" @click="zaofan()" class="tp"/><img :src="wf" @click="wufan()" class="tp"/><img :src="wanf" @click="wanfan()" class="tp"/><img :src="sport" @click="sport1()" class="tp"/> 
+      </div>
   </div>
 </template>
 <script>
@@ -55,8 +58,34 @@ export default {
   },
   data() {
     return {
-      percent: 80
+      percent: 80,
+      zf: require("../images/早饭.jpg"),
+      wf: require("../images/午饭.jpg"),
+      wanf: require("../images/晚饭.jpg"),
+      sport: require("../images/运动.jpg")
     };
+  },
+  methods:{
+    zaofan(){
+      console.log("zao");
+      this.$router.replace("/add-food");
+      localStorage.setItem("type", '早饭'); //将变量存储到字段
+          
+    },
+    wufan(){
+      console.log("wu");
+      this.$router.replace("/add-food");
+      localStorage.setItem("type", '午饭'); //将变量存储到字段
+    },
+    wanfan(){
+      console.log("wan");
+      this.$router.replace("/add-food");
+      localStorage.setItem("type", '晚饭'); //将变量存储到字段
+    },
+    sport1(){
+      console.log("sport");
+      this.$router.replace("/add-sport");
+    }
   }
 };
 </script>
@@ -72,5 +101,11 @@ export default {
 .title {
   font-size: 14px;
   color: gray;
+}
+.tp{
+  width: 25%;
+  margin: 0;
+  padding: 0;
+  border: 0;
 }
 </style>
