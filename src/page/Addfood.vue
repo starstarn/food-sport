@@ -211,9 +211,10 @@ export default {
     addFood() {
       //console.log(this.num);
       const user_name = localStorage.getItem("user_name");
-      console.log(user_name);
-      console.log(this.reliang + this.addfood.name);
-      console.log(this.time);
+      console.log(`用户名:${user_name}`);
+      console.log(`午饭热量:${this.reliang}午饭:${this.addfood.name}`);
+      console.log(`时间:${this.time}`);
+      this.show = !this.show;
       //保存数据
     },
     changeNum() {

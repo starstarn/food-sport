@@ -89,6 +89,7 @@ export default {
       } else {
         if (this.info.user_password !== this.info.user_password1) {
           console.log("两次密码不一致");
+          alert("两次密码不一致");
         } else {
           console.log(this.info);
 

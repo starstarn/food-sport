@@ -36,10 +36,12 @@
             :stroke-color="['#36D1DC', '#5B86E5']"
             trail-color="#ececec"
           >
-            <span style="color:#36D1DC">{{ percent }}%</span>
+            <span v-if="percent >= 0" style="color:#36D1DC">{{ percent }}</span>
+            <span v-else style="color:#36D1DC">{{ -percent }}</span>
           </x-circle>
         </div>
-        <label>已减去</label>
+        <label v-if="percent >= 0">需减去</label>
+        <label v-else>需增重</label>
       </div>
 
       <div style="position: absolute;right:13%;top:70px;">
@@ -113,6 +115,7 @@ export default {
     console.log(weight + s_weight);
     this.weight = weight;
     this.s_weight = s_weight;
+    this.percent = this.weight - this.s_weight;
   },
   methods: {
     jilu() {
