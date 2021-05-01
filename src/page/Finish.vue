@@ -33,8 +33,10 @@ export default {
       );
       const bmi = weight / ((height / 100) * (height / 100));
       const s_weight = height - 105;
+      const kll = s_weight * 35;
       localStorage.setItem("bmi", bmi); //将变量存储到height字段
-      localStorage.setItem("s_weight",s_weight); //将变量imgs存储到sex字段
+      localStorage.setItem("s_weight", s_weight); //将变量imgs存储到sex字段
+      localStorage.setItem("kll", kll); //将变量imgs存储到sex字段
       const info = {
         user_name,
         user_password,
@@ -44,7 +46,8 @@ export default {
         weight,
         birthday,
         bmi,
-        s_weight
+        s_weight,
+        kll
       };
       console.log(info);
       //link="/"

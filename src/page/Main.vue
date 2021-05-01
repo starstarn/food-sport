@@ -36,8 +36,8 @@
             :stroke-color="['#36D1DC', '#5B86E5']"
             trail-color="#ececec"
           >
-            <span v-if="percent >= 0" style="color:#36D1DC">{{ percent }}</span>
-            <span v-else style="color:#36D1DC">{{ -percent }}</span>
+            <span v-if="percent >= 0" style="color:white">{{ percent }}</span>
+            <span v-else style="color:white">{{ -percent }}</span>
           </x-circle>
         </div>
         <label v-if="percent >= 0">需减去</label>
@@ -69,7 +69,7 @@
           >
         </div>
         <hr />
-        <div class="xiang">
+        <div class="xiang" @click="jiluweight()">
           <label>体重</label>
           <br />
           <label
@@ -86,24 +86,94 @@
         <hr />
       </div>
     </div>
+
+    <!-- 图标位置 -->
+    <van-popup
+      v-model="show"
+      closeable
+      round
+      close-icon-position="top-right"
+      position="bottom"
+      :style="{ height: '30%' }"
+    >
+      <div class="sel">
+        <div @click="jlfood()">
+          <img :src="imgs" />
+          <br />
+          记饮食
+        </div>
+        <div @click="jlsport()">
+          <img :src="imgs" />
+          <br />
+          记运动
+        </div>
+        <div @click="jlweight()">
+          <img :src="imgs" />
+          <br />
+          记体重
+        </div>
+        <div @click="jlsleep()">
+          <img :src="imgs" />
+          <br />
+          记睡眠
+        </div>
+      </div>
+    </van-popup>
+
+    <van-tabbar v-model="active" fixed route replace active-color="green">
+      <van-tabbar-item name="home" icon="home-o" to="/">首页</van-tabbar-item>
+      <van-tabbar-item name="search" icon="search">发现</van-tabbar-item>
+      <van-tabbar-item name="plus" icon="plus" @click="add()"></van-tabbar-item>
+      <van-tabbar-item name="friends" icon="friends-o">商店</van-tabbar-item>
+      <van-tabbar-item name="setting" icon="setting-o" to="/my"
+        >我的</van-tabbar-item
+      >
+    </van-tabbar>
+
+    <!-- 弹出 -->
+    <div class="toast" v-show="shows">
+      <p style="font-size:20px;color:gray;padding:15px 0;">
+        <span style="margin:10px 0 0 20px;" @click="close">取消</span>
+      </p>
+      <Range
+        @on-change="Onchange"
+        v-model="v_weight"
+        :min="30"
+        :max="100"
+        :range-bar-height="4"
+      ></Range>
+    </div>
+
   </div>
 </template>
 <script>
-import { Search, Group, Cell, XCircle } from "vux";
+import { Search, Group, Cell, XCircle, Range } from "vux";
+import Vue from "vue";
+import { Tabbar, TabbarItem, Popup } from "vant";
+
+Vue.use(Popup);
+Vue.use(Tabbar);
+Vue.use(TabbarItem);
 
 export default {
   components: {
     Search,
     Group,
     Cell,
-    XCircle
+    XCircle,
+    Range
   },
   data() {
     return {
+      v_weight: 50,
+      shows: false,
+      show: false,
+      active: "home",
       percent: 80,
       weight: null,
       s_weight: null,
-      intake: null
+      intake: null,
+      imgs: require("../images/mika.jpg")
     };
   },
   created() {
@@ -120,11 +190,38 @@ export default {
   methods: {
     jilu() {
       this.$router.replace("/jilu-food-sport");
+    },
+    jiluweight() {
+      this.$router.replace("/weightjilu");
+    },
+    add() {
+      console.log("添加");
+      this.show = true;
+    },
+    jlfood() {
+      console.log("记录饮食");
+      this.$router.replace("/jilu-food-sport");
+    },
+    jlsport() {
+      this.$router.replace("/add-sport");
+    },
+    jlweight() {
+      // this.$$router.replace("/");
+      const user_name = localStorage.getItem("user_name");
+      this.shows = !this.shows;
+      this.show = !this.show;
+    },
+    close() {
+      this.shows = !this.shows;
+      // this.num = 1;
+    },
+    Onchange(v_weight) {
+      console.log(v_weight);
     }
   }
 };
 </script>
-<style lang="css">
+<style lang="css" scope>
 .header {
   width: 100%;
   height: 200px;
@@ -132,12 +229,22 @@ export default {
   position: fixed;
   top: 0;
 }
+.sel div {
+  display: inline-block;
+  margin: 50px 8px 0 14px;
+  font-size: 18px;
+}
 .nav {
   width: 100%;
   height: 600px;
-  background-color: rgb(229, 230, 227);
   position: fixed;
   top: 200px;
+}
+.sel img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 2px white solid;
 }
 .jilu {
   width: 94%;
@@ -145,7 +252,7 @@ export default {
   position: absolute;
   margin: 0 auto;
   left: 3%;
-  background-color: rgb(241, 241, 241);
+  background-color: white;
   border-radius: 8px;
 }
 .neirong {
@@ -224,5 +331,12 @@ label {
 }
 .vux-cell-bd vux-cell-primary {
   width: 0;
+}
+.toast {
+  width: 100%;
+  height: 400px;
+  background-color: rgb(168, 199, 226);
+  position: fixed;
+  top: 300px;
 }
 </style>
