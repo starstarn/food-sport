@@ -249,7 +249,7 @@ export default {
         this.axios({
           method: "post",
           url: "/add_sport",
-          data: this.sport
+          data: this.sports
         })
           .then(res => {
             console.log(res);

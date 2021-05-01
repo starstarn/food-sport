@@ -85,6 +85,7 @@ export default {
       time: time
     };
     console.log(name_time);
+    //早饭
     this.axios({
       method: "post",
       url: "/s_breakfast",
@@ -100,6 +101,22 @@ export default {
       .catch(error => {
         console.log(error);
       });
+
+    //运动
+    this.axios({
+      method:"post",
+      url:"s_sport",
+      data: name_time
+    })
+    .then(res => {
+      console.log(res.data);
+      const sport = res.data.sport;
+      const rl = res.data.rl;
+    })
+    .catch(error => {
+      console.log(error);
+    })
+
   },
   methods: {
     zaofan() {

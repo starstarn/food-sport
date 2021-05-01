@@ -293,10 +293,11 @@ li {
 .footer {
   z-index: 0;
   position: fixed;
-  bottom: 18px;
+  bottom: 0;
   width: 100%;
   padding-top: 10px;
-  height: 35px;
+  height: 55px;
   border-top: 1px rgb(197, 194, 194) solid;
+  background-color: white;
 }
 </style>
