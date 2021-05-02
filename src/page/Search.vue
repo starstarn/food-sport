@@ -1,18 +1,12 @@
 <template lang="">
   <div>
-    <search
-      @result-click="resultClick"
-      @on-change="getResult"
-      :results="results"
+    <van-search
       v-model="value"
-      position="absolute"
-      auto-scroll-to-top
-      @on-focus="onFocus"
-      @on-cancel="onCancel"
-      @on-submit="onSubmit"
-      ref="search"
-    ></search>
-    <p>食物推荐榜 <button>更多></button></p>
+      shape="round"
+      background="#4fc08d"
+      placeholder="请输入搜索关键词"
+    />
+    <p>食物推荐榜 <button @click="more()">更多></button></p>
 
     <badge
       text="水果"
@@ -24,19 +18,109 @@
       text="鸡蛋"
       style="background-color:rgb(241, 242, 243); color:black;padding: 4px;"
     ></badge>
+
+    <!-- 图标位置 -->
+    <van-popup
+      v-model="show"
+      closeable
+      round
+      close-icon-position="top-right"
+      position="bottom"
+      :style="{ height: '30%' }"
+    >
+      <div class="sel">
+        <div @click="jlfood()">
+          <img :src="imgs" />
+          <br />
+          记饮食
+        </div>
+        <div @click="jlsport()">
+          <img :src="imgs" />
+          <br />
+          记运动
+        </div>
+        <div @click="jlweight()">
+          <img :src="imgs" />
+          <br />
+          记体重
+        </div>
+        <div @click="jlsleep()">
+          <img :src="imgs" />
+          <br />
+          记睡眠
+        </div>
+      </div>
+    </van-popup>
+
+    <van-tabbar v-model="active" fixed route replace active-color="green">
+      <van-tabbar-item name="home" icon="home-o" to="/">首页</van-tabbar-item>
+      <van-tabbar-item name="search" icon="search" to="/search"
+        >发现</van-tabbar-item
+      >
+      <van-tabbar-item name="plus" icon="plus" @click="add()"></van-tabbar-item>
+      <van-tabbar-item name="friends" icon="friends-o">商店</van-tabbar-item>
+      <van-tabbar-item name="setting" icon="setting-o" to="/my"
+        >我的</van-tabbar-item
+      >
+    </van-tabbar>
   </div>
 </template>
 <script>
-import { Search, Badge } from "vux";
+import { Badge } from "vux";
+import Vue from "vue";
+import { Search, Tabbar, TabbarItem, Icon, Popup } from "vant";
+import "vant/lib/index.css";
+import "vant/lib/icon/local.css"; //本地
+
+Vue.use(Tabbar);
+Vue.use(TabbarItem);
+Vue.use(Icon);
+Vue.use(Popup);
+
+Vue.use(Search);
 
 export default {
   components: {
-    Search,
     Badge
+  },
+  data() {
+    return {
+      active: "search",
+      show: false,
+      imgUrl: require("../images/mika.jpg"),
+      imgs: require("../images/mika.jpg")
+    };
+  },
+
+  methods: {
+    more(){
+      console.log("更多");
+      this.$router.replace("/food-type");
+    },
+    add() {
+      console.log("添加");
+      this.show = true;
+    },
+    jlfood() {
+      console.log("记录饮食");
+      this.$router.replace("/jilu-food-sport");
+    },
+    jlsport() {
+      this.$router.replace("/add-sport");
+    },
+    jlweight() {
+      this.$$router.replace("/");
+    }
   }
 };
 </script>
-<style lang="css">
+<style lang="css" scoped>
+button {
+  background-color: white;
+  font-size: 14px;
+  color: gray;
+  border: none;
+}
 .in {
   color: rgb(241, 242, 243);
 }
@@ -49,5 +133,16 @@ p {
 button {
   float: right;
   margin-right: 10px;
+}
+.sel div {
+  display: inline-block;
+  margin: 50px 8px 0 14px;
+  font-size: 18px;
+}
+img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 2px white solid;
 }
 </style>

@@ -25,6 +25,8 @@ import Userbasic from "./page/Userbasic";
 /* import FoodClass from "./page/Food-class";
 import FoodList from "./page/Food-list";
  */
+import FoodType from "./page/Foodtype";
+import FoodList from "./page/Foodlist";
 import WeightJilu from "./page/Weightjilu";
 import WeightChart from "./page/Weightchart";
 import FoodAnalyse from "./page/Foodanalyse";
@@ -68,6 +70,14 @@ const routes = [
   {
     path: "/search",
     component: Search
+  },
+  {
+    path: "/food-type",
+    component: FoodType
+  },
+  {
+    path: "/food-list",
+    component: FoodList
   },
   {
     path: "/my",

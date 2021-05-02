@@ -5,9 +5,17 @@
     <flexbox orient="vertical">
       <h3>您的性别是？</h3>
       <div>
-        <img :src="imgUrl" @click="boy()" />
-        <img :src="imgUrl" @click="girl()" />
-        <div><span class="boy">男</span> <span class="girl">女</span></div>
+        <img
+          :src="imgUrl"
+          @click="boy()"
+          class="boys"
+          style="border:3px green solid;"
+        />
+        <img :src="imgUrl" @click="girl()" class="girls" />
+        <div>
+          <span class="boy" style="color:green;">男</span>
+          <span class="girl">女</span>
+        </div>
       </div>
 
       <span>男女对食物热量需求不一样，请正确填写</span>
@@ -50,19 +58,27 @@ export default {
       const sex = this.sex;
       const value = this.value;
       localStorage.setItem("height", value); //将变量存储到height字段
-      localStorage.setItem("sex",sex); //将变量imgs存储到sex字段
+      localStorage.setItem("sex", sex); //将变量imgs存储到sex字段
       console.log("保存身高性别");
-      console.log(this.value+sex);
+      console.log(this.value + sex);
       this.$router.replace("/birthday");
       // link="/birthday"
     },
     boy() {
-      this.sex="男";
+      this.sex = "男";
       console.log("男");
+      document.querySelector(".boy").style.color = "green";
+      document.querySelector(".girl").style.color = "black";
+      document.querySelector(".boys").style.border = "3px green solid";
+      document.querySelector(".girls").style.border = "none";
     },
     girl() {
-      this.sex="女";
+      this.sex = "女";
       console.log("女");
+      document.querySelector(".girl").style.color = "green";
+      document.querySelector(".boy").style.color = "black";
+      document.querySelector(".boys").style.border = "none";
+      document.querySelector(".girls").style.border = "3px green solid";
     }
   }
 };

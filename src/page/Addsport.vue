@@ -175,14 +175,15 @@ export default {
       num: 1,
       sportname: null,
       reliang: 0,
-      sportnames: [],
-      reliangs: [],
+      /* sportnames: [],
+      reliangs: [], */
       tiji: 0,
       type: null,
       time: null,
       month: null,
       day: null,
-      sports: null,
+      sport: null,
+      //sports: null,
       s_num: 0
     };
   },
@@ -227,13 +228,32 @@ export default {
       console.log(this.sportname + this.reliang);
       this.s_num += 1;
 
-      this.sportnames.push(this.sportname);
+      const user_name = localStorage.getItem("user_name");
+      this.sport = {
+        user_name: user_name,
+        sport: this.sportname,
+        rl: this.reliang,
+        time: this.time
+      };
+      this.axios({
+        method: "post",
+        url: "/add_sport",
+        data: this.sport
+      })
+        .then(res => {
+          console.log(res);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+
+      /* this.sportnames.push(this.sportname);
       this.reliangs.push(this.reliang);
-      console.log(this.sportnames + this.reliangs);
+      console.log(this.sportnames + this.reliangs); */
     },
     addSport() {
       //console.log(this.num);
-      const user_name = localStorage.getItem("user_name");
+      /*  const user_name = localStorage.getItem("user_name");
       const str_sportnames = this.sportnames.join(",");
       const str_reliangs = this.reliangs.join(",");
       console.log(str_sportnames + str_reliangs);
@@ -257,7 +277,9 @@ export default {
           .catch(error => {
             console.log(error);
           });
-      }
+      } */
+      this.s_num = 0;
+      this.$router.replace("/jilu-food-sport");
     },
     changeNum() {
       console.log(this.num);

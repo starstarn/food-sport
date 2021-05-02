@@ -16,7 +16,7 @@
     <!-- <flexbox orient="vertical">
       <flexbox> -->
     <div class="header"></div>
-    <div class="nav"></div>
+    
     <!-- 卡片 -->
     <div class="card">
       <span class="head">体重管理</span> <span class="danwei">单位：公斤</span>
@@ -52,7 +52,7 @@
     </div>
 
     <!-- 健康记录 -->
-    <div class="jilu">
+    <div class="jilu1">
       <div class="neirong">
         <div style="margin:0 0 5px 3px;">
           <div
@@ -122,7 +122,7 @@
 
     <van-tabbar v-model="active" fixed route replace active-color="green">
       <van-tabbar-item name="home" icon="home-o" to="/">首页</van-tabbar-item>
-      <van-tabbar-item name="search" icon="search">发现</van-tabbar-item>
+      <van-tabbar-item name="search" icon="search" to="/search">发现</van-tabbar-item>
       <van-tabbar-item name="plus" icon="plus" @click="add()"></van-tabbar-item>
       <van-tabbar-item name="friends" icon="friends-o">商店</van-tabbar-item>
       <van-tabbar-item name="setting" icon="setting-o" to="/my"
@@ -234,19 +234,13 @@ export default {
   margin: 50px 8px 0 14px;
   font-size: 18px;
 }
-.nav {
-  width: 100%;
-  height: 600px;
-  position: fixed;
-  top: 200px;
-}
 .sel img {
   width: 60px;
   height: 60px;
   border-radius: 50%;
   border: 2px white solid;
 }
-.jilu {
+.jilu1 {
   width: 94%;
   height: 400px;
   position: absolute;

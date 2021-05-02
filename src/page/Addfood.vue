@@ -169,14 +169,15 @@ export default {
       num: 1,
       foodname: null,
       reliang: 0,
-      foodnames: [],
-      reliangs: [],
+      /* foodnames: [],
+      reliangs: [], */
       tiji: 0,
       type: null,
       time: null,
       month: null,
       day: null,
-      foods: null,
+      food: null,
+      // foods: null,
       s_num: 0
     };
   },
@@ -218,16 +219,78 @@ export default {
       console.log(this.foodname + this.reliang);
       this.s_num += 1;
 
-      this.foodnames.push(this.foodname);
+      const user_name = localStorage.getItem("user_name");
+
+      if (this.type === "早饭") {
+        this.food = {
+          user_name: user_name,
+          breakfast: this.foodname,
+          rl: this.reliang,
+          time: this.time
+        };
+        this.axios({
+          method: "post",
+          url: "/add_breakfast",
+          data: this.food
+        })
+          .then(res => {
+            console.log(res);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      }
+
+      if (this.type === "午饭") {
+        this.food = {
+          user_name: user_name,
+          lunch: this.foodname,
+          rl: this.reliang,
+          time: this.time
+        };
+        this.axios({
+          method: "post",
+          url: "/add_lunch",
+          data: this.food
+        })
+          .then(res => {
+            console.log(res);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      }
+
+      if (this.type === "晚饭") {
+        this.food = {
+          user_name: user_name,
+          dinner: this.foodname,
+          rl: this.reliang,
+          time: this.time
+        };
+        this.axios({
+          method: "post",
+          url: "/add_dinner",
+          data: this.food
+        })
+          .then(res => {
+            console.log(res);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      }
+
+      /* this.foodnames.push(this.foodname);
       this.reliangs.push(this.reliang);
-      console.log(this.foodnames + this.reliangs);
+      console.log(this.foodnames + this.reliangs); */
     },
     look() {
       console.log("查看");
     },
     addFood() {
       console.log("保存");
-      const user_name = localStorage.getItem("user_name");
+      /* const user_name = localStorage.getItem("user_name");
       const str_foodnames = this.foodnames.join(",");
       const str_reliangs = this.reliangs.join(",");
       console.log(str_foodnames + str_reliangs);
@@ -252,7 +315,7 @@ export default {
           .catch(error => {
             console.log(error);
           });
-      }
+      } */
       this.s_num = 0;
       this.$router.replace("/jilu-food-sport");
     },

@@ -7,7 +7,7 @@
       <label>年龄不同，热量消耗不同，请准确选择</label>
       <p class="info" style="font-size:30px;color:green;">{{ value }}</p>
     </flexbox>
-    <DatetimeView  v-model="value"></DatetimeView>
+    <DatetimeView  v-model="value" min-year="1900"></DatetimeView>
     <x-button
       @click.native="birthday()"
       text="下一步"

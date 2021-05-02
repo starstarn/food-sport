@@ -70,7 +70,7 @@
 
     <van-tabbar v-model="active" fixed route replace active-color="green">
       <van-tabbar-item name="home" icon="home-o" to="/">首页</van-tabbar-item>
-      <van-tabbar-item name="search" icon="search">发现</van-tabbar-item>
+      <van-tabbar-item name="search" icon="search" to="/search">发现</van-tabbar-item>
       <van-tabbar-item name="plus" icon="plus" @click="add()"></van-tabbar-item>
       <van-tabbar-item name="friends" icon="friends-o">商店</van-tabbar-item>
       <van-tabbar-item name="setting" icon="setting-o" to="/my"
@@ -128,7 +128,7 @@ export default {
   }
 };
 </script>
-<style lang="css" scope>
+<style lang="css" scoped>
 .header1 {
   width: 100%;
   height: 180px;

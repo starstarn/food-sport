@@ -7,29 +7,36 @@
     <div class="card1">
       <div style="margin:50px 0 0 30px;">
         <span class="title">饮食摄入</span>
-        <span>1000</span>
+        <span>{{ break_rl }}</span>
       </div>
 
       <div style="width:140px;height:140px;margin:auto;margin-top:30px;">
         <x-circle
-          :percent="percent"
+          :percent="maybe"
           :stroke-width="6"
           :trail-width="6"
           :stroke-color="['#36D1DC', '#5B86E5']"
           trail-color="#ececec"
         >
-          <span style="color:grey;font-size:16px;">
-            还可以吃
+          <span v-if="maybe >= 0" style="color:grey;font-size:14px;">
+            <span>还可以吃</span>
             <br />
-            {{ percent }}
+            <span style="font-size:18px;color:black;">{{ maybe }}</span>
             <br />
-            推荐预算{{biaozhun}}</span
+            <span style="margin-top:10px;">推荐预算{{ biaozhun }}</span></span
+          >
+          <span v-else style="color:grey;font-size:14px;">
+            <span>超出热量</span>
+            <br />
+            <span style="font-size:18px;color:black;">{{ -maybe }}</span>
+            <br />
+            <span style="margin-top:10px;">推荐预算{{ biaozhun }}</span></span
           >
         </x-circle>
       </div>
       <div style="margin:50px 0 0 30px;">
         <span class="title">运动消耗</span>
-        <span>1000</span>
+        <span>{{ sport_rl }}</span>
       </div>
     </div>
 
@@ -51,6 +58,7 @@
 </template>
 <script>
 import { XCircle, Cell } from "vux";
+import axios from "axios";
 
 export default {
   components: {
@@ -66,7 +74,12 @@ export default {
       sport: require("../images/运动.jpg"),
       foods: null,
       img_foods: require("../images/mika.jpg"),
-      biaozhun: 0
+      biaozhun: 0,
+      break_rl: 0,
+      lunch_rl: 0,
+      dinner_rl: 0,
+      sport_rl: 0,
+      maybe: 0
     };
   },
   created() {
@@ -85,8 +98,54 @@ export default {
       time: time
     };
     console.log(name_time);
+
+    function getBreak() {
+      return axios({
+        method: "post",
+        url: "/s_breakfast",
+        data: name_time
+      });
+    }
+    function getSport() {
+      return axios({
+        method: "post",
+        url: "/s_sport",
+        data: name_time
+      });
+    }
+    this.axios.all([getBreak(), getSport()]).then(
+      axios.spread((user_break, user_sport) => {
+        // 两个请求现在都执行完成
+        console.log(user_break.data);
+        console.log(user_sport.data);
+
+        if (user_break.data !== null) {
+          const break_name = user_break.data.breakfast;
+          const brl = user_break.data.rl;
+          // 字符串转数组；
+          const b_rl = brl.split(",").map(Number);
+          console.log(b_rl);
+          for (let i = 0; i < b_rl.length; i++) {
+            this.break_rl += b_rl[i];
+          }
+          // console.log(this.break_rl);
+        }
+
+        const sport_name = user_sport.data.sport;
+        const srl = user_sport.data.rl;
+        const s_rl = srl.split(",").map(Number);
+        for (let i = 0; i < s_rl.length; i++) {
+          this.sport_rl += s_rl[i];
+        }
+
+        this.maybe =
+          this.biaozhun -
+          (this.break_rl + this.lunch_rl + this.dinner_rl - this.sport_rl);
+      })
+    );
+
     //早饭
-    this.axios({
+    /*  this.axios({
       method: "post",
       url: "/s_breakfast",
       data: name_time
@@ -95,8 +154,12 @@ export default {
         console.log(res.data);
         const name = res.data.breakfast;
         const rl = res.data.rl;
-        console.log(name + rl);
-        // this.foods= res.data;
+        // 字符串转数组；
+        const b_rl = rl.split(",").map(Number);
+        for (let i = 0; i < b_rl.length; i++) {
+          this.break_rl += b_rl[i];
+        }
+        // console.log(this.break_rl);
       })
       .catch(error => {
         console.log(error);
@@ -104,19 +167,25 @@ export default {
 
     //运动
     this.axios({
-      method:"post",
-      url:"s_sport",
+      method: "post",
+      url: "s_sport",
       data: name_time
     })
-    .then(res => {
-      console.log(res.data);
-      const sport = res.data.sport;
-      const rl = res.data.rl;
-    })
-    .catch(error => {
-      console.log(error);
-    })
+      .then(res => {
+        console.log(res.data);
+        const sport = res.data.sport;
+        const rl = res.data.rl;
 
+        const s_rl = rl.split(",").map(Number);
+        for (let i = 0; i < s_rl.length; i++) {
+          this.sport_rl += s_rl[i];
+        }
+        // console.log(this.sport_rl);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    console.log(this.sport_rl + this.break_rl); */
   },
   methods: {
     zaofan() {
