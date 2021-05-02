@@ -120,26 +120,13 @@ export default {
   },
   data() {
     return {
-      list: [
-        {
-          label: "早餐",
-          value: "3.29"
-        },
-        {
-          label: "午餐",
-          value: "1.04"
-        },
-        {
-          label: "晚餐",
-          value: "8.00"
-        }
-      ],
+      list: null,
       map,
       htmlOptions: {
         position: ["50%", "45%"],
         html: `
           <div style="width: 250px;height: 40px;text-align: center;">
-            
+
           </div>`
       },
       legendOptions: {
@@ -155,10 +142,26 @@ export default {
       },
       data
     };
+  },
+  created() {
+    const breaks = localStorage.getItem("breaks");
+    const lunchs = localStorage.getItem("lunchs");
+    const dinners = localStorage.getItem("dinners");
+    const foodall = localStorage.getItem("foodall");
+    const breaks_p = breaks / foodall;
+    const lunchs_p = lunchs / foodall;
+    const dinners_p = dinners / foodall;
+    console.log(breaks_p)
+
+    this.list = [
+      { name: "早餐", percent: breaks_p, a: "1" },
+      { name: "午餐", percent: lunchs_p, a: "1" },
+      { name: "晚餐", percent: dinners_p, a: "1" }
+    ];
   }
 };
 </script>
-<style lang="css">
+<style lang="css" scoped>
 body {
   background-color: rgb(240, 242, 243);
 }
