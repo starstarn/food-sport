@@ -16,7 +16,7 @@
     <!-- <flexbox orient="vertical">
       <flexbox> -->
     <div class="header"></div>
-    
+
     <!-- 卡片 -->
     <div class="card">
       <span class="head">体重管理</span> <span class="danwei">单位：公斤</span>
@@ -122,7 +122,9 @@
 
     <van-tabbar v-model="active" fixed route replace active-color="green">
       <van-tabbar-item name="home" icon="home-o" to="/">首页</van-tabbar-item>
-      <van-tabbar-item name="search" icon="search" to="/search">发现</van-tabbar-item>
+      <van-tabbar-item name="search" icon="search" to="/search"
+        >发现</van-tabbar-item
+      >
       <van-tabbar-item name="plus" icon="plus" @click="add()"></van-tabbar-item>
       <van-tabbar-item name="friends" icon="friends-o">商店</van-tabbar-item>
       <van-tabbar-item name="setting" icon="setting-o" to="/my"
@@ -130,24 +132,26 @@
       >
     </van-tabbar>
 
-    <!-- 弹出 -->
+    <!-- 弹出记录体重-->
     <div class="toast" v-show="shows">
       <p style="font-size:20px;color:gray;padding:15px 0;">
         <span style="margin:10px 0 0 20px;" @click="close">取消</span>
+        <span style="margin:10px 0 0 100px;color:black;">今天</span>
+        <span style="margin:10px 0 0 100px;" @click="xiugai()">确定</span>
       </p>
-      <Range
-        @on-change="Onchange"
-        v-model="v_weight"
+      <h4 style=" text-align: center">体重</h4>
+      <inline-x-number
+        v-model="u_weight"
+        @on-change="changeWeight()"
+        width="60px"
         :min="30"
-        :max="100"
-        :range-bar-height="4"
-      ></Range>
+        style="text-align: center;"
+      ></inline-x-number>
     </div>
-
   </div>
 </template>
 <script>
-import { Search, Group, Cell, XCircle, Range } from "vux";
+import { Search, Group, Cell, XCircle, InlineXNumber } from "vux";
 import Vue from "vue";
 import { Tabbar, TabbarItem, Popup } from "vant";
 
@@ -161,7 +165,7 @@ export default {
     Group,
     Cell,
     XCircle,
-    Range
+    InlineXNumber
   },
   data() {
     return {
@@ -173,7 +177,8 @@ export default {
       weight: null,
       s_weight: null,
       intake: null,
-      imgs: require("../images/mika.jpg")
+      imgs: require("../images/mika.jpg"),
+      u_weight: 45
     };
   },
   created() {
@@ -186,8 +191,18 @@ export default {
     this.weight = weight;
     this.s_weight = s_weight;
     this.percent = this.weight - this.s_weight;
+
+    this.u_weight = this.weight;
   },
   methods: {
+    changeWeight(){
+      console.log(this.u_weight);
+    },
+    xiugai(){
+      console.log("修改体重");
+      console.log(this.u_weight);
+      
+    },
     jilu() {
       this.$router.replace("/jilu-food-sport");
     },

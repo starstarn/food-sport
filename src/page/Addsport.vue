@@ -52,77 +52,93 @@
               <hr />
             </div>
           </div>
+        </div>
+      </van-tab>
 
-          <!-- 弹出 -->
-          <div class="toast" v-show="show">
-            <p style="font-size:20px;color:gray;padding:15px 0;">
-              <span style="margin:10px 0 0 20px;" @click="close">取消</span>
-              <span style="margin:10px 0 0 50px;"
-                >{{ month }}月{{ day }}日/运动</span
-              >
-              <span style="margin:10px 20px 0 55px;" @click="finSport()"
-                >确认</span
-              >
+      <van-tab title="自定义" name="b" @click.native="makeSport()">
+        <div>
+          <van-icon
+            name="plus"
+            color="#1989fa"
+            style="margin:20px;"
+          />添加自定义运动
+        </div>
+      </van-tab>
+      <div v-for="item in usportlist" :key="item" @click="add(item)">
+        <li>
+          <img class="img_food" :src="imgUrl" />
+
+          <span style="font-size:16px;position:absolute;left:78px;top:15px;">{{
+            item.name
+          }}</span>
+          <span
+            style="font-size:12px;color:gray;position:absolute;left:78px;top:45px;"
+            ><span style="color:red;">{{ item.rl }}</span
+            >千卡/100{{ item.danwei }}</span
+          >
+        </li>
+        <hr />
+      </div>
+    </van-tabs>
+    <!-- 弹出 -->
+    <div class="toast1" v-show="show">
+      <p style="font-size:20px;color:gray;padding:15px 0;">
+        <span style="margin:10px 0 0 20px;" @click="close">取消</span>
+        <span style="margin:10px 0 0 50px;">{{ month }}月{{ day }}日/运动</span>
+        <span style="margin:10px 20px 0 55px;" @click="finSport()">确认</span>
+      </p>
+      <div style="margin:20px 0;">
+        <div>
+          <li>
+            <img :src="imgUrl" />
+
+            <span
+              style="font-size:16px;position:absolute;left:78px;top:15px;"
+              >{{ addsport.name }}</span
+            >
+            <span
+              style="font-size:12px;color:gray;position:absolute;left:78px;top:45px;"
+              ><span style="color:red;">{{ addsport.rl }}</span
+              >千卡/10{{ addsport.danwei }}</span
+            >
+          </li>
+          <hr />
+        </div>
+      </div>
+
+      <div>
+        <br />
+
+        <!-- 数量选择 -->
+        <div>
+          <div style="text-align:center;">
+            <p style="font-size:16px;color:gray;margin:0 0 5px 0;">
+              {{ reliang }}千卡/
             </p>
-            <div style="margin:20px 0;">
-              <div>
-                <li>
-                  <img :src="imgUrl" />
-
-                  <span
-                    style="font-size:16px;position:absolute;left:78px;top:15px;"
-                    >{{ addsport.name }}</span
-                  >
-                  <span
-                    style="font-size:12px;color:gray;position:absolute;left:78px;top:45px;"
-                    ><span style="color:red;">{{ addsport.rl }}</span
-                    >千卡/10{{ addsport.danwei }}</span
-                  >
-                </li>
-                <hr />
-              </div>
-            </div>
-
-            <div>
-              <br />
-
-              <!-- 数量选择 -->
-              <div>
-                <div style="text-align:center;">
-                  <p style="font-size:16px;color:gray;margin:0 0 5px 0;">
-                    {{ reliang }}千卡/
-                  </p>
-                  <p style="font-size:16px;color:gray;margin:0 0 20px 0;">
-                    {{ tiji }}分钟
-                  </p>
-                  <inline-x-number
-                    v-model="num"
-                    @on-change="changeNum()"
-                    width="60px"
-                    :min="1"
-                  ></inline-x-number>
-                </div>
-              </div>
-            </div>
+            <p style="font-size:16px;color:gray;margin:0 0 20px 0;">
+              {{ tiji }}分钟
+            </p>
+            <inline-x-number
+              v-model="num"
+              @on-change="changeNum()"
+              width="60px"
+              :min="1"
+            ></inline-x-number>
           </div>
         </div>
-        <div class="footer">
-          <span style="margin-left:10px;" @click="look()"
-            >食物<badge :text="s_num"></badge
-          ></span>
-          <x-button
-            @click.native="addSport()"
-            text="完成"
-            type="primary"
-            style="display:inline; border-radius:99px; width:250px;margin-left:22px; "
-          ></x-button>
-        </div>
-      </van-tab>
-
-      <van-tab title="自定义" name="b">
-        <div><van-icon name="plus" color="#1989fa" />添加自定义运动</div>
-      </van-tab>
-    </van-tabs>
+      </div>
+    </div>
+    <div class="footer">
+      <span style="margin-left:10px;" @click="look()"
+        >食物<badge :text="s_num"></badge
+      ></span>
+      <x-button
+        @click.native="addSport()"
+        text="完成"
+        type="primary"
+        style="display:inline; border-radius:99px; width:250px;margin-left:22px; "
+      ></x-button>
+    </div>
   </div>
 </template>
 <script>
@@ -184,11 +200,12 @@ export default {
       day: null,
       sport: null,
       //sports: null,
-      s_num: 0
+      s_num: 0,
+      usportlist: null
     };
   },
   created() {
-    this.axios.get("http://localhost:8087/api/sportlist").then(res => {
+    this.axios.post("/sportlist").then(res => {
       console.log(res.data);
       this.foodlist = res.data;
       console.log(this.foodlist);
@@ -202,6 +219,11 @@ export default {
       this.day = data.getDate() <= 9 ? "0" + data.getDate() : data.getDate();
       this.time = data.getFullYear() + "-" + this.month + "-" + this.day;
       console.log(this.time); //2021-05-01
+    });
+
+    this.axios.post("/s_makesport").then(res => {
+      console.log(res.data);
+      this.usportlist = res.data;
     });
   },
   methods: {
@@ -285,6 +307,10 @@ export default {
       console.log(this.num);
       this.reliang = this.addsport.rl * this.num;
       this.tiji = 10 * this.num;
+    },
+    makeSport() {
+      console.log("tianjia");
+      this.$router.replace("/make-sport");
     }
   }
   /* updated() {
@@ -312,7 +338,7 @@ li {
   margin: 0;
   height: 52px;
 }
-.toast {
+.toast1 {
   width: 100%;
   height: 400px;
   background-color: aliceblue;

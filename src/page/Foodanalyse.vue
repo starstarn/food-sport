@@ -7,23 +7,10 @@
 
     <flexbox orient="vertical">
       <!-- 热量分析 -->
-      <div>
+      <div style="width:95%;">
         <span class="head_rl">热量分析</span>
         <div class="rl">
           <span class="titler">热量比及摄入</span>
-          <!-- <v-chart :data="data" :padding="[20, 'auto']">
-            <v-tooltip disabled />
-            <v-scale y :options="yOptions" />
-            <v-pie
-              :radius="0.65"
-              :inner-radius="0.4"
-              series-field="name"
-              :colors="['#9999FF', '#FF8800', '#00BBFF']"
-            />
-            <v-legend :options="legendOptions" />
-            <v-guide type="html" :options="htmlOptions" />
-          </v-chart> -->
-
           <v-chart :data="data">
             <v-scale y :options="yOptions" />
             <v-tooltip disabled />
@@ -35,16 +22,16 @@
             <v-legend :options="legendOptions" />
           </v-chart>
 
-          <div>
+          <div style="width:92%;position:relative;margin:auto;">
             <group>
               <cell
                 title="总摄入(千卡)"
-                value="2000"
-                style="widht:90%;height:40px;border-radius: 25px 25px 0 0;background-color: rgb(240, 242, 243);"
+                :value="all_rl"
+                style="widht:85%;height:40px;border-radius: 15px 15px 0 0;background-color: rgb(240, 242, 243);"
               ></cell>
               <cell-form-preview
                 :list="list"
-                style="background-color: rgb(240, 242, 243);"
+                style="background-color: rgb(240, 242, 243);width:92%;height:120px; border-radius: 0 0 15px 15px;"
               ></cell-form-preview>
             </group>
           </div>
@@ -52,39 +39,33 @@
       </div>
 
       <!-- 三大营养素分析 -->
-      <div>
+
+      <!-- 热量分析 -->
+      <div style="width:95%;">
         <span class="head_rl">三大营养素分析</span>
         <div class="rl">
           <span class="titler">供能比及摄入</span>
-          <!-- <v-chart :data="data" :padding="[20, 'auto']">
-            <v-tooltip disabled />
+          <v-chart :data="data1">
             <v-scale y :options="yOptions" />
+            <v-tooltip disabled />
             <v-pie
               :radius="0.65"
-              :inner-radius="0.4"
               series-field="name"
-              :colors="['#FE5D4D', '#3BA4FF', '#737DDE']"
+              :colors="['#9999FF', '#FF8800', '#00BBFF']"
             />
-            <v-legend :options="legendOptions" />
-            <v-guide type="html" :options="htmlOptions" />
-          </v-chart> -->
-          <v-chart :data="data">
-            <v-scale y :options="yOptions" />
-            <v-tooltip disabled />
-            <v-pie :radius="0.85" series-field="name" />
-            <v-legend :options="legendOptions" />
+            <v-legend :options="legendOptions1" />
           </v-chart>
 
-          <div>
+          <div style="width:92%;position:relative;margin:auto;">
             <group>
               <cell
-                title="总摄入(千卡)"
-                value="2000"
-                style="widht:90%;height:40px;border-radius: 25px 25px 0 0;background-color: rgb(240, 242, 243);"
+                title="名称(克)"
+                :value="all_rl"
+                style="widht:85%;height:40px;border-radius: 15px 15px 0 0;background-color: rgb(240, 242, 243);"
               ></cell>
               <cell-form-preview
-                :list="list"
-                style="background-color: rgb(240, 242, 243);"
+                :list="list1"
+                style="background-color: rgb(240, 242, 243);width:92%;height:120px; border-radius: 0 0 15px 15px;"
               ></cell-form-preview>
             </group>
           </div>
@@ -114,6 +95,11 @@ const map = {
   午餐: "20%",
   晚餐: "18%"
 };
+const map1 = {
+  蛋白质: "40%",
+  脂肪: "20%",
+  碳水: "18%"
+};
 
 export default {
   components: {
@@ -133,10 +119,17 @@ export default {
   data() {
     return {
       legendOptions: {
-        position: "right",
-        right:"50px",
+        position: "left",
+        right: "50px",
         itemFormatter(val) {
           return val + "  " + map[val];
+        }
+      },
+      legendOptions1: {
+        position: "left",
+        right: "50px",
+        itemFormatter(val) {
+          return val + "  " + map1[val];
         }
       },
       yOptions: {
@@ -149,6 +142,28 @@ export default {
         { name: "早餐", percent: 30, a: "1" },
         { name: "午餐", percent: 30, a: "1" },
         { name: "晚餐", percent: 40, a: "1" }
+      ],
+      map1,
+      data1: [
+        { name: "蛋白质", percent: 30, a: "1" },
+        { name: "脂肪", percent: 30, a: "1" },
+        { name: "碳水", percent: 40, a: "1" }
+      ],
+      all_rl: 0,
+      list: null,
+      list1: [
+        {
+          label: "蛋白质",
+          value: "3.29"
+        },
+        {
+          label: "脂肪",
+          value: "1.04"
+        },
+        {
+          label: "碳水",
+          value: "8.00"
+        }
       ]
     };
   },
@@ -160,6 +175,7 @@ export default {
     const breaks_p = breaks / foodall;
     const lunchs_p = lunchs / foodall;
     const dinners_p = dinners / foodall;
+    this.all_rl = foodall;
     console.log(breaks_p);
 
     this.data = [
@@ -172,6 +188,20 @@ export default {
       午餐: this.data[1].percent,
       晚餐: this.data[2].percent
     };
+    this.list = [
+      {
+        label: "早餐",
+        value: breaks
+      },
+      {
+        label: "午餐",
+        value: lunchs
+      },
+      {
+        label: "晚餐",
+        value: dinners
+      }
+    ];
     console.log(this.data);
     console.log(this.map);
   }
@@ -180,13 +210,16 @@ export default {
 <style lang="css" scoped>
 .head_rl {
   font-size: 22px;
-  margin: 10px;
+  margin: 10px 0 10px 18px;
+  display: block;
 }
 .rl {
   background-color: white;
   width: 94%;
-  height: 550px;
+  height: 560px;
   border-radius: 25px;
+  margin: auto;
+  margin-bottom: 30px;
 }
 .titler {
   font-size: 16px;

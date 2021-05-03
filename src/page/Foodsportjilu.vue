@@ -47,7 +47,11 @@
       >
     </div>
 
-    <div v-for="(item, index) in breaks" :key="index">
+    <div
+      v-for="(item, index) in breaks"
+      :key="index"
+      @click="deleteBreak(item)"
+    >
       <li>
         <img class="img_food" :src="img_foods" />
 
@@ -59,6 +63,7 @@
           style="font-size:12px;color:gray;position:absolute;left:78px;top:45px;"
           ><span style="color:gray;">{{ item.rl }}千卡</span></span
         >
+        <img :src="sc" class="sc" />
       </li>
       <hr />
     </div>
@@ -82,6 +87,7 @@
           style="font-size:12px;color:gray;position:absolute;left:78px;top:45px;"
           ><span style="color:gray;">{{ item.rl }}千卡</span></span
         >
+        <img :src="sc" class="sc" />
       </li>
       <hr />
     </div>
@@ -105,6 +111,7 @@
           style="font-size:12px;color:gray;position:absolute;left:78px;top:45px;"
           ><span style="color:gray;">{{ item.rl }}千卡</span></span
         >
+        <img :src="sc" class="sc" />
       </li>
       <hr />
     </div>
@@ -128,6 +135,7 @@
           style="font-size:12px;color:gray;position:absolute;left:78px;top:45px;"
           ><span style="color:gray;">{{ item.rl }}千卡</span></span
         >
+        <img :src="sc" class="sc" />
       </li>
       <hr />
     </div>
@@ -138,7 +146,6 @@
       style="display:inline; border-radius:99px; width:50%;margin-top:30px;left:25%"
     ></x-button>
     <div style="margin-bottom:100px;"></div>
-    
 
     <div class="leibie" style="position:fixed; bottom:0;">
       <img :src="zf" @click="zaofan()" class="tp1" /><img
@@ -151,19 +158,32 @@
         class="tp1"
       />
     </div>
+
+    <div v-transfer-dom>
+      <confirm
+        v-model="show_del"
+        theme="android"
+        @on-cancel="onCancel()"
+        @on-confirm="onConfirm()"
+      >
+        <p style="text-align:center;">确定要删除吗？</p>
+      </confirm>
+    </div>
   </div>
 </template>
 <script>
-import { XCircle, Cell } from "vux";
+import { XCircle, Cell, Confirm } from "vux";
 import axios from "axios";
 
 export default {
   components: {
     XCircle,
-    Cell
+    Cell,
+    Confirm
   },
   data() {
     return {
+      show_del: false,
       percent: 80,
       zf: require("../images/早饭.jpg"),
       wf: require("../images/午饭.jpg"),
@@ -171,6 +191,7 @@ export default {
       sport: require("../images/运动.jpg"),
       foods: null,
       img_foods: require("../images/mika.jpg"),
+      sc: require("../images/shanchu.png"),
       biaozhun: 0,
       break_rl: 0,
       lunch_rl: 0,
@@ -181,12 +202,12 @@ export default {
       lunchs: null,
       dinners: null,
       sports: null,
-      foodsall: 0
+      foodsall: 0,
+      del_food: null
     };
   },
   created() {
     this.biaozhun = localStorage.getItem("kll");
-
     var data = new Date();
     var month =
       data.getMonth() < 9 ? "0" + (data.getMonth() + 1) : data.getMonth() + 1;
@@ -254,81 +275,15 @@ export default {
         this.lunch_rl = addDuration(user_lunch.data);
         this.dinner_rl = addDuration(user_dinner.data);
         this.sport_rl = addDuration(user_sport.data);
-
         // 食物热量总和
         this.foodsall = this.break_rl + this.lunch_rl + this.dinner_rl;
-        localStorage.setItem("breaks",this.break_rl);
-        localStorage.setItem("lunchs",this.lunch_rl);
-        localStorage.setItem("dinners",this.dinner_rl);
-        localStorage.setItem("foodall",this.foodsall);
-
+        localStorage.setItem("breaks", this.break_rl);
+        localStorage.setItem("lunchs", this.lunch_rl);
+        localStorage.setItem("dinners", this.dinner_rl);
+        localStorage.setItem("foodall", this.foodsall);
         this.maybe = this.biaozhun - (this.foodsall - this.sport_rl);
-        /* if (user_break.data !== null) {
-          const break_name = user_break.data.breakfast;
-          const brl = user_break.data.rl;
-          // 字符串转数组；
-          const b_rl = brl.split(",").map(Number);
-          console.log(b_rl);
-          for (let i = 0; i < b_rl.length; i++) {
-            this.break_rl += b_rl[i];
-          }
-        }
-
-        const sport_name = user_sport.data.sport;
-        const srl = user_sport.data.rl;
-        const s_rl = srl.split(",").map(Number);
-        for (let i = 0; i < s_rl.length; i++) {
-          this.sport_rl += s_rl[i];
-        } */
-
-        /*  this.maybe =
-          this.biaozhun -
-          (this.break_rl + this.lunch_rl + this.dinner_rl - this.sport_rl); */
       })
     );
-
-    //早饭
-    /*  this.axios({
-      method: "post",
-      url: "/s_breakfast",
-      data: name_time
-    })
-      .then(res => {
-        console.log(res.data);
-        const name = res.data.breakfast;
-        const rl = res.data.rl;
-        // 字符串转数组；
-        const b_rl = rl.split(",").map(Number);
-        for (let i = 0; i < b_rl.length; i++) {
-          this.break_rl += b_rl[i];
-        }
-        // console.log(this.break_rl);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-
-    //运动
-    this.axios({
-      method: "post",
-      url: "s_sport",
-      data: name_time
-    })
-      .then(res => {
-        console.log(res.data);
-        const sport = res.data.sport;
-        const rl = res.data.rl;
-
-        const s_rl = rl.split(",").map(Number);
-        for (let i = 0; i < s_rl.length; i++) {
-          this.sport_rl += s_rl[i];
-        }
-        // console.log(this.sport_rl);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-    console.log(this.sport_rl + this.break_rl); */
   },
   methods: {
     zaofan() {
@@ -350,8 +305,35 @@ export default {
       console.log("sport");
       this.$router.replace("/add-sport");
     },
-    yingyang(){
+    yingyang() {
       this.$router.replace("/food-analyse");
+    },
+    deleteBreak(item) {
+      console.log("删除早餐");
+      this.show_del = !this.show_del;
+      console.log(item);
+      this.del_food = item;
+    },
+    onConfirm() {
+      console.log("确定删除");
+      const food = {
+        id: this.show_del.id
+      };
+      this.axios({
+        method: "post",
+        url: "/d_breakfast",
+        data: food
+      })
+        .then(res => {
+          console.log(res);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      location.reload();
+    },
+    onCancel(){
+      console.log("取消删除");
     }
   }
 };
@@ -399,5 +381,12 @@ li {
   width: 50px;
   height: 50px;
   border-radius: 10px;
+}
+.sc {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: 20px;
+  top: 30px;
 }
 </style>

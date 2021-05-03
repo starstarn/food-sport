@@ -25,9 +25,10 @@ export default {
       const user_password = localStorage.getItem("user_password");
       const nick_name = localStorage.getItem("nick_name");
       const sex = localStorage.getItem("sex"); //获取指定key本地存储的值
-      const height = localStorage.getItem("height");
+      const height = parseInt(localStorage.getItem("height"));
       const birthday = localStorage.getItem("birthday");
-      const weight = localStorage.getItem("weight");
+      const weight = parseInt(localStorage.getItem("weight"));
+      const begin_weight = weight;
       console.log(
         user_name + user_password + nick_name + sex + height + birthday + weight
       );
@@ -47,7 +48,8 @@ export default {
         birthday,
         bmi,
         s_weight,
-        kll
+        kll,
+        begin_weight
       };
       console.log(info);
       //link="/"

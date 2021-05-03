@@ -22,9 +22,6 @@ import Username from "./page/Username";
 import Userpassword from "./page/Userpassword";
 import Userdeclaration from "./page/Userdeclaration";
 import Userbasic from "./page/Userbasic";
-/* import FoodClass from "./page/Food-class";
-import FoodList from "./page/Food-list";
- */
 import FoodType from "./page/Foodtype";
 import FoodList from "./page/Foodlist";
 import WeightJilu from "./page/Weightjilu";
@@ -34,6 +31,8 @@ import FoodSportjilu from "./page/Foodsportjilu";
 import Healthreport from "./page/Healthreport";
 import Addfood from "./page/Addfood";
 import Addsport from "./page/Addsport";
+import Makefood from "./page/Makefood";
+import MakeSport from "./page/Makesport";
 // 在入口文件全局引入
 import { XHeader, Flexbox, FlexboxItem, XProgress, XButton } from "vux";
 
@@ -49,8 +48,8 @@ Vue.component("x-header", XHeader);
 // Vue.use(ScrollNav);
 
 Vue.prototype.axios = axios;
-axios.defaults.baseURL = '/api'  //关键代码
-Vue.config.productionTip = false
+axios.defaults.baseURL = "/api"; //关键代码
+Vue.config.productionTip = false;
 
 Vue.use(VueRouter);
 
@@ -116,12 +115,20 @@ const routes = [
     component: Addfood
   },
   {
+    path: "/make-food",
+    component: Makefood
+  },
+  {
     path: "/add-sport",
     component: Addsport
   },
   {
     path: "/weightjilu",
     component: WeightJilu
+  },
+  {
+    path: "/make-sport",
+    component: MakeSport
   },
   {
     path: "/weight-chart",

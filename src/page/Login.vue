@@ -52,12 +52,7 @@ export default {
       info: {
         user_name: null,
         user_password: null
-        /* height: null,
-        weight: null,
-        birthday: null,
-        sex: null */
       },
-
       imgUrl: require("../images/mika.jpg")
     };
   },
