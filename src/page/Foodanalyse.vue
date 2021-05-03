@@ -8,10 +8,10 @@
     <flexbox orient="vertical">
       <!-- 热量分析 -->
       <div>
-        <span class="head">热量分析</span>
+        <span class="head_rl">热量分析</span>
         <div class="rl">
           <span class="titler">热量比及摄入</span>
-          <v-chart :data="data" :padding="[20, 'auto']">
+          <!-- <v-chart :data="data" :padding="[20, 'auto']">
             <v-tooltip disabled />
             <v-scale y :options="yOptions" />
             <v-pie
@@ -22,6 +22,17 @@
             />
             <v-legend :options="legendOptions" />
             <v-guide type="html" :options="htmlOptions" />
+          </v-chart> -->
+
+          <v-chart :data="data">
+            <v-scale y :options="yOptions" />
+            <v-tooltip disabled />
+            <v-pie
+              :radius="0.65"
+              series-field="name"
+              :colors="['#9999FF', '#FF8800', '#00BBFF']"
+            />
+            <v-legend :options="legendOptions" />
           </v-chart>
 
           <div>
@@ -42,10 +53,10 @@
 
       <!-- 三大营养素分析 -->
       <div>
-        <span class="head">三大营养素分析</span>
+        <span class="head_rl">三大营养素分析</span>
         <div class="rl">
           <span class="titler">供能比及摄入</span>
-          <v-chart :data="data" :padding="[20, 'auto']">
+          <!-- <v-chart :data="data" :padding="[20, 'auto']">
             <v-tooltip disabled />
             <v-scale y :options="yOptions" />
             <v-pie
@@ -56,6 +67,12 @@
             />
             <v-legend :options="legendOptions" />
             <v-guide type="html" :options="htmlOptions" />
+          </v-chart> -->
+          <v-chart :data="data">
+            <v-scale y :options="yOptions" />
+            <v-tooltip disabled />
+            <v-pie :radius="0.85" series-field="name" />
+            <v-legend :options="legendOptions" />
           </v-chart>
 
           <div>
@@ -92,16 +109,11 @@ import {
   Cell
 } from "vux";
 
-const data = [
-  { name: "早餐", percent: 30, a: "1" },
-  { name: "午餐", percent: 30, a: "1" },
-  { name: "晚餐", percent: 40, a: "1" }
-];
-
-const map = {};
-data.map(obj => {
-  map[obj.name] = obj.percent + "%";
-});
+const map = {
+  早餐: "40%",
+  午餐: "20%",
+  晚餐: "18%"
+};
 
 export default {
   components: {
@@ -120,17 +132,9 @@ export default {
   },
   data() {
     return {
-      list: null,
-      map,
-      htmlOptions: {
-        position: ["50%", "45%"],
-        html: `
-          <div style="width: 250px;height: 40px;text-align: center;">
-
-          </div>`
-      },
       legendOptions: {
         position: "right",
+        right:"50px",
         itemFormatter(val) {
           return val + "  " + map[val];
         }
@@ -140,7 +144,12 @@ export default {
           return val * 100 + "%";
         }
       },
-      data
+      map,
+      data: [
+        { name: "早餐", percent: 30, a: "1" },
+        { name: "午餐", percent: 30, a: "1" },
+        { name: "晚餐", percent: 40, a: "1" }
+      ]
     };
   },
   created() {
@@ -151,21 +160,25 @@ export default {
     const breaks_p = breaks / foodall;
     const lunchs_p = lunchs / foodall;
     const dinners_p = dinners / foodall;
-    console.log(breaks_p)
+    console.log(breaks_p);
 
-    this.list = [
+    this.data = [
       { name: "早餐", percent: breaks_p, a: "1" },
       { name: "午餐", percent: lunchs_p, a: "1" },
       { name: "晚餐", percent: dinners_p, a: "1" }
     ];
+    this.map = {
+      早餐: this.data[0].percent,
+      午餐: this.data[1].percent,
+      晚餐: this.data[2].percent
+    };
+    console.log(this.data);
+    console.log(this.map);
   }
 };
 </script>
 <style lang="css" scoped>
-body {
-  background-color: rgb(240, 242, 243);
-}
-.head {
+.head_rl {
   font-size: 22px;
   margin: 10px;
 }

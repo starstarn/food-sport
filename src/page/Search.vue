@@ -6,7 +6,7 @@
       background="#4fc08d"
       placeholder="请输入搜索关键词"
     />
-    <p>食物推荐榜 <button @click="more()">更多></button></p>
+    <p>食物推荐榜 <button class="button" @click="more()">更多></button></p>
 
     <badge
       text="水果"
@@ -115,11 +115,13 @@ export default {
 };
 </script>
 <style lang="css" scoped>
-button {
+.button {
   background-color: white;
   font-size: 14px;
   color: gray;
   border: none;
+   float: right;
+  margin-right: 10px;
 }
 .in {
   color: rgb(241, 242, 243);
@@ -129,10 +131,6 @@ body {
 }
 p {
   margin: 20px 0;
-}
-button {
-  float: right;
-  margin-right: 10px;
 }
 .sel div {
   display: inline-block;
