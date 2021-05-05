@@ -50,9 +50,9 @@
 
     <div style="display:inline;">
       <x-button
+        @click.native="updatemb()"
         plain
         text="设定新目标"
-        link="/birthday"
         style="border-radius:99px;width:140px;font-size:14px;"
       ></x-button>
       <x-button
@@ -75,6 +75,11 @@ export default {
     return {
       percent: 80
     };
+  },
+  methods:{
+    updatemb(){
+      console.log("修改体重目标");
+    }
   }
 };
 </script>
@@ -86,11 +91,11 @@ export default {
   width: 100%;
   height: 80px;
   position: relative;
-  margin-bottom:10px;
+  margin-bottom: 10px;
 }
 .begin span {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
   color: gray;
   font-size: 14px;
   position: absolute;

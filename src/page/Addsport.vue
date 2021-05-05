@@ -63,22 +63,23 @@
             style="margin:20px;"
           />添加自定义运动
         </div>
-      </van-tab>
-      <div v-for="item in usportlist" :key="item" @click="add(item)">
-        <li>
-          <img class="img_food" :src="imgUrl" />
+        <div v-for="item in usportlist" :key="item" @click="add(item)">
+          <li>
+            <img class="img_food" :src="imgUrl" />
 
-          <span style="font-size:16px;position:absolute;left:78px;top:15px;">{{
-            item.name
-          }}</span>
-          <span
-            style="font-size:12px;color:gray;position:absolute;left:78px;top:45px;"
-            ><span style="color:red;">{{ item.rl }}</span
-            >千卡/100{{ item.danwei }}</span
-          >
-        </li>
-        <hr />
-      </div>
+            <span
+              style="font-size:16px;position:absolute;left:78px;top:15px;"
+              >{{ item.name }}</span
+            >
+            <span
+              style="font-size:12px;color:gray;position:absolute;left:78px;top:45px;"
+              ><span style="color:red;">{{ item.rl }}</span
+              >千卡/100{{ item.danwei }}</span
+            >
+          </li>
+          <hr />
+        </div>
+      </van-tab>
     </van-tabs>
     <!-- 弹出 -->
     <div class="toast1" v-show="show">
@@ -221,7 +222,15 @@ export default {
       console.log(this.time); //2021-05-01
     });
 
-    this.axios.post("/s_makesport").then(res => {
+    const u_name = localStorage.getItem("user_name");
+    const user_name = {
+      user_name: u_name
+    };
+    this.axios({
+      method: "post",
+      url: "/s_makesport",
+      data: user_name
+    }).then(res => {
       console.log(res.data);
       this.usportlist = res.data;
     });

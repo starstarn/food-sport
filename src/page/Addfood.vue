@@ -120,24 +120,24 @@
             style="margin:20px;"
           />添加自定义食物
         </div>
+        <div v-for="item in ufoodlist" :key="item" @click="add(item)">
+          <li>
+            <img class="img_food" :src="imgUrl" />
+
+            <span
+              style="font-size:16px;position:absolute;left:78px;top:15px;"
+              >{{ item.name }}</span
+            >
+            <span
+              style="font-size:12px;color:gray;position:absolute;left:78px;top:45px;"
+              ><span style="color:red;">{{ item.rl }}</span
+              >千卡/100{{ item.danwei }}</span
+            >
+            <img :src="shanChu" class="delete" @click="deleteFood()" />
+          </li>
+          <hr />
+        </div>
       </van-tab>
-
-      <div v-for="item in ufoodlist" :key="item" @click="add(item)">
-        <li>
-          <img class="img_food" :src="imgUrl" />
-
-          <span style="font-size:16px;position:absolute;left:78px;top:15px;">{{
-            item.name
-          }}</span>
-          <span
-            style="font-size:12px;color:gray;position:absolute;left:78px;top:45px;"
-            ><span style="color:red;">{{ item.rl }}</span
-            >千卡/100{{ item.danwei }}</span
-          >
-          <img :src="shanChu" class="delete" @click="deleteFood()" />
-        </li>
-        <hr />
-      </div>
     </van-tabs>
     <!-- 弹出 -->
     <div class="toast" v-show="show">
@@ -280,7 +280,16 @@ export default {
       this.time = data.getFullYear() + "-" + this.month + "-" + this.day;
       console.log(this.time); //2021-05-01
     });
-    this.axios.post("/s_makefood").then(res => {
+  
+    const u_name = localStorage.getItem("user_name");
+    const user_name = {
+      user_name: u_name
+    };
+    this.axios({
+      method: "post",
+      url: "/s_makefood",
+      data: user_name
+    }).then(res => {
       console.log(res.data);
       this.ufoodlist = res.data;
     });
@@ -385,7 +394,7 @@ export default {
       console.log("tianjia");
       this.$router.replace("/make-food");
     },
-    deleteFood(){
+    deleteFood() {
       console.log("删除食物");
     }
   }

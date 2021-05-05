@@ -16,7 +16,12 @@
           title="我的健康资料"
           style="background-color:white; border-radius:15px; padding: 10px 0; width: 330px"
         >
-          <cell @click.native="basic()" title="基本信息" style="padding:20px 15px;" is-link>
+          <cell
+            @click.native="basic()"
+            title="基本信息"
+            style="padding:20px 15px;"
+            is-link
+          >
             <div class="badge-value">
               <span class="vertical-middle">&nbsp;</span>
             </div>
@@ -70,13 +75,17 @@
 
     <van-tabbar v-model="active" fixed route replace active-color="green">
       <van-tabbar-item name="home" icon="home-o" to="/">首页</van-tabbar-item>
-      <van-tabbar-item name="search" icon="search" to="/search">发现</van-tabbar-item>
+      <van-tabbar-item name="search" icon="search" to="/search"
+        >发现</van-tabbar-item
+      >
       <van-tabbar-item name="plus" icon="plus" @click="add()"></van-tabbar-item>
       <van-tabbar-item name="friends" icon="friends-o">商店</van-tabbar-item>
       <van-tabbar-item name="setting" icon="setting-o" to="/my"
         >我的</van-tabbar-item
       >
     </van-tabbar>
+    <!-- 弹出记录体重 -->
+    <jl-weight v-show="shows"></jl-weight>
   </div>
 </template>
 <script>
@@ -85,6 +94,7 @@ import Vue from "vue";
 import { Tabbar, TabbarItem, Icon, Popup } from "vant";
 import "vant/lib/index.css";
 import "vant/lib/icon/local.css"; //本地
+import jlWeight from "../components/Jiluweight";
 
 Vue.use(Tabbar);
 Vue.use(TabbarItem);
@@ -94,36 +104,41 @@ Vue.use(Popup);
 export default {
   components: {
     Group,
-    Cell
+    Cell,
+    jlWeight
   },
   data() {
     return {
+      shows: false,
       show: false,
       active: "home",
       imgUrl: require("../images/mika.jpg"),
       imgs: require("../images/mika.jpg")
     };
   },
-  methods:{
+  methods: {
     add() {
       console.log("添加");
       this.show = true;
     },
-    jlfood(){
+    jlfood() {
       console.log("记录饮食");
       this.$router.replace("/jilu-food-sport");
     },
-    jlsport(){
+    jlsport() {
       this.$router.replace("/add-sport");
     },
-    jlweight(){
-      this.$$router.replace("/");
-    },
-    update(){
+    update() {
       this.$router.replace("/my-info");
     },
-    basic(){
+    basic() {
       this.$router.replace("/user-basic");
+    },
+    jlweight() {
+      // this.$$router.replace("/");
+      const user_name = localStorage.getItem("user_name");
+      this.shows = !this.shows;
+      this.show = !this.show;
     }
   }
 };

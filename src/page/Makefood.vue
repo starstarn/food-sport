@@ -68,11 +68,13 @@ export default {
     },
     makeFood() {
       console.log("添加食物");
+      const user_name = localStorage.getItem("user_name");
       console.log(this.f_name + this.f_rl + this.f_danwei);
       const u_foods = {
         name: this.f_name,
         rl: parseInt(this.f_rl),
-        danwei: this.f_danwei
+        danwei: this.f_danwei,
+        user_name:user_name
       };
 
       this.axios({

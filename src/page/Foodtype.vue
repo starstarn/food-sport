@@ -19,7 +19,7 @@
             <label>></label>
           </li>
           <hr />
-          <li>
+          <li @click="zhushi_low()">
             <img :src="imgss" />
             <span>低热量—主食类</span>
             <label>></label>
@@ -64,6 +64,11 @@ export default {
     fruits_low() {
       console.log("水果-低");
       localStorage.setItem("f_type", "水果-低");
+      this.$router.replace("/food-list");
+    },
+    zhushi_low() {
+      console.log("主食-低");
+      localStorage.setItem("f_type", "主食-低");
       this.$router.replace("/food-list");
     }
   }

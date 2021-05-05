@@ -75,7 +75,11 @@
       >
     </div>
 
-    <div v-for="(item, index) in lunchs" :key="index">
+    <div
+      v-for="(item, index) in lunchs"
+      :key="index"
+      @click="deleteLunch(item)"
+    >
       <li>
         <img class="img_food" :src="img_foods" />
 
@@ -99,7 +103,11 @@
       >
     </div>
 
-    <div v-for="(item, index) in dinners" :key="index">
+    <div
+      v-for="(item, index) in dinners"
+      :key="index"
+      @click="deleteDinner(item)"
+    >
       <li>
         <img class="img_food" :src="img_foods" />
 
@@ -123,7 +131,11 @@
       >
     </div>
 
-    <div v-for="(item, index) in sports" :key="index">
+    <div
+      v-for="(item, index) in sports"
+      :key="index"
+      @click="deleteSport(item)"
+    >
       <li>
         <img class="img_food" :src="img_foods" />
 
@@ -163,8 +175,8 @@
       <confirm
         v-model="show_del"
         theme="android"
-        @on-cancel="onCancel()"
-        @on-confirm="onConfirm()"
+        @on-cancel="onCancel"
+        @on-confirm="onConfirm"
       >
         <p style="text-align:center;">确定要删除吗？</p>
       </confirm>
@@ -203,7 +215,8 @@ export default {
       dinners: null,
       sports: null,
       foodsall: 0,
-      del_food: null
+      del_food: null,
+      type: null
     };
   },
   created() {
@@ -313,26 +326,94 @@ export default {
       this.show_del = !this.show_del;
       console.log(item);
       this.del_food = item;
+      this.type = "早餐";
+    },
+    deleteLunch(item) {
+      console.log("删除午餐");
+      this.show_del = !this.show_del;
+      console.log(item);
+      this.del_food = item;
+      this.type = "午餐";
+    },
+    deleteDinner(item) {
+      console.log("删除晚餐");
+      this.show_del = !this.show_del;
+      console.log(item);
+      this.del_food = item;
+      this.type = "晚餐";
+    },
+    deleteSport(item) {
+      console.log("删除运动");
+      this.show_del = !this.show_del;
+      console.log(item);
+      this.del_food = item;
+      this.type = "运动";
     },
     onConfirm() {
       console.log("确定删除");
+      console.log(this, this.del_food.id);
       const food = {
-        id: this.show_del.id
+        id: this.del_food.id
       };
-      this.axios({
-        method: "post",
-        url: "/d_breakfast",
-        data: food
-      })
-        .then(res => {
-          console.log(res);
+      if (this.type === "早餐") {
+        this.axios({
+          method: "post",
+          url: "/d_breakfast",
+          data: food
         })
-        .catch(error => {
-          console.log(error);
-        });
+          .then(res => {
+            console.log(res);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      }
+
+      if (this.type === "午餐") {
+        this.axios({
+          method: "post",
+          url: "/d_lunch",
+          data: food
+        })
+          .then(res => {
+            console.log(res);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      }
+
+      if (this.type === "晚餐") {
+        this.axios({
+          method: "post",
+          url: "/d_dinner",
+          data: food
+        })
+          .then(res => {
+            console.log(res);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      }
+
+      if (this.type === "运动") {
+        this.axios({
+          method: "post",
+          url: "/d_sport",
+          data: food
+        })
+          .then(res => {
+            console.log(res);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      }
+
       location.reload();
     },
-    onCancel(){
+    onCancel() {
       console.log("取消删除");
     }
   }

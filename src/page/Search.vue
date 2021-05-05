@@ -63,6 +63,9 @@
         >我的</van-tabbar-item
       >
     </van-tabbar>
+
+    <!-- 弹出记录体重 -->
+    <jl-weight  v-show="shows"></jl-weight>
   </div>
 </template>
 <script>
@@ -71,6 +74,7 @@ import Vue from "vue";
 import { Search, Tabbar, TabbarItem, Icon, Popup } from "vant";
 import "vant/lib/index.css";
 import "vant/lib/icon/local.css"; //本地
+import jlWeight from "../components/Jiluweight";
 
 Vue.use(Tabbar);
 Vue.use(TabbarItem);
@@ -81,10 +85,12 @@ Vue.use(Search);
 
 export default {
   components: {
-    Badge
+    Badge,
+    jlWeight
   },
   data() {
     return {
+      shows: false,
       active: "search",
       show: false,
       imgUrl: require("../images/mika.jpg"),
@@ -93,7 +99,7 @@ export default {
   },
 
   methods: {
-    more(){
+    more() {
       console.log("更多");
       this.$router.replace("/food-type");
     },
@@ -109,7 +115,10 @@ export default {
       this.$router.replace("/add-sport");
     },
     jlweight() {
-      this.$$router.replace("/");
+      // this.$$router.replace("/");
+      const user_name = localStorage.getItem("user_name");
+      this.shows = !this.shows;
+      this.show = !this.show;
     }
   }
 };
@@ -120,7 +129,7 @@ export default {
   font-size: 14px;
   color: gray;
   border: none;
-   float: right;
+  float: right;
   margin-right: 10px;
 }
 .in {

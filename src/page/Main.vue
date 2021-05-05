@@ -1,23 +1,22 @@
 <template lang="">
   <div>
-    <search
-      @result-click="resultClick"
-      @on-change="getResult"
-      :results="results"
-      v-model="value"
+    <!-- <search
+      
       position="absolute"
       auto-scroll-to-top
       top="46px"
-      @on-focus="onFocus"
-      @on-cancel="onCancel"
-      @on-submit="onSubmit"
-      ref="search"
-    ></search>
-    <!-- <flexbox orient="vertical">
-      <flexbox> -->
-    <div class="header"></div>
+     
+    ></search> -->
+    <!-- 搜索框样式 -->
+
+    <div class="header">
+      <div class="search1" @click="serarch1()">
+        <icon type="search"></icon>搜索
+      </div>
+    </div>
 
     <!-- 卡片 -->
+
     <div class="card">
       <span class="head">体重管理</span> <span class="danwei">单位：公斤</span>
       <br />
@@ -64,7 +63,7 @@
           <label>饮食&运动</label>
           <br />
           <label
-            >还可以吃<span> {{ 2085 }}</span
+            >还可以吃<span> {{ kaluli }}</span
             >千卡</label
           >
         </div>
@@ -151,7 +150,7 @@
   </div>
 </template>
 <script>
-import { Search, Group, Cell, XCircle, InlineXNumber } from "vux";
+import { Search, Group, Cell, XCircle, InlineXNumber, Icon } from "vux";
 import Vue from "vue";
 import { Tabbar, TabbarItem, Popup } from "vant";
 
@@ -165,20 +164,25 @@ export default {
     Group,
     Cell,
     XCircle,
-    InlineXNumber
+    InlineXNumber,
+    Icon
   },
   data() {
     return {
-      v_weight: 50,
+      // v_weight: 50,
       shows: false,
       show: false,
       active: "home",
-      percent: 80,
+      percent: 0,
       weight: null,
       s_weight: null,
       intake: null,
       imgs: require("../images/mika.jpg"),
-      u_weight: 45
+      u_weight: null,
+      kaluli: null,
+      time: null,
+      username: null,
+      info_weight: null
     };
   },
   created() {
@@ -191,17 +195,113 @@ export default {
     this.weight = weight;
     this.s_weight = s_weight;
     this.percent = this.weight - this.s_weight;
-
     this.u_weight = this.weight;
+    const u_name = localStorage.getItem("user_name");
+    this.username = u_name;
+    const user_name = {
+      user_name: u_name
+    };
+
+    this.axios({
+      method: "post",
+      url: "/user/sel_user",
+      data: user_name
+    })
+      .then(res => {
+        console.log(res);
+        this.kaluli = res.data.kll;
+        this.weight = res.data.weight;
+        this.s_weight = res.data.s_weight;
+        this.percent = this.weight - this.s_weight;
+      })
+      .catch(error => {
+        console.log(error);
+      });
   },
   methods: {
-    changeWeight(){
+    serarch1() {
+      this.$router.replace("/search");
+    },
+    changeWeight() {
       console.log(this.u_weight);
     },
-    xiugai(){
+    xiugai() {
       console.log("修改体重");
       console.log(this.u_weight);
-      
+      const user_name = localStorage.getItem("user_name");
+      const name_weight = {
+        user_name: user_name,
+        weight: this.u_weight
+      };
+      this.axios({
+        method: "post",
+        url: "/user/update_weight",
+        data: name_weight
+      })
+        .then(res => {
+          console.log(res);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+
+      //查找体重表
+      var data = new Date();
+      this.month =
+        data.getMonth() < 9 ? "0" + (data.getMonth() + 1) : data.getMonth() + 1;
+      this.day = data.getDate() <= 9 ? "0" + data.getDate() : data.getDate();
+      this.time = data.getFullYear() + "-" + this.month + "-" + this.day;
+      console.log(this.time); //2021-05-01
+      const time_name = {
+        time: this.time,
+        user_name: this.username
+      };
+      this.axios({
+        method: "post",
+        url: "/sel_tweight",
+        data: time_name
+      })
+        .then(res => {
+          console.log(res.data);
+          this.info_weight = res.data;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+
+      const u_infoweight = {
+        time: this.time,
+        user_name: this.username,
+        t_weight: this.u_weight
+      };
+
+      if (this.info_weight === null) {
+        this.axios({
+          method: "post",
+          url: "/add_weight",
+          data: u_infoweight
+        })
+          .then(res => {
+            console.log(res);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      } else {
+        this.axios({
+          method: "post",
+          url: "/update_tweight",
+          data: u_infoweight
+        })
+          .then(res => {
+            console.log(res);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      }
+      /* this.shows = !this.shows;
+      location.reload(); */
     },
     jilu() {
       this.$router.replace("/jilu-food-sport");
@@ -221,22 +321,28 @@ export default {
       this.$router.replace("/add-sport");
     },
     jlweight() {
-      // this.$$router.replace("/");
-      const user_name = localStorage.getItem("user_name");
       this.shows = !this.shows;
       this.show = !this.show;
     },
     close() {
       this.shows = !this.shows;
-      // this.num = 1;
-    },
-    Onchange(v_weight) {
-      console.log(v_weight);
     }
   }
 };
 </script>
 <style lang="css" scope>
+.search1 {
+  width: 94%;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 3px;
+  background-color: white;
+  margin: 10px auto;
+  z-index: 3;
+  text-align: center;
+  font-size: 16px;
+  color: gray;
+}
 .header {
   width: 100%;
   height: 200px;
@@ -290,7 +396,7 @@ export default {
 }
 hr {
   color: rgb(200, 202, 202);
-  width: 85%;
+  width: 100%;
 }
 .card {
   background-color: rgb(127, 197, 185);
@@ -302,6 +408,7 @@ hr {
   display: flex;
   flex-direction: row;
   margin: 20px auto;
+  margin-top: 70px;
   margin-bottom: 10px;
 }
 .head {

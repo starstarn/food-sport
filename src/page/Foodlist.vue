@@ -10,16 +10,16 @@
       <span style="margin-left:20px;">{{ type_s }}</span>
     </div>
 
-    <div class="list">
-      <li>
-        <img :src="food_img" />
+    <div v-for="item in food" :key="item" @click="look(item)">
+      <li class="li1">
+        <img :src="food_img" class="food_img" />
         <span style="font-size:16px;position:absolute;left:78px;top:15px;">{{
-          52
+          item.name
         }}</span>
         <span
           style="font-size:12px;color:gray;position:absolute;left:78px;top:45px;"
-          ><span style="color:red;">{{ a534rl }}</span
-          >千卡/100{{ a543 }}</span
+          ><span style="color:red;">{{ item.rl }}</span
+          >千卡/100{{ item.danwei }}</span
         >
       </li>
     </div>
@@ -30,41 +30,49 @@ export default {
   data() {
     return {
       type_s: null,
-      food_img: require("../images/mika.jpg")
+      food_img: require("../images/mika.jpg"),
+      food: null
     };
   },
   created() {
     const f_type = localStorage.getItem("f_type");
     this.type_s = f_type;
     console.log(this.type_s);
+    const food_type = {
+      type: this.type_s
+    };
 
-    this.axios
-      .get("http://localhost:8087/api/foodlist", {
-        params: {
-          type: this.type_s
-        }
-      })
+    this.axios({
+      method: "post",
+      url: "/s_type",
+      data: food_type
+    })
       .then(res => {
-        console.log(res);
+        console.log(res.data);
+        this.food = res.data;
       })
       .catch(error => {
         console.log(error);
       });
+  },
+  methods:{
+    look(item){
+      console.log(item);
+    }
   }
 };
 </script>
 <style lang="css">
-.list li {
-  position: relative;
-  margin: 10px;
-  list-style-type: none;
-}
-.list img {
-  position: absolute;
-  top: 18px;
-  left: 20px;
+.food_img {
   width: 50px;
   height: 50px;
   border-radius: 10px;
+}
+.li1 {
+  list-style-type: none;
+  padding: 15px 20px;
+  position: relative;
+  margin: 0;
+  height: 52px;
 }
 </style>

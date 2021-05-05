@@ -33,11 +33,11 @@ import Addfood from "./page/Addfood";
 import Addsport from "./page/Addsport";
 import Makefood from "./page/Makefood";
 import MakeSport from "./page/Makesport";
+import FoodCareful from "./page/Foodcareful";
 // 在入口文件全局引入
 import { XHeader, Flexbox, FlexboxItem, XProgress, XButton } from "vux";
 
 import "amfe-flexible";
-// import { Style, ScrollNav } from "cube-ui";
 
 Vue.component("x-button", XButton);
 Vue.component("x-progress", XProgress);
@@ -45,7 +45,6 @@ Vue.component("flexbox", Flexbox);
 Vue.component("flexbox-item", FlexboxItem);
 Vue.component("x-header", XHeader);
 
-// Vue.use(ScrollNav);
 
 Vue.prototype.axios = axios;
 axios.defaults.baseURL = "/api"; //关键代码
@@ -77,6 +76,10 @@ const routes = [
   {
     path: "/food-list",
     component: FoodList
+  },
+  {
+    path: "/food-careful",
+    component: FoodCareful
   },
   {
     path: "/my",
@@ -142,14 +145,6 @@ const routes = [
     path: "/jilu-food-sport",
     component: FoodSportjilu
   },
-  /* {
-    path: "/food-class",
-    component: FoodClass
-  },
-  {
-    path: "/food-list",
-    component: FoodList
-  }, */
   {
     path: "/birthday",
     component: Birthday
