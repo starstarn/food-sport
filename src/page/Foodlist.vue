@@ -50,14 +50,17 @@ export default {
       .then(res => {
         console.log(res.data);
         this.food = res.data;
+        localStorage.setItem("user_name", user_name);
       })
       .catch(error => {
         console.log(error);
       });
   },
-  methods:{
-    look(item){
+  methods: {
+    look(item) {
       console.log(item);
+      localStorage.setItem("food", item);
+      this.$router.replace("/food-careful");
     }
   }
 };

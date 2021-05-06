@@ -6,17 +6,32 @@
     ></x-header>
     <div class="foodheader">
       <img :src="food_img" class="shiwu" />
-      <span style="position:absolute;top:55px;">苹果</span>
+      <span style="position:absolute;top:65px;">{{food.name}}</span>
     </div>
     <!-- 热量 -->
     <div class="foodnav">
-      <span>热量</span><span>千卡</span>
-      <p><span>4千卡</span></p>
-      <p>每100克</p>
+      <span style="font-size:20px;font-weight:600;position:absolute;"
+        >热量</span
+      >
+      <span style="position:absolute;right:20px;">千卡</span>
+      <p>
+        <span style="position:absolute;right:50%;top:56px;"
+          ><span style="font-size:34px;font-weight:300;">{{food.rl}}</span>千卡</span
+        >
+      </p>
+      <p
+        style="position:absolute;right:50%;top:105px;font-size:14px;color:gray;"
+      >
+        每100克
+      </p>
     </div>
     <!-- 营养元素 -->
     <div class="yysy">
-      <p><span>营养元素</span><span>单位：每100克</span></p>
+      <p>
+        <span style="font-size:20px;font-weight:600;position:absolute;padding:15px 0 10px 15px;"
+          >营养元素</span
+        ><span style="position:absolute;right:20px;font-size:14px;color:gray;padding:22px 10px 10px 0;">单位：每100克</span>
+      </p>
       <v-chart prevent-render @on-render="renderChart"></v-chart>
     </div>
   </div>
@@ -29,8 +44,13 @@ export default {
   },
   data() {
     return {
-      food_img: require("../images/mika.jpg")
+      food_img: require("../images/mika.jpg"),
+      food: null
     };
+  },
+  created() {
+    this.food = localStorage.getItem("food");
+    console.log(this.food)
   },
   methods: {
     renderChart({ chart }) {
@@ -84,19 +104,26 @@ export default {
 .foodheader {
   width: 100%;
   height: 100px;
-  background-color: honeydew;
+  background-color: white;
 }
 .shiwu {
   width: 50px;
   height: 50px;
   border-radius: 10px;
-  margin: 10px;
+  margin: 20px;
 }
 .foodnav {
+  position: relative;
   width: 90%;
   height: 160px;
-  background-color: honeydew;
+  background-color: white;
   margin: 20px;
+  border-radius: 10px;
+}
+.yysy {
+  width: 90%;
+  height: 150px;
+  margin: auto;
   border-radius: 10px;
 }
 </style>

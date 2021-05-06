@@ -20,9 +20,9 @@
       </x-circle>
     </div>
     <x-button
+      @click.native="jiluWeight()"
       plain
       text="记录体重"
-      link="/birthday"
       type="primary"
       style="border-radius:99px;width:180px;margin-top:30px;"
     ></x-button>
@@ -31,7 +31,7 @@
       <hr />
       <!-- 初始体重 -->
       <div class="begin">
-        <span style="left:20px;">90公斤</span>
+        <span style="left:20px;">{{ begin_weight }}公斤</span>
         <span style="right:20px;">开始保持</span>
         <br />
         <span style="left:20px;">初始体重</span>
@@ -40,7 +40,7 @@
 
       <!-- 最新体重 -->
       <div class="begin">
-        <span style="left:20px;">90公斤</span>
+        <span style="left:20px;">{{ new_weight }}公斤</span>
         <span style="right:20px;">开始保持</span>
         <br />
         <span style="left:20px;">最新体重</span>
@@ -58,27 +58,77 @@
       <x-button
         plain
         text="制作对比照"
-        link="/birthday"
+        link="/weight-chart"
         style="border-radius:99px;width:140px;font-size:14px;"
       ></x-button>
     </div>
+
+    <!-- 弹出记录体重 -->
+    <jl-weight v-show="shows"></jl-weight>
   </div>
 </template>
 <script>
 import { XCircle } from "vux";
+import jlWeight from "../components/Jiluweight";
 
 export default {
   components: {
-    XCircle
+    XCircle,
+    jlWeight
   },
   data() {
     return {
-      percent: 80
+      shows: false,
+      percent: 80,
+      new_weight: null
     };
   },
-  methods:{
-    updatemb(){
+  created() {
+    const u_name = localStorage.getItem("user_name");
+    const user_name = {
+      user_name: u_name
+    };
+    this.axios({
+      method: "post",
+      url: "/user/sel_user",
+      data: user_name
+    })
+      .then(res => {
+        console.log(res);
+        this.new_weight = res.data.weight;
+        this.s_weight = res.data.s_weight;
+        this.begin_weight = res.data.begin_weight;
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  },
+  methods: {
+    updatemb() {
       console.log("修改体重目标");
+    },
+    jiluWeight() {
+      console.log("修改现在体重");
+      const u_name = localStorage.getItem("user_name");
+      this.shows = !this.shows;
+      const user_name = {
+        user_name: u_name
+      };
+
+      this.axios({
+        method: "post",
+        url: "/user/sel_user",
+        data: user_name
+      })
+        .then(res => {
+          console.log(res);
+          this.new_weight = res.data.weight;
+          this.s_weight = res.data.s_weight;
+          this.begin_weight = res.data.begin_weight;
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
   }
 };

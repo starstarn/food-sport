@@ -1,6 +1,5 @@
 <template lang="">
   <div>
-    rwe
     <x-header
       style="background-color:green; color:white;"
       title="体重记录"
@@ -63,8 +62,35 @@ export default {
         { time: "Jun.", tem: 2600 },
         { time: "Jul.", tem: 2800 },
         { time: "Aug.", tem: 2000 }
-      ]
+      ],
+      username: null
     };
+  },
+  created() {
+    this.username = localStorage.getItem("user_name");
+    const user_name = {
+      user_name: this.username
+    };
+    this.axios({
+      method: "post",
+      url: "/all_weight",
+      data: user_name
+    })
+      .then(res => {
+        console.log(res.data);
+
+        let r = res.data.map(item => {
+          return {
+            time: item.time,
+            tem: item.t_weight
+          };
+        });
+        console.log(r);
+        this.data = res.data;
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 };
 </script>
