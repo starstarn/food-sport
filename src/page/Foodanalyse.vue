@@ -1,9 +1,20 @@
 <template lang="">
   <div>
-    <x-header
+    <!-- <x-header
       style="background-color:green; color:white;"
       title="营养分析"
-    ></x-header>
+    ></x-header> -->
+
+    <div
+      style="width:100%;height:50px;background-color:green;line-height:50px;color:white;font-size:16px;"
+    >
+      <span
+        @click="onReturn()"
+        style="margin:15px;font-size:15px;color:rgb(223, 226, 226);"
+        ><img :src="fh" class="fanhui" /> 返回</span
+      >
+      <span style="position:absolute;left:45%;">营养分析</span>
+    </div>
 
     <flexbox orient="vertical">
       <!-- 热量分析 -->
@@ -118,6 +129,7 @@ export default {
   },
   data() {
     return {
+      fh: require("../images/return.png"),
       legendOptions: {
         position: "left",
         right: "50px",
@@ -204,6 +216,11 @@ export default {
     ];
     console.log(this.data);
     console.log(this.map);
+  },
+  methods: {
+    onReturn() {
+      this.$router.replace("/jilu-food-sport");
+    }
   }
 };
 </script>
@@ -225,5 +242,10 @@ export default {
   font-size: 16px;
   margin: 20px 0 0 20px;
   color: black;
+}
+.fanhui {
+  width: 15px;
+  height: 15px;
+  text-align: center;
 }
 </style>

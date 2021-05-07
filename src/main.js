@@ -49,6 +49,7 @@ Vue.component("x-header", XHeader);
 Vue.prototype.axios = axios;
 axios.defaults.baseURL = "/api"; //关键代码
 Vue.config.productionTip = false;
+Vue.prototype.$EventBus = new Vue();
 
 Vue.use(VueRouter);
 

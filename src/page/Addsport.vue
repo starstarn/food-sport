@@ -1,9 +1,20 @@
 <template lang="">
   <div>
-    <x-header
+    <!-- <x-header
       style="background-color:green; color:white;"
       title="添加运动"
-    ></x-header>
+    ></x-header> -->
+
+    <div
+      style="width:100%;height:50px;background-color:green;line-height:50px;color:white;font-size:16px;"
+    >
+      <span
+        @click="onReturn()"
+        style="margin:15px;font-size:15px;color:rgb(223, 226, 226);"
+        ><img :src="fh" class="fanhui" /> 返回</span
+      >
+      <span style="position:absolute;left:45%;">添加运动</span>
+    </div>
 
     <search
       @result-click="resultClick"
@@ -55,8 +66,8 @@
         </div>
       </van-tab>
 
-      <van-tab title="自定义" name="b" @click.native="makeSport()">
-        <div>
+      <van-tab title="自定义" name="b">
+        <div @click.native="makeSport()">
           <van-icon
             name="plus"
             color="#1989fa"
@@ -65,7 +76,7 @@
         </div>
         <div v-for="item in usportlist" :key="item" @click="add(item)">
           <li>
-            <img class="img_food" :src="imgUrl" />
+            <img class="img_food" src="../images/set_sport.jpg" />
 
             <span
               style="font-size:16px;position:absolute;left:78px;top:15px;"
@@ -202,7 +213,8 @@ export default {
       sport: null,
       //sports: null,
       s_num: 0,
-      usportlist: null
+      usportlist: null,
+      fh: require("../images/return.png")
     };
   },
   created() {
@@ -210,9 +222,6 @@ export default {
       console.log(res.data);
       this.foodlist = res.data;
       console.log(this.foodlist);
-      /* const type = localStorage.getItem("type");
-      this.type = type;
-      console.log(this.type); */
 
       var data = new Date();
       this.month =
@@ -236,6 +245,9 @@ export default {
     });
   },
   methods: {
+    onReturn() {
+      this.$router.replace("/jilu-food-sport");
+    },
     add(item) {
       console.log("添加");
       // console.log(item);
@@ -365,5 +377,10 @@ li {
   height: 55px;
   border-top: 1px rgb(197, 194, 194) solid;
   background-color: white;
+}
+.fanhui {
+  width: 15px;
+  height: 15px;
+  text-align: center;
 }
 </style>

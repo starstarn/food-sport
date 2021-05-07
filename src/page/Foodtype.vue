@@ -1,9 +1,20 @@
 <template lang="">
   <div>
-    <x-header
+    <!-- <x-header
       style="background-color:green; color:white;"
       title="食物排行榜"
     ></x-header>
+ -->
+    <div
+      style="width:100%;height:50px;background-color:green;line-height:50px;color:white;font-size:16px;"
+    >
+      <span
+        @click="onReturn()"
+        style="margin:15px;font-size:15px;color:rgb(223, 226, 226);"
+        ><img :src="fh" class="fanhui" /> 返回</span
+      >
+      <span style="position:absolute;left:45%;">食物排行榜</span>
+    </div>
 
     <van-tree-select
       height="100vw"
@@ -26,13 +37,13 @@
           </li>
         </div>
         <div v-if="active === 1" class="panel">
-          <li>
+          <li @click="fruits_c()">
             <img :src="imgss" />
             <span>高维生素C—水果类</span>
             <label>></label>
           </li>
           <hr />
-          <li>
+          <li @click="vegetables_c()">
             <img :src="imgss" />
             <span>高维生素C—蔬菜类</span>
             <label>></label>
@@ -57,10 +68,14 @@ export default {
         { text: "补钙" },
         { text: "高血压" }
       ],
-      imgss: require("../images/mika.jpg")
+      imgss: require("../images/mika.jpg"),
+      fh: require("../images/return.png")
     };
   },
   methods: {
+    onReturn() {
+      this.$router.replace("/search");
+    },
     fruits_low() {
       console.log("水果-低");
       localStorage.setItem("f_type", "水果-低");
@@ -69,6 +84,16 @@ export default {
     zhushi_low() {
       console.log("主食-低");
       localStorage.setItem("f_type", "主食-低");
+      this.$router.replace("/food-list");
+    },
+    fruits_c() {
+      console.log("水果-C");
+      localStorage.setItem("f_type", "水果-C");
+      this.$router.replace("/food-list");
+    },
+    vegetables_c() {
+      console.log("蔬菜-C");
+      localStorage.setItem("f_type", "蔬菜-C");
       this.$router.replace("/food-list");
     }
   }
@@ -105,5 +130,10 @@ li {
   width: 50px;
   height: 50px;
   border-radius: 10px;
+}
+.fanhui {
+  width: 15px;
+  height: 15px;
+  text-align: center;
 }
 </style>

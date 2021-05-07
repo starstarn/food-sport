@@ -1,6 +1,6 @@
 <template lang="">
   <div>
-    <x-header
+    <!-- <x-header
       v-if="type == '早饭'"
       style="background-color:green; color:white;"
       title="添加早餐"
@@ -14,7 +14,43 @@
       v-else
       style="background-color:green; color:white;"
       title="添加晚饭"
-    ></x-header>
+    ></x-header> -->
+
+    <div
+      v-if="type == '早饭'"
+      style="width:100%;height:50px;background-color:green;line-height:50px;color:white;font-size:16px;"
+    >
+      <span
+        @click="onReturn()"
+        style="margin:15px;font-size:15px;color:rgb(223, 226, 226);"
+        ><img :src="fh" class="fanhui" /> 返回</span
+      >
+      <span style="position:absolute;left:45%;">添加早餐</span>
+    </div>
+
+    <div
+      v-else-if="type == '午饭'"
+      style="width:100%;height:50px;background-color:green;line-height:50px;color:white;font-size:16px;"
+    >
+      <span
+        @click="onReturn()"
+        style="margin:15px;font-size:15px;color:rgb(223, 226, 226);"
+        ><img :src="fh" class="fanhui" /> 返回</span
+      >
+      <span style="position:absolute;left:45%;">添加午餐</span>
+    </div>
+
+    <div
+      v-else
+      style="width:100%;height:50px;background-color:green;line-height:50px;color:white;font-size:16px;"
+    >
+      <span
+        @click="onReturn()"
+        style="margin:15px;font-size:15px;color:rgb(223, 226, 226);"
+        ><img :src="fh" class="fanhui" /> 返回</span
+      >
+      <span style="position:absolute;left:45%;">添加晚餐</span>
+    </div>
 
     <van-tabs
       v-model="activeName"
@@ -30,7 +66,7 @@
           <hr />
           <div v-for="item in foodlist" :key="item" @click="add(item)">
             <li>
-              <img class="img_food" :src="imgUrl" />
+              <img class="img_food" src="../images/egg.jpg" />
 
               <span
                 style="font-size:16px;position:absolute;left:78px;top:15px;"
@@ -48,72 +84,9 @@
             <hr />
           </div>
         </div>
-
-        <!-- 弹出 -->
-        <!-- <div class="toast" v-show="show">
-          <p style="font-size:20px;color:gray;padding:15px 0;">
-            <span style="margin:10px 0 0 20px;" @click="close">取消</span>
-            <span style="margin:10px 0 0 50px;"
-              >{{ month }}月{{ day }}日/{{ type }}</span
-            >
-            <span style="margin:10px 20px 0 55px;" @click="finFood()"
-              >确认</span
-            >
-          </p>
-          <div style="margin:20px 0;">
-            <div>
-              <li>
-                <img class="img_food" :src="imgUrl" />
-
-                <span
-                  style="font-size:16px;position:absolute;left:78px;top:15px;"
-                  >{{ addfood.name }}</span
-                >
-                <span
-                  style="font-size:12px;color:gray;position:absolute;left:78px;top:45px;"
-                  ><span style="color:red;">{{ addfood.rl }}</span
-                  >千卡/100{{ addfood.danwei }}</span
-                >
-              </li>
-              <hr />
-            </div>
-          </div>
-
-          <div>
-            <br />
-            <div>
-              <div style="text-align:center;">
-                <p style="font-size:16px;color:gray;margin:0 0 5px 0;">
-                  {{ reliang }}千卡
-                </p>
-                <p style="font-size:16px;color:gray;margin:0 0 20px 0;">
-                  {{ tiji }}克
-                </p>
-                <inline-x-number
-                  v-model="num"
-                  @on-change="changeNum()"
-                  width="60px"
-                  :min="1"
-                ></inline-x-number>
-              </div>
-            </div>
-          </div>
-        </div> -->
-
-        <!-- <div class="footer">
-          <span style="margin-left:10px;" @click="look()"
-            >食物<badge :text="s_num"></badge
-          ></span>
-          <x-button
-            @click.native="addFood()"
-            text="完成"
-            type="primary"
-            style="display:inline; border-radius:99px; width:250px;margin-left:22px; "
-          ></x-button>
-        </div> -->
       </van-tab>
-      <van-tab title="自定义" name="b" @click.native="makeFood()">
-        <div>
+      <van-tab title="自定义" name="b">
+        <div @click.native="makeFood()">
           <van-icon
             name="plus"
             color="#1989fa"
@@ -122,7 +95,7 @@
         </div>
         <div v-for="item in ufoodlist" :key="item" @click="add(item)">
           <li>
-            <img class="img_food" :src="imgUrl" />
+            <img class="img_food" src="../images/set_food.jpg" />
 
             <span
               style="font-size:16px;position:absolute;left:78px;top:15px;"
@@ -243,6 +216,7 @@ export default {
       getBarWidth: function(index) {
         return (index + 1) * 22 + "px";
       },
+      // imgUrl: require("../images/mika.jpg"),
       imgUrl: require("../images/mika.jpg"),
       shanChu: require("../images/shanchu.png"),
       addfood: {
@@ -261,7 +235,8 @@ export default {
       month: null,
       day: null,
       food: null,
-      s_num: 0
+      s_num: 0,
+      fh: require("../images/return.png")
     };
   },
   created() {
@@ -280,7 +255,7 @@ export default {
       this.time = data.getFullYear() + "-" + this.month + "-" + this.day;
       console.log(this.time); //2021-05-01
     });
-  
+
     const u_name = localStorage.getItem("user_name");
     const user_name = {
       user_name: u_name
@@ -295,6 +270,9 @@ export default {
     });
   },
   methods: {
+    onReturn() {
+      this.$router.replace("/jilu-food-sport");
+    },
     add(item) {
       console.log("添加");
       // console.log(item);
@@ -442,5 +420,10 @@ li {
   position: absolute;
   right: 20px;
   top: 30px;
+}
+.fanhui {
+  width: 15px;
+  height: 15px;
+  text-align: center;
 }
 </style>

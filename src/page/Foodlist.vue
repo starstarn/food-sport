@@ -1,9 +1,20 @@
 <template lang="">
   <div>
-    <x-header
+    <!-- <x-header
       style="background-color:green; color:white;"
       title="食物榜单"
-    ></x-header>
+    ></x-header> -->
+
+    <div
+      style="width:100%;height:50px;background-color:green;line-height:50px;color:white;font-size:16px;"
+    >
+      <span
+        @click="onReturn()"
+        style="margin:15px;font-size:15px;color:rgb(223, 226, 226);"
+        ><img :src="fh" class="fanhui" /> 返回</span
+      >
+      <span style="position:absolute;left:45%;">食物榜单</span>
+    </div>
     <div
       style="width:100%;height:80px;background-color:aliceblue;line-height:80px;"
     >
@@ -31,7 +42,8 @@ export default {
     return {
       type_s: null,
       food_img: require("../images/mika.jpg"),
-      food: null
+      food: null,
+      fh: require("../images/return.png")
     };
   },
   created() {
@@ -57,9 +69,13 @@ export default {
       });
   },
   methods: {
+    onReturn() {
+      this.$router.replace("/food-type");
+    },
     look(item) {
       console.log(item);
-      localStorage.setItem("food", item);
+      localStorage.setItem("food", JSON.stringify(item));
+      // this.$EventBus.$emit("look", item);
       this.$router.replace("/food-careful");
     }
   }
@@ -77,5 +93,10 @@ export default {
   position: relative;
   margin: 0;
   height: 52px;
+}
+.fanhui {
+  width: 15px;
+  height: 15px;
+  text-align: center;
 }
 </style>

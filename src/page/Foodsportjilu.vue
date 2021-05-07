@@ -1,9 +1,17 @@
 <template lang="">
   <div>
-    <x-header
-      style="background-color:green; color:white;"
-      title="能量显示"
-    ></x-header>
+    
+    <div
+      style="width:100%;height:50px;background-color:green;line-height:50px;color:white;font-size:16px;"
+    >
+      <span
+        @click="onReturn()"
+        style="margin:15px;font-size:15px;color:rgb(223, 226, 226);"
+        ><img :src="fh" class="fanhui" /> 返回</span
+      >
+      <span style="position:absolute;left:45%;">能量显示</span>
+    </div>
+
     <div class="card1">
       <div style="margin:50px 0 0 30px;">
         <span class="title">饮食摄入</span>
@@ -216,7 +224,8 @@ export default {
       sports: null,
       foodsall: 0,
       del_food: null,
-      type: null
+      type: null,
+      fh: require("../images/return.png")
     };
   },
   created() {
@@ -299,6 +308,9 @@ export default {
     );
   },
   methods: {
+    onReturn() {
+      this.$router.replace("/");
+    },
     zaofan() {
       console.log("zao");
       this.$router.replace("/add-food");
@@ -469,5 +481,10 @@ li {
   position: absolute;
   right: 20px;
   top: 30px;
+}
+.fanhui {
+  width: 15px;
+  height: 15px;
+  text-align: center;
 }
 </style>

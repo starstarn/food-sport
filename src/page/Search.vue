@@ -9,15 +9,23 @@
     <p>食物推荐榜 <button class="button" @click="more()">更多></button></p>
 
     <badge
-      text="水果"
-      style="background-color:rgb(241, 242, 243); color:black;padding: 4px;"
+      text="苹果"
+      style="background-color:rgb(241, 242, 243); color:black;padding: 6px;margin:0 20px;"
+    ></badge>
+    <badge
+      text="牛奶"
+      style="background-color:rgb(241, 242, 243); color:black;padding: 6px;margin-right:20px;"
+    ></badge>
+    <badge
+      text="鸡蛋"
+      style="background-color:rgb(241, 242, 243); color:black;padding: 6px;"
     ></badge>
 
-    <p>大家都在搜</p>
+   <!--  <p>大家都在搜</p>
     <badge
       text="鸡蛋"
       style="background-color:rgb(241, 242, 243); color:black;padding: 4px;"
-    ></badge>
+    ></badge> -->
 
     <!-- 图标位置 -->
     <van-popup
@@ -30,22 +38,22 @@
     >
       <div class="sel">
         <div @click="jlfood()">
-          <img :src="imgs" />
+          <img src="../images/food.jpg" />
           <br />
           记饮食
         </div>
         <div @click="jlsport()">
-          <img :src="imgs" />
+          <img src="../images/sport.jpg" />
           <br />
           记运动
         </div>
         <div @click="jlweight()">
-          <img :src="imgs" />
+          <img src="../images/weight.jpg" />
           <br />
           记体重
         </div>
         <div @click="jlsleep()">
-          <img :src="imgs" />
+          <img src="../images/sleep.jpg"/>
           <br />
           记睡眠
         </div>

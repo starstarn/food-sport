@@ -1,12 +1,5 @@
 <template lang="">
   <div>
-    <!-- <search
-      
-      position="absolute"
-      auto-scroll-to-top
-      top="46px"
-     
-    ></search> -->
     <!-- 搜索框样式 -->
 
     <div class="header">
@@ -97,22 +90,22 @@
     >
       <div class="sel">
         <div @click="jlfood()">
-          <img :src="imgs" />
+          <img src="../images/food.jpg" />
           <br />
           记饮食
         </div>
         <div @click="jlsport()">
-          <img :src="imgs" />
+          <img src="../images/sport.jpg" />
           <br />
           记运动
         </div>
         <div @click="jlweight()">
-          <img :src="imgs" />
+          <img src="../images/weight.jpg" />
           <br />
           记体重
         </div>
         <div @click="jlsleep()">
-          <img :src="imgs" />
+          <img src="../images/sleep.jpg" />
           <br />
           记睡眠
         </div>
@@ -211,8 +204,10 @@ export default {
         console.log(res);
         this.kaluli = res.data.kll;
         this.weight = res.data.weight;
+        this.u_weight = this.weight;
         this.s_weight = res.data.s_weight;
         this.percent = this.weight - this.s_weight;
+        localStorage.setItem("weight", this.weight);
       })
       .catch(error => {
         console.log(error);
@@ -300,8 +295,8 @@ export default {
             console.log(error);
           });
       }
-      /* this.shows = !this.shows;
-      location.reload(); */
+      this.shows = !this.shows;
+      location.reload();
     },
     jilu() {
       this.$router.replace("/jilu-food-sport");
