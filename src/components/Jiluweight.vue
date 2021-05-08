@@ -25,7 +25,10 @@ export default {
   data() {
     return {
       shows: false,
-      u_weight: null
+      u_weight: null,
+      kaluli: null,
+      bmi: null,
+      height: null
     };
   },
   created() {
@@ -42,7 +45,10 @@ export default {
     })
       .then(res => {
         console.log(res);
-        this.u_weight = this.weight;
+        this.u_weight = res.data.weight;
+        this.kaluli = res.data.kll;
+        this.bmi = res.data.bmi;
+        this.height = res.data.height;
       })
       .catch(error => {
         console.log(error);
@@ -59,9 +65,30 @@ export default {
       console.log("修改体重");
       console.log(this.u_weight);
       const user_name = localStorage.getItem("user_name");
+
+      this.bmi = this.u_weight / ((this.height / 100) * (this.height / 100));
+      //偏瘦 <=18.4
+      if (this.bmi <= 18.4) {
+        this.kaluli = this.u_weight * 38;
+      }
+      //正常 18.5-23.9
+      if (this.bmi >= 18.5 || this.bmi <= 23.9) {
+        this.kaluli = this.u_weight * 36;
+      }
+      //过胖 24.0-27.9
+      if (this.bmi >= 24.0 || this.bmi <= 27.9) {
+        this.kaluli = this.u_weight * 34;
+      }
+      //肥胖 >=28.0
+      if (this.bmi >= 28.0) {
+        this.kaluli = this.u_weight * 32;
+      }
+
       const name_weight = {
         user_name: user_name,
-        weight: this.u_weight
+        weight: this.u_weight,
+        bmi: this.bmi,
+        kll: this.kaluli
       };
       this.axios({
         method: "post",

@@ -10,8 +10,8 @@
 
     <!-- 卡片 -->
 
-    <div class="card">
-      <span class="head">体重管理</span> <span class="danwei">单位：公斤</span>
+    <div class="cards">
+      <span class="head1">体重管理</span> <span class="danwei">单位：公斤</span>
       <br />
       <div style="position: absolute;left:13%;top:70px;">
         <span class="weight">{{ weight }}</span>
@@ -175,7 +175,9 @@ export default {
       kaluli: null,
       time: null,
       username: null,
-      info_weight: null
+      info_weight: null,
+      bmi: null,
+      height: null
     };
   },
   created() {
@@ -206,6 +208,8 @@ export default {
         this.weight = res.data.weight;
         this.u_weight = this.weight;
         this.s_weight = res.data.s_weight;
+        this.bmi = res.data.bmi;
+        this.height = res.data.height;
         this.percent = this.weight - this.s_weight;
         localStorage.setItem("weight", this.weight);
       })
@@ -224,9 +228,30 @@ export default {
       console.log("修改体重");
       console.log(this.u_weight);
       const user_name = localStorage.getItem("user_name");
+
+      this.bmi = this.u_weight / ((this.height / 100) * (this.height / 100));
+      //偏瘦 <=18.4
+      if (this.bmi <= 18.4) {
+        this.kaluli = this.u_weight * 38;
+      }
+      //正常 18.5-23.9
+      if (this.bmi >= 18.5 || this.bmi <= 23.9) {
+        this.kaluli = this.u_weight * 36;
+      }
+      //过胖 24.0-27.9
+      if (this.bmi >= 24.0 || this.bmi <= 27.9) {
+        this.kaluli = this.u_weight * 34;
+      }
+      //肥胖 >=28.0
+      if (this.bmi >= 28.0) {
+        this.kaluli = this.u_weight * 32;
+      }
+
       const name_weight = {
         user_name: user_name,
-        weight: this.u_weight
+        weight: this.u_weight,
+        bmi: this.bmi,
+        kll: this.kaluli
       };
       this.axios({
         method: "post",
@@ -393,7 +418,7 @@ hr {
   color: rgb(200, 202, 202);
   width: 100%;
 }
-.card {
+.cards {
   background-color: rgb(127, 197, 185);
   width: 85%;
   height: 155px;
@@ -406,7 +431,7 @@ hr {
   margin-top: 70px;
   margin-bottom: 10px;
 }
-.head {
+.head1 {
   position: absolute;
   /* left: 0px;
   top: 0px; */
@@ -423,7 +448,7 @@ hr {
   top: 5px;
   font-size: 14px;
 }
-.card label {
+.cards label {
   font-size: 14px;
 }
 .weight {

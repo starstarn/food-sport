@@ -34,7 +34,24 @@ export default {
       );
       const bmi = weight / ((height / 100) * (height / 100));
       const s_weight = height - 105;
-      const kll = s_weight * 35;
+      // const kll = s_weight * 35;
+      let kll;
+      //偏瘦 <=18.4
+      if (bmi <= 18.4) {
+        kll = weight * 38;
+      }
+      //正常 18.5-23.9
+      if (bmi >= 18.5 || bmi <= 23.9) {
+        kll = weight * 36;
+      }
+      //过胖 24.0-27.9
+      if (bmi >= 24.0 || bmi <= 27.9) {
+        kll = weight * 34;
+      }
+      //肥胖 >=28.0
+      if (bmi >= 28.0) {
+        kll = weight * 32;
+      }
       localStorage.setItem("bmi", bmi); //将变量存储到height字段
       localStorage.setItem("s_weight", s_weight); //将变量imgs存储到sex字段
       localStorage.setItem("kll", kll); //将变量imgs存储到sex字段

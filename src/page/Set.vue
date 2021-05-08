@@ -1,11 +1,22 @@
 <template lang="">
   <div>
-    <x-header
+    <!--   <x-header
       style="background-color:green; color:white;"
       title="设置"
-    ></x-header>
+    ></x-header> -->
+
+    <div
+      style="width:100%;height:50px;background-color:green;line-height:50px;color:white;font-size:16px;"
+    >
+      <span
+        @click="onReturn()"
+        style="margin:15px;font-size:15px;color:rgb(223, 226, 226);"
+        ><img :src="fh" class="fanhui" /> 返回</span
+      >
+      <span style="position:absolute;left:45%;">设置</span>
+    </div>
     <group style="font-size:18px;">
-      <cell title="修改用户名/昵称" style="padding:15px 15px;"></cell>
+      <!-- <cell title="修改用户名/昵称" style="padding:15px 15px;"></cell> -->
       <cell title="修改密码" style="padding:15px 15px;"></cell>
       <cell title="注销账号（永久删除账号）" style="padding:15px 15px;"></cell>
     </group>
@@ -29,13 +40,24 @@ export default {
   },
   data() {
     return {
-      imgUrl: require("../images/mika.jpg")
+      imgUrl: require("../images/mika.jpg"),
+      fh: require("../images/return.png")
     };
+  },
+  methods: {
+    onReturn() {
+      this.$router.replace("/my");
+    }
   }
 };
 </script>
-<style lang="css">
+<style lang="css" scoped>
 body {
   background-color: white;
+}
+.fanhui {
+  width: 15px;
+  height: 15px;
+  text-align: center;
 }
 </style>

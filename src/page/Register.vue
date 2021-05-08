@@ -1,7 +1,12 @@
 <template lang="">
   <div>
     <flexbox orient="vertical">
-      <span style="margin:25px 0 20px 0;">注册</span>
+      <div style="background-color:green;width:100%;height:50px;color:white;">
+        <span @click="zc()" style="position:absolute;left:20px;font-size:20px;"
+          >返回登录</span
+        >
+        <span style="position:absolute;right:40%;">注册</span>
+      </div>
       <group>
         <x-input
           @on-blur="onBlur"
@@ -69,6 +74,9 @@ export default {
     };
   },
   methods: {
+    zc() {
+      this.$router.replace("/login");
+    },
     change(val) {
       console.log("on change", val);
     },
@@ -106,4 +114,4 @@ export default {
   }
 };
 </script>
-<style lang=""></style>
+<style lang="css" scoped></style>

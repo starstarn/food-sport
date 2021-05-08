@@ -67,7 +67,7 @@
       </van-tab>
 
       <van-tab title="自定义" name="b">
-        <div @click.native="makeSport()">
+        <div @click="makeSport()">
           <van-icon
             name="plus"
             color="#1989fa"

@@ -14,12 +14,11 @@
       <popup-picker
         title="性别"
         :data="list"
-        v-model="u_sex"
+        v-model="sexs"
         @on-show="onShow"
         @on-hide="onHide"
         @on-change="onChange"
         :placeholder="sex"
-        style="padding:6px 3px;"
       ></popup-picker>
 
       <datetime
@@ -27,6 +26,8 @@
         v-model="date"
         @on-change="onChangetime"
         style="padding:15px 15px;"
+        :placeholder="date"
+        min-year="1900"
       ></datetime>
       <cell
         @click.native="onHeight()"
@@ -36,22 +37,6 @@
         style="padding:15px 15px;"
       ></cell>
     </group>
-    <van-field
-      readonly
-      clickable
-      label="城市"
-      :value="value"
-      placeholder="选择城市"
-      @click="showPicker = true"
-    />
-    <van-popup v-model="showPicker" round position="bottom">
-      <van-picker
-        show-toolbar
-        :columns="columns"
-        @cancel="showPicker = false"
-        @confirm="onConfirm"
-      />
-    </van-popup>
 
     <x-button
       @click.native="save()"
@@ -68,7 +53,7 @@
       </p>
       <h4 style=" text-align: center">身高</h4>
       <van-slider
-      @change="cgHeight"
+        @change="cgHeight"
         v-model="height"
         active-color="rgb(94, 213, 235)"
         :max="210"
@@ -80,10 +65,12 @@
         </template>
       </van-slider>
     </div>
+
+    <toast v-model="show1" @on-hide="onHide">保存成功</toast>
   </div>
 </template>
 <script>
-import { Group, CellBox, Cell, PopupPicker, Datetime } from "vux";
+import { Group, CellBox, Cell, PopupPicker, Datetime, Toast } from "vux";
 
 import Vue from "vue";
 import { Slider } from "vant";
@@ -96,28 +83,34 @@ export default {
     CellBox,
     Cell,
     PopupPicker,
-    Datetime
+    Datetime,
+    Toast
   },
   data() {
     return {
+      show1: false,
       shows: false,
       list: [["男", "女"]],
+      sexs: [],
       fh: require("../images/return.png"),
-      u_sex: null,
-      sex: null,
+      sex: [],
       date: null,
       value: "",
       height: "160",
       u_name: null,
       showPicker: false,
-      columns: ["杭州", "宁波", "温州", "绍兴", "湖州", "嘉兴", "金华", "衢州"]
+      format: function(value, name) {
+        return `${value[0]}:${value[1]}`;
+      },
+      bmi: null,
+      kll: null,
+      weight: null
     };
   },
   created() {
-    const u_name = localStorage.getItem("user_name");
-    this.username = u_name;
+    this.u_name = localStorage.getItem("user_name");
     const user_name = {
-      user_name: u_name
+      user_name: this.u_name
     };
 
     this.axios({
@@ -127,9 +120,13 @@ export default {
     })
       .then(res => {
         console.log(res);
-        this.sex = res.data.sex;
-        this.u_sex = res.data.sex;
-        this.data = res.data.birthday;
+        this.sexs.push(res.data.sex);
+        this.sex.push(res.data.sex);
+        this.date = res.data.birthday;
+        this.bmi = res.data.bmi;
+        this.kll = res.data.kll;
+        this.weight = res.data.weight;
+        this.height = res.data.height;
       })
       .catch(error => {
         console.log(error);
@@ -143,27 +140,11 @@ export default {
       this.value = value;
       this.showPicker = false;
     },
-    onChange(u_sex) {
-      console.log("val change", u_sex);
+    onChange(sexs) {
+      console.log("val change", sexs);
     },
     onChangetime(date) {
       console.log(date);
-    },
-    changeList10() {
-      this.list1 = [
-        ["小米1", "iPhone1", "华为1", "情怀1", "三星1", "其他1", "不告诉你1"]
-      ];
-    },
-    changeList11() {
-      this.list1[0].push("我是push条目");
-    },
-    changeList20() {},
-    changeList21() {
-      this.list3.push({
-        name: "美国002_007",
-        value: "0007",
-        parent: "usa002"
-      });
     },
     onShow() {
       console.log("on show");
@@ -178,20 +159,67 @@ export default {
     close() {
       this.shows = !this.shows;
     },
-    cgHeight(height){
+    cgHeight(height) {
       console.log(height);
       this.height = height;
     },
     xiugai() {
       console.log("修改身高");
       this.shows = !this.shows;
-      const user_name = localStorage.getItem("user_name");
-      this.u_name = user_name;
+      this.u_name = localStorage.getItem("user_name");
+    },
+    save() {
+      console.log("保存");
+      console.log(this.sexs + this.date + this.height + this.u_name);
+      // console.log(typeof(toString(this.sexs)));
+      this.sexs = this.sexs.toString();
+      console.log(typeof this.sexs);
+
+      this.bmi = this.weight / ((this.height / 100) * (this.height / 100));
+
+      //偏瘦 <=18.4
+      if (this.bmi <= 18.4) {
+        this.kll = this.weight * 38;
+      }
+      //正常 18.5-23.9
+      if (this.bmi >= 18.5 || this.bmi <= 23.9) {
+        this.kll = this.weight * 36;
+      }
+      //过胖 24.0-27.9
+      if (this.bmi >= 24.0 || this.bmi <= 27.9) {
+        this.kll = this.weight * 34;
+      }
+      //肥胖 >=28.0
+      if (this.bmi >= 28.0) {
+        this.kll = this.weight * 32;
+      }
+      const info = {
+        user_name: this.u_name,
+        sex: this.sexs,
+        birthday: this.date,
+        height: this.height,
+        bmi: this.bmi,
+        kll: this.kll
+      };
+
+      this.axios({
+        method: "post",
+        url: "/user/update_basic",
+        data: info
+      })
+        .then(res => {
+          console.log(res);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      this.show1 = !this.show1;
+      // this.$router.replace("/my");
     }
   }
 };
 </script>
-<style lang="css">
+<style lang="css" scoped>
 body {
   background-color: white;
 }

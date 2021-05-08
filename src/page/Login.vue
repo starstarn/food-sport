@@ -109,7 +109,7 @@ export default {
   }
 };
 </script>
-<style lang="css">
+<style lang="css" scoped>
 body {
   background-color: rgb(146, 212, 175);
 }

@@ -9,19 +9,14 @@
     <p>食物推荐榜 <button class="button" @click="more()">更多></button></p>
 
     <badge
-      text="苹果"
-      style="background-color:rgb(241, 242, 243); color:black;padding: 6px;margin:0 20px;"
-    ></badge>
-    <badge
-      text="牛奶"
-      style="background-color:rgb(241, 242, 243); color:black;padding: 6px;margin-right:20px;"
-    ></badge>
-    <badge
-      text="鸡蛋"
-      style="background-color:rgb(241, 242, 243); color:black;padding: 6px;"
+      v-for="item in list"
+      :key="item"
+      @click.native="look(item)"
+      :text="item"
+      style="background-color:rgb(241, 242, 243); color:black;padding: 6px;margin: 0 20px;"
     ></badge>
 
-   <!--  <p>大家都在搜</p>
+    <!--  <p>大家都在搜</p>
     <badge
       text="鸡蛋"
       style="background-color:rgb(241, 242, 243); color:black;padding: 4px;"
@@ -53,7 +48,7 @@
           记体重
         </div>
         <div @click="jlsleep()">
-          <img src="../images/sleep.jpg"/>
+          <img src="../images/sleep.jpg" />
           <br />
           记睡眠
         </div>
@@ -73,7 +68,7 @@
     </van-tabbar>
 
     <!-- 弹出记录体重 -->
-    <jl-weight  v-show="shows"></jl-weight>
+    <jl-weight v-show="shows"></jl-weight>
   </div>
 </template>
 <script>
@@ -98,6 +93,7 @@ export default {
   },
   data() {
     return {
+      list: ["牛奶", "鸡蛋", "苹果"],
       shows: false,
       active: "search",
       show: false,
@@ -127,6 +123,28 @@ export default {
       const user_name = localStorage.getItem("user_name");
       this.shows = !this.shows;
       this.show = !this.show;
+    },
+    look(item) {
+      console.log("查询");
+      console.log(item);
+
+      const foodname = {
+        name: item
+      };
+
+      this.axios({
+        method: "post",
+        url: "/s_name",
+        data: foodname
+      })
+        .then(res => {
+          console.log(res.data);
+          localStorage.setItem("food", JSON.stringify(res.data));
+          this.$router.replace("/food-careful");
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
   }
 };

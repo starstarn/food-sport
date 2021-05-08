@@ -7,14 +7,14 @@
         <!--   昵称 -->
         <span class="call">tiamo</span>
         <!-- 修改个人信息按钮 -->
-        <button class="xiugai" @click="update()">修改</button>
+        <img :src="bj" class="xiugai" @click="update()" />
         <!-- 设置按钮 -->
-        <button class="set">设置</button>
+        <img src="../images/set.png" class="set" @click="set()" />
       </div>
-      <div>
+      <div style="margin:40px 0;">
         <group
           title="我的健康资料"
-          style="background-color:white; border-radius:15px; padding: 10px 0; width: 330px"
+          style="background-color:white; border-radius:10px; padding: 10px 0; width: 330px"
         >
           <cell
             @click.native="basic()"
@@ -26,12 +26,12 @@
               <span class="vertical-middle">&nbsp;</span>
             </div>
           </cell>
-          <cell title="健康报告" is-link>
+          <cell title="健康报告" style="padding:20px 15px;" is-link>
             <div class="badge-value">
               <span class="vertical-middle">&nbsp;</span>
             </div>
           </cell>
-          <cell title="基本信息" is-link>
+          <cell title="基本信息" style="padding:20px 15px;" is-link>
             <div class="badge-value">
               <span class="vertical-middle">&nbsp;</span>
             </div>
@@ -66,7 +66,7 @@
           记体重
         </div>
         <div @click="jlsleep()">
-          <img src="../images/sleep.jpg"/>
+          <img src="../images/sleep.jpg" />
           <br />
           记睡眠
         </div>
@@ -113,7 +113,8 @@ export default {
       show: false,
       active: "home",
       imgUrl: require("../images/mika.jpg"),
-      imgs: require("../images/mika.jpg")
+      imgs: require("../images/mika.jpg"),
+      bj: require("../images/bj.png")
     };
   },
   methods: {
@@ -139,6 +140,10 @@ export default {
       const user_name = localStorage.getItem("user_name");
       this.shows = !this.shows;
       this.show = !this.show;
+    },
+    set(){
+      console.log("设置");
+      this.$router.replace("/set");
     }
   }
 };
@@ -179,10 +184,14 @@ img {
   position: absolute;
   top: 90px;
   left: 180px;
+  width: 20px;
+  height: 20px;
 }
 .set {
   position: absolute;
   top: 20px;
   right: 20px;
+  width: 20px;
+  height: 20px;
 }
 </style>
