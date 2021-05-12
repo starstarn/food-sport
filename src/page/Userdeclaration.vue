@@ -21,7 +21,6 @@
 
       <x-button
         text="完成"
-        link="/birthday"
         type="primary"
         style="border-radius:99px; position:fixed; width:300px; left:10%; bottom:80px;"
       ></x-button>
@@ -35,6 +34,31 @@ export default {
   components: {
     XTextarea,
     Group
+  },
+  data() {
+    return {
+      xuanyan: null,
+      u_name:null
+    };
+  },
+  created() {
+    this.u_name = localStorage.getItem("user_name");
+    const user_name = {
+      user_name: this.u_name
+    };
+
+    this.axios({
+      method: "post",
+      url: "/user/sel_user",
+      data: user_name
+    })
+      .then(res => {
+        console.log(res);
+        this.xuanyan = res.data.xuanyan;
+      })
+      .catch(error => {
+        console.log(error);
+      });
   },
   methods: {
     onEvent(event) {

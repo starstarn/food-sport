@@ -20,7 +20,7 @@
       <cell
         :link="{ path: '/user-name' }"
         title="用户名/昵称"
-        value="tiamo"
+        :value="nick_name"
         is-link
         style="padding:15px 15px;"
       ></cell>
@@ -46,9 +46,30 @@ export default {
   data() {
     return {
       imgUrl: require("../images/mika.jpg"),
-      fh: require("../images/return.png")
+      fh: require("../images/return.png"),
+      nick_name: null
+      //xuanyan,
     };
   },
+  created() {
+    const u_name = localStorage.getItem("user_name");
+    const user_name = {
+      user_name: u_name
+    };
+    this.axios({
+      method: "post",
+      url: "/user/sel_user",
+      data: user_name
+    })
+      .then(res => {
+        console.log(res);
+        this.nick_name = res.data.nick_name;
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  },
+
   methods: {
     onReturn() {
       this.$router.replace("/my");
