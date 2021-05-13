@@ -27,7 +27,7 @@
       <cell
         :link="{ path: '/user-declaration' }"
         title="我的宣言"
-        value="happy"
+        :value="xuanyan"
         is-link
         style="padding:15px 15px;"
       ></cell>
@@ -47,7 +47,8 @@ export default {
     return {
       imgUrl: require("../images/mika.jpg"),
       fh: require("../images/return.png"),
-      nick_name: null
+      nick_name: null,
+      xuanyan: null
       //xuanyan,
     };
   },
@@ -64,6 +65,7 @@ export default {
       .then(res => {
         console.log(res);
         this.nick_name = res.data.nick_name;
+        this.xuanyan = res.data.xuanyan;
       })
       .catch(error => {
         console.log(error);

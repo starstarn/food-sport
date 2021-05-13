@@ -10,6 +10,8 @@
         <group>
           <group>
             <x-textarea
+              @on-change="onChange()"
+              v-model="xuan"
               :max="20"
               placeholder="请输入宣言"
               @on-focus="onEvent('focus')"
@@ -20,6 +22,7 @@
       </div>
 
       <x-button
+        @click.native="save()"
         text="完成"
         type="primary"
         style="border-radius:99px; position:fixed; width:300px; left:10%; bottom:80px;"
@@ -38,7 +41,8 @@ export default {
   data() {
     return {
       xuanyan: null,
-      u_name:null
+      u_name: null,
+      xuan: null
     };
   },
   created() {
@@ -63,6 +67,29 @@ export default {
   methods: {
     onEvent(event) {
       console.log("on", event);
+    },
+    onChange() {
+      console.log(this.xuan);
+    },
+    save() {
+      console.log(this.xuan);
+
+      const user_xuan = {
+        user_name: this.u_name,
+        xuanyan: this.xuan
+      };
+
+      this.axios({
+        method: "post",
+        url: "/user/update_xuan",
+        data: user_xuan
+      })
+        .then(res => {
+          console.log(res);
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
   }
 };
