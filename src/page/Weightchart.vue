@@ -15,7 +15,7 @@
       >
       <span style="position:absolute;left:45%;">体重记录</span>
     </div>
-    <div style="margin:0 0 10px 0;">
+    <div style="margin:20px 0 10px 0;">
       <span style="font-size:22px; margin:10px 0 10px 20px;"
         >体重<span
           style="font-size:14px;font-weight:200; color:gery; margin:5px 0 10px 10px;"
@@ -24,6 +24,13 @@
       </span>
     </div>
 
+    <!-- <v-chart :data="data">
+      <v-tooltip show-crosshairs />
+      <v-area series-field="type" shape="smooth" />
+      <v-legend disabled />
+      <v-line series-field="type" shape="smooth" />
+    </v-chart> -->
+
     <v-chart :data="data">
       <v-scale x :tick-count="0" />
       <v-scale y :min="0" />
@@ -32,22 +39,32 @@
       <v-line />
     </v-chart>
 
-    <div style="margin:0 0 10px 0;">
+    <img src="../images/tzz.jpeg" class="tz" />
+
+    <!--  <v-chart :data="data">
+      <v-scale x :tick-count="0" />
+      <v-scale y :min="0" />
+      <v-tooltip show-crosshairs show-x-value />
+      <v-area />
+      <v-line />
+    </v-chart> -->
+
+    <!-- <div style="margin:0 0 10px 0;">
       <span style="font-size:22px; margin:10px 0 10px 20px;"
         >体脂<span
           style="font-size:14px;font-weight:200; color:gery; margin:5px 0 10px 10px;"
           >单位：%</span
         >
       </span>
-    </div>
+    </div> -->
 
-    <v-chart :data="data">
+    <!--   <v-chart :data="data">
       <v-scale x :tick-count="0" />
       <v-scale y :min="0" />
       <v-tooltip show-crosshairs show-x-value />
       <v-area />
       <v-line />
-    </v-chart>
+    </v-chart> -->
   </div>
 </template>
 <script>
@@ -65,10 +82,10 @@ export default {
   data() {
     return {
       data: [
-        { time: "Jan.", tem: 1000 },
-        { time: "Feb.", tem: 2200 },
-        { time: "Mar.", tem: 2000 },
-        { time: "Apr.", tem: 2600 },
+        { time: "05-06", tem: 1000 },
+        { time: "05-07", tem: 2200 },
+        { time: "05-08", tem: 2000 },
+        { time: "05-16", tem: 2600 },
         { time: "May.", tem: 2000 },
         { time: "Jun.", tem: 2600 },
         { time: "Jul.", tem: 2800 },
@@ -93,12 +110,12 @@ export default {
 
         let r = res.data.map(item => {
           return {
-            time: item.time,
+            time: item.time.substring(5, 10),
             tem: item.t_weight
           };
         });
         console.log(r);
-        this.data = res.data;
+        this.data = r;
       })
       .catch(error => {
         console.log(error);
@@ -116,5 +133,8 @@ export default {
   width: 15px;
   height: 15px;
   text-align: center;
+}
+.tz {
+  width: 100%;
 }
 </style>

@@ -17,7 +17,7 @@
     </div>
     <group style="font-size:18px;">
       <!-- <cell title="修改用户名/昵称" style="padding:15px 15px;"></cell> -->
-      <cell title="修改密码" style="padding:15px 15px;"></cell>
+      <cell @click.native="xiugai()" title="修改密码" style="padding:15px 15px;"></cell>
       <cell title="注销账号（永久删除账号）" style="padding:15px 15px;"></cell>
     </group>
     <x-button
@@ -47,6 +47,10 @@ export default {
   methods: {
     onReturn() {
       this.$router.replace("/my");
+    },
+    xiugai(){
+      console.log("修改密码");
+      this.$router.replace("/user-password");
     }
   }
 };

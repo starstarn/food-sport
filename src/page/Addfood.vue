@@ -66,7 +66,8 @@
           <hr />
           <div v-for="item in foodlist" :key="item" @click="add(item)">
             <li>
-              <img class="img_food" src="../images/egg.jpg" />
+              <!-- <img class="img_food" src="../images/egg.jpg" /> -->
+              <img class="img_food" :src="require(`${item.image}`)" />
 
               <span
                 style="font-size:16px;position:absolute;left:78px;top:15px;"
