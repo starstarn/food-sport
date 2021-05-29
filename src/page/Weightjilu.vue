@@ -83,7 +83,7 @@
         <span style="margin:10px 0 0 100px;color:black;">今天</span>
         <span style="margin:10px 0 0 100px;" @click="xiugai1()">确定</span>
       </p>
-      <h4 style=" text-align: center">体重</h4>
+      <h4 style=" text-align: center">目标体重</h4>
       <inline-x-number
         v-model="s_weight"
         @on-change="changeWeight()"

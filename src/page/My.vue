@@ -65,10 +65,10 @@
           <br />
           记体重
         </div>
-        <div @click="jlsleep()">
+        <div @click="jlMood()">
           <img src="../images/sleep.jpg" />
           <br />
-          记睡眠
+          记心情
         </div>
       </div>
     </van-popup>
@@ -144,6 +144,9 @@ export default {
     set(){
       console.log("设置");
       this.$router.replace("/set");
+    },
+    jlMood(){
+      this.$router.replace("/mood");
     }
   }
 };

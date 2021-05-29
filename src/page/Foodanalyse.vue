@@ -52,7 +52,7 @@
       <!-- 三大营养素分析 -->
 
       <!-- 热量分析 -->
-      <div style="width:95%;">
+     <!--  <div style="width:95%;">
         <span class="head_rl">三大营养素分析</span>
         <div class="rl">
           <span class="titler">供能比及摄入</span>
@@ -81,7 +81,7 @@
             </group>
           </div>
         </div>
-      </div>
+      </div> -->
     </flexbox>
   </div>
 </template>

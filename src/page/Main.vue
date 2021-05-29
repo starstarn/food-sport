@@ -70,10 +70,29 @@
           >
         </div>
         <hr />
-        <div class="xiang">
-          <label>心情</label>
+        <div class="xiang" @click="onMood()">
+          <label>心情------{{ mood }}</label>
           <br />
-          <label>：<span> 开心</span></label>
+          <label v-if="mood == '开心'"
+            >：<svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-kaixin"></use></svg
+          ></label>
+          <label v-if="mood == '不开心'"
+            >：<svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-bukaixin"></use></svg
+          ></label>
+          <label v-if="mood == '伤心'"
+            >：<svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-shangxinbiaoqing"></use></svg
+          ></label>
+          <label v-if="mood == '无语'"
+            >：<svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-wuyu"></use></svg
+          ></label>
+          <label v-if="mood == '生气'"
+            >：<svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-shengqi"></use></svg
+          ></label>
         </div>
         <hr />
       </div>
@@ -104,10 +123,10 @@
           <br />
           记体重
         </div>
-        <div @click="jlsleep()">
+        <div @click="jlMood()">
           <img src="../images/sleep.jpg" />
           <br />
-          记睡眠
+          记心情
         </div>
       </div>
     </van-popup>
@@ -177,7 +196,8 @@ export default {
       username: null,
       info_weight: null,
       bmi: null,
-      height: null
+      height: null,
+      mood: "开心"
     };
   },
   created() {
@@ -212,6 +232,7 @@ export default {
         this.height = res.data.height;
         this.percent = this.weight - this.s_weight;
         localStorage.setItem("weight", this.weight);
+        this.mood = res.data.mood;
       })
       .catch(error => {
         console.log(error);
@@ -346,11 +367,24 @@ export default {
     },
     close() {
       this.shows = !this.shows;
+    },
+    onMood() {
+      this.$router.replace("/mood");
+    },
+    jlMood(){
+      this.$router.replace("/mood");
     }
   }
 };
 </script>
 <style lang="css" scope>
+.icon {
+  width: 2em;
+  height: 2em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
 .search1 {
   width: 94%;
   height: 40px;

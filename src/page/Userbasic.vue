@@ -235,7 +235,7 @@ body {
 .toast {
   width: 100%;
   height: 400px;
-  background-color: rgb(199, 215, 230);
+  background-color: rgb(231, 236, 241);
   position: fixed;
   top: 300px;
 }

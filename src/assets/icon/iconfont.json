@@ -1,0 +1,44 @@
+{
+  "id": "2579368",
+  "name": "bs",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "2135173",
+      "name": "生气",
+      "font_class": "shengqi",
+      "unicode": "e780",
+      "unicode_decimal": 59264
+    },
+    {
+      "icon_id": "3650981",
+      "name": "开心",
+      "font_class": "kaixin",
+      "unicode": "e66a",
+      "unicode_decimal": 58986
+    },
+    {
+      "icon_id": "5483273",
+      "name": "不开心",
+      "font_class": "bukaixin",
+      "unicode": "e6c4",
+      "unicode_decimal": 59076
+    },
+    {
+      "icon_id": "9225436",
+      "name": "伤心表情",
+      "font_class": "shangxinbiaoqing",
+      "unicode": "e69d",
+      "unicode_decimal": 59037
+    },
+    {
+      "icon_id": "20574699",
+      "name": "无语",
+      "font_class": "wuyu",
+      "unicode": "e61a",
+      "unicode_decimal": 58906
+    }
+  ]
+}

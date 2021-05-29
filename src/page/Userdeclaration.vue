@@ -28,21 +28,24 @@
         style="border-radius:99px; position:fixed; width:300px; left:10%; bottom:80px;"
       ></x-button>
     </flexbox>
+    <toast v-model="show1" @on-hide="onHide">修改宣言成功</toast>
   </div>
 </template>
 <script>
-import { XTextarea, Group } from "vux";
+import { XTextarea, Group,Toast } from "vux";
 
 export default {
   components: {
     XTextarea,
-    Group
+    Group,
+    Toast
   },
   data() {
     return {
       xuanyan: null,
       u_name: null,
-      xuan: null
+      xuan: null,
+      show1: false
     };
   },
   created() {
@@ -90,6 +93,10 @@ export default {
         .catch(error => {
           console.log(error);
         });
+      this.show1 = !this.show1;
+    },
+    onHide(type) {
+      console.log("on hide", type);
     }
   }
 };

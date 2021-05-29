@@ -66,8 +66,10 @@
           <hr />
           <div v-for="item in foodlist" :key="item" @click="add(item)">
             <li>
-              <!-- <img class="img_food" src="../images/egg.jpg" /> -->
-              <img class="img_food" :src="require(`${item.image}`)" />
+              <img class="img_food" src="../images/egg.jpg" />
+              <!---<img class="img_food" :src="eval(require(`${item.image}`))" />--->
+              <!-- <img class="img_food" :src="item.image" /> -->
+              <!---<img class="img_food" :src="require(`../images/egg.jpg`)" /> -->
 
               <span
                 style="font-size:16px;position:absolute;left:78px;top:15px;"
@@ -244,6 +246,14 @@ export default {
     this.axios.post("/foodlist").then(res => {
       console.log(res.data);
       this.foodlist = res.data;
+      /* this.foodlist = res.data.map(i => {
+        return {
+          name: i.name,
+          danwei: i.danwei,
+          rl: i.rl,
+          image: require(`${i.image}`)
+        };
+      }); */
       console.log(this.foodlist);
       const type = localStorage.getItem("type");
       this.type = type;

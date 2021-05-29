@@ -1,6 +1,5 @@
 <template lang="">
   <div>
-    
     <div
       style="width:100%;height:50px;background-color:green;line-height:50px;color:white;font-size:16px;"
     >
@@ -229,7 +228,33 @@ export default {
     };
   },
   created() {
-    this.biaozhun = localStorage.getItem("kll");
+    const u_name = localStorage.getItem("user_name");
+    const us_name = {
+      user_name: u_name
+    };
+
+    this.axios({
+      method: "post",
+      url: "/user/sel_user",
+      data: us_name
+    })
+      .then(res => {
+        console.log(res);
+        this.kaluli = res.data.kll;
+        this.weight = res.data.weight;
+        this.u_weight = this.weight;
+        this.s_weight = res.data.s_weight;
+        this.bmi = res.data.bmi;
+        this.height = res.data.height;
+        this.percent = this.weight - this.s_weight;
+        localStorage.setItem("weight", this.weight);
+        this.biaozhun = res.data.kll;
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    //this.biaozhun = localStorage.getItem("kll");
     var data = new Date();
     var month =
       data.getMonth() < 9 ? "0" + (data.getMonth() + 1) : data.getMonth() + 1;

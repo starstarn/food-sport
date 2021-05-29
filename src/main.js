@@ -2,6 +2,8 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from "vue";
 import axios from "axios";
+//import './assets/icon/iconfont.css'
+import './assets/icon//iconfont.js'
 
 import FastClick from "fastclick";
 import VueRouter from "vue-router";
@@ -34,6 +36,7 @@ import Addsport from "./page/Addsport";
 import Makefood from "./page/Makefood";
 import MakeSport from "./page/Makesport";
 import FoodCareful from "./page/Foodcareful";
+import Mood from "./page/Mood";
 // 在入口文件全局引入
 import { XHeader, Flexbox, FlexboxItem, XProgress, XButton } from "vux";
 
@@ -165,6 +168,10 @@ const routes = [
   {
     path: "/finish",
     component: Finish
+  },
+  {
+    path: "/mood",
+    component: Mood
   }
 ];
 
