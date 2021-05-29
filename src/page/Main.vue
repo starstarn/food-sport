@@ -56,7 +56,7 @@
           <label>饮食&运动</label>
           <br />
           <label
-            >还可以吃<span> {{ kaluli }}</span
+            >应摄入<span> {{ kaluli }}</span
             >千卡</label
           >
         </div>

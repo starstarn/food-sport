@@ -37,23 +37,26 @@
       type="primary"
       style=" border-radius:99px; width:250px;margin: 50px auto;"
     ></x-button>
+    <toast v-model="show" type="warn">每一项都必填！</toast>
   </div>
 </template>
 <script>
-import { Group, XInput, Selector } from "vux";
+import { Group, XInput, Selector, Toast } from "vux";
 
 export default {
   components: {
     Group,
     XInput,
-    Selector
+    Selector,
+    Toast
   },
   data() {
     return {
       value1: 2,
       f_name: null,
       f_danwei: "克",
-      f_rl: null
+      f_rl: null,
+      show: false
     };
   },
   methods: {
@@ -67,28 +70,32 @@ export default {
       console.log("on focus", val, $event);
     },
     makeFood() {
-      console.log("添加食物");
-      const user_name = localStorage.getItem("user_name");
-      console.log(this.f_name + this.f_rl + this.f_danwei);
-      const u_foods = {
-        name: this.f_name,
-        rl: parseInt(this.f_rl),
-        danwei: this.f_danwei,
-        user_name:user_name
-      };
+      if (!this.f_name || !this.f_rl || !this.f_danwei) {
+        this.show = !this.show;
+      } else {
+        console.log("添加食物");
+        const user_name = localStorage.getItem("user_name");
+        console.log(this.f_name + this.f_rl + this.f_danwei);
+        const u_foods = {
+          name: this.f_name,
+          rl: parseInt(this.f_rl),
+          danwei: this.f_danwei,
+          user_name: user_name
+        };
 
-      this.axios({
-        method: "post",
-        url: "/makefood",
-        data: u_foods
-      })
-        .then(res => {
-          console.log(res);
+        this.axios({
+          method: "post",
+          url: "/makefood",
+          data: u_foods
         })
-        .catch(error => {
-          console.log(error);
-        });
+          .then(res => {
+            console.log(res);
+          })
+          .catch(error => {
+            console.log(error);
+          });
         this.$router.replace("/add-food");
+      }
     }
   }
 };

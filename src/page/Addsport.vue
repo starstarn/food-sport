@@ -142,7 +142,7 @@
     </div>
     <div class="footer">
       <span style="margin-left:10px;" @click="look()"
-        >食物<badge :text="s_num"></badge
+        >运动<badge v-show="s_num !== 0" :text="s_num"></badge
       ></span>
       <x-button
         @click.native="addSport()"

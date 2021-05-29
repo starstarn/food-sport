@@ -52,7 +52,7 @@
       <!-- 三大营养素分析 -->
 
       <!-- 热量分析 -->
-     <!--  <div style="width:95%;">
+      <!--  <div style="width:95%;">
         <span class="head_rl">三大营养素分析</span>
         <div class="rl">
           <span class="titler">供能比及摄入</span>
@@ -101,16 +101,16 @@ import {
   Cell
 } from "vux";
 
-const map = {
+/* const map = {
   早餐: "40%",
   午餐: "20%",
   晚餐: "18%"
-};
-const map1 = {
+}; */
+/* const map1 = {
   蛋白质: "40%",
   脂肪: "20%",
   碳水: "18%"
-};
+}; */
 
 export default {
   components: {
@@ -129,54 +129,42 @@ export default {
   },
   data() {
     return {
+      map: {
+        早餐: "40%",
+        午餐: "20%",
+        晚餐: "18%"
+      },
       fh: require("../images/return.png"),
-      legendOptions: {
+      /*  legendOptions: {
         position: "left",
         right: "50px",
         itemFormatter(val) {
           return val + "  " + map[val];
         }
-      },
-      legendOptions1: {
-        position: "left",
-        right: "50px",
-        itemFormatter(val) {
-          return val + "  " + map1[val];
-        }
-      },
+      }, */
+      legendOptions: null,
       yOptions: {
         formatter(val) {
           return val * 100 + "%";
         }
       },
-      map,
+      // map,
       data: [
         { name: "早餐", percent: 30, a: "1" },
         { name: "午餐", percent: 30, a: "1" },
         { name: "晚餐", percent: 40, a: "1" }
       ],
-      map1,
-      data1: [
-        { name: "蛋白质", percent: 30, a: "1" },
-        { name: "脂肪", percent: 30, a: "1" },
-        { name: "碳水", percent: 40, a: "1" }
-      ],
       all_rl: 0,
-      list: null,
-      list1: [
-        {
-          label: "蛋白质",
-          value: "3.29"
-        },
-        {
-          label: "脂肪",
-          value: "1.04"
-        },
-        {
-          label: "碳水",
-          value: "8.00"
-        }
-      ]
+      list: null
+    };
+  },
+  mounted() {
+    this.legendOptions = {
+      position: "left",
+      right: "50px",
+      itemFormatter(val) {
+        return val + "  " + this.map[val];
+      }
     };
   },
   created() {
