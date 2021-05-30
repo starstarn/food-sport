@@ -29,9 +29,10 @@
       ></cell>
     </group>
     <x-button
+    @click.native="tc()"
       plain
       text="退出登录"
-      link="/birthday"
+      link="/login"
       type="primary"
       style="border-radius:99px;width:180px;margin-top:100px;"
     ></x-button>
@@ -95,6 +96,9 @@ export default {
           console.log(error);
         });
       this.$router.replace("/login");
+    },
+    tc(){
+      console.log("退出");
     }
   }
 };

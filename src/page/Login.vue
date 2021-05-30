@@ -36,6 +36,8 @@
       ></x-button>
       <button>忘记密码</button>
     </flexbox>
+    <toast v-model="show" type="cancel">{{ text }}</toast>
+    <toast v-model="show1" @on-hide="onHide">登录成功！</toast>
   </div>
 </template>
 <script>
@@ -53,7 +55,10 @@ export default {
         user_name: null,
         user_password: null
       },
-      imgUrl: require("../images/mika.jpg")
+      imgUrl: require("../images/mika.jpg"),
+      show: false,
+      show1: false,
+      text: null
     };
   },
   methods: {
@@ -73,17 +78,9 @@ export default {
     login() {
       console.log(this.info);
       if (!this.info.user_name || !this.info.user_password) {
-        console.log("账号或密码不能为空");
+        this.text = "账号或密码不能为空";
+        this.show = !this.show;
       } else {
-        /* this.axios
-          .get("/test")
-          .then(response => {
-            console.log(response);
-          })
-          .catch(error => {
-            console.log(error.response);
-          }); */
-
         this.axios({
           method: "post",
           url: "/user/login",
@@ -92,19 +89,22 @@ export default {
           .then(res => {
             console.log(res.data);
             if (res.data.msg === "请求成功") {
-              alert("登录成功");
+              this.show1 = !this.show1;
               localStorage.setItem("user_name", this.info.user_name);
               this.$router.replace("/");
             } else {
-              alert("账号或密码错误");
+              this.text = "账号或密码错误";
+              this.show = !this.show;
               console.log(error);
             }
           })
           .catch(error => {
-            // alert("账号或密码错误");
             console.log(error);
           });
       }
+    },
+    onHide(type) {
+      console.log("on hide", type);
     }
   }
 };
