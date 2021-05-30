@@ -45,7 +45,7 @@
       <p>
         <span
           style="font-size:20px;font-weight:600;position:absolute;padding:15px 0 10px 15px;"
-          >营养元素</span
+          >营养元素 — <span style="font-size:14px;">蛋白质</span></span
         ><span
           style="position:absolute;right:20px;font-size:14px;color:gray;padding:22px 10px 10px 0;"
           >单位：每100克</span
@@ -73,8 +73,8 @@
       <div
         style="position:relative;color:gray;width:100%;height:55px;line-height:55px;"
       >
-        <span style="position:absolute;left:60px;">蛋白质</span
-        ><span style="position:absolute;right:60px;">{{ food.dbz }}克</span>
+        <span style="position:absolute;left:60px;">碳水化合物</span
+        ><span style="position:absolute;right:60px;">{{ food.shhf}}克</span>
       </div>
       <hr />
       <div
@@ -126,12 +126,16 @@ export default {
     return {
       food_img: require("../images/mika.jpg"),
       food: null,
-      fh: require("../images/return.png")
+      fh: require("../images/return.png"),
+      dbz: null
     };
   },
   created() {
     this.food = JSON.parse(localStorage.getItem("food"));
     console.log(this.food);
+    /* const sum = this.food.dbz + this.food.zf + this.food.shhf;
+    this.dbz = fomatFloat(this.food.dbz/sum*100, 1); */
+    
   },
   methods: {
     renderChart({ chart }) {
@@ -160,7 +164,8 @@ export default {
       });
       chart.guide().text({
         position: ["50%", "50%"],
-        content: "85%",
+        //content: "85%",
+        content: this.food.dbz,
         style: {
           fontSize: 24,
           fill: "#1890FF"

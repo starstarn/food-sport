@@ -6,12 +6,12 @@
       <h3>您的性别是？</h3>
       <div>
         <img
-          :src="imgUrl"
+          src="../images/nan.png"
           @click="boy()"
           class="boys"
           style="border:3px green solid;"
         />
-        <img :src="imgUrl" @click="girl()" class="girls" />
+        <img src="../images/nv.png" @click="girl()" class="girls" />
         <div>
           <span class="boy" style="color:green;">男</span>
           <span class="girl">女</span>

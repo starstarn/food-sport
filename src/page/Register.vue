@@ -2,7 +2,7 @@
   <div>
     <flexbox orient="vertical">
       <div style="background-color:green;width:100%;height:50px;color:white;">
-        <span @click="zc()" style="position:absolute;left:20px;font-size:20px;"
+        <span @click="zc()" style="position:absolute;left:20px;font-size:16px;height:50px;line-height:50px;"
           >返回登录</span
         >
         <span style="position:absolute;right:40%;">注册</span>
@@ -44,13 +44,13 @@
           v-model="info.user_password1"
           style="font-size:18px; background-color:rgb(236, 238, 240);margin: 25px auto;width: 90%;  height:30px; border-radius:20px;"
         ></x-input>
-        <x-button
-          @click.native="register()"
-          text="下一步"
-          type="primary"
-          style="width:300px; height:36px; background-color:white;color:black;border-radius:10px;margin:30px 0;"
-        ></x-button>
       </group>
+      <x-button
+        @click.native="register()"
+        text="下一步"
+        type="primary"
+        style="width:300px; height:36px; background-color:white;color:green;border-radius:10px;margin:30px 0;"
+      ></x-button>
     </flexbox>
     <toast v-model="show" type="cancel">{{ text }}</toast>
   </div>
@@ -112,8 +112,7 @@ export default {
       } else if (this.info.user_password.length > 8) {
         this.text = "密码不能长于8位！";
         this.show = !this.show;
-      }
-       else {
+      } else {
         console.log(this.info);
 
         const user_name = this.info.user_name;
