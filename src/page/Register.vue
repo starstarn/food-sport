@@ -30,7 +30,7 @@
           @on-change="change"
           title="密码"
           type="password"
-          placeholder="请输入密码"
+          placeholder="密码（5-8位只能包含字母和数字）"
           v-model="info.user_password"
           style="font-size:18px; background-color:rgb(236, 238, 240);margin: 25px auto;width: 90%;  height:30px; border-radius:20px;"
         ></x-input>
@@ -52,16 +52,18 @@
         ></x-button>
       </group>
     </flexbox>
+    <toast v-model="show" type="cancel">{{ text }}</toast>
   </div>
 </template>
 <script>
-import { XInput, Tab, TabItem } from "vux";
+import { XInput, Tab, TabItem, Toast } from "vux";
 
 export default {
   components: {
     XInput,
     Tab,
-    TabItem
+    TabItem,
+    Toast
   },
   data() {
     return {
@@ -70,7 +72,9 @@ export default {
         user_password: null,
         user_password1: null,
         nick_name: null
-      }
+      },
+      text: null,
+      show: false
     };
   },
   methods: {
@@ -87,6 +91,8 @@ export default {
       console.log("on focus", val, $event);
     },
     register() {
+      let reg = /^[0-9a-zA-Z]+$/;
+
       if (
         !this.info.nick_name ||
         !this.info.user_name ||
@@ -94,21 +100,29 @@ export default {
         !this.info.user_password1
       ) {
         console.log("不能为空");
-      } else {
-        if (this.info.user_password !== this.info.user_password1) {
-          console.log("两次密码不一致");
-          alert("两次密码不一致");
-        } else {
-          console.log(this.info);
+      } else if (this.info.user_password !== this.info.user_password1) {
+        this.text = "两次密码不一致";
+        this.show = !this.show;
+      } else if (!reg.test(this.info.user_password)) {
+        this.text = "密码只能包含字母和数字！";
+        this.show = !this.show;
+      } else if (this.info.user_password.length < 5) {
+        this.text = "密码不能少于5位！";
+        this.show = !this.show;
+      } else if (this.info.user_password.length > 8) {
+        this.text = "密码不能长于8位！";
+        this.show = !this.show;
+      }
+       else {
+        console.log(this.info);
 
-          const user_name = this.info.user_name;
-          const nick_name = this.info.nick_name;
-          const user_password = this.info.user_password;
-          localStorage.setItem("user_name", user_name); //将变量存储到height字段
-          localStorage.setItem("nick_name", nick_name); //将变量imgs存储到sex字段
-          localStorage.setItem("user_password", user_password); //将变量imgs存储到sex字段
-          this.$router.replace("/sex-tall");
-        }
+        const user_name = this.info.user_name;
+        const nick_name = this.info.nick_name;
+        const user_password = this.info.user_password;
+        localStorage.setItem("user_name", user_name); //将变量存储到height字段
+        localStorage.setItem("nick_name", nick_name); //将变量imgs存储到sex字段
+        localStorage.setItem("user_password", user_password); //将变量imgs存储到sex字段
+        this.$router.replace("/sex-tall");
       }
     }
   }

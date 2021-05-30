@@ -32,22 +32,23 @@
         @click.native="login()"
         text="登录"
         type="primary"
-        style="width:300px; height:36px; background-color:white;color:black;border-radius:10px;margin:30px 0;"
+        style="width:300px; height:36px; background-color:rgb(199, 226, 222);color:black;border-radius:10px;margin:50px 0;"
       ></x-button>
-      <button>忘记密码</button>
+      <!-- <button>忘记密码</button> -->
     </flexbox>
     <toast v-model="show" type="cancel">{{ text }}</toast>
     <toast v-model="show1" @on-hide="onHide">登录成功！</toast>
   </div>
 </template>
 <script>
-import { XInput, Tab, TabItem } from "vux";
+import { XInput, Tab, TabItem, Toast } from "vux";
 
 export default {
   components: {
     XInput,
     Tab,
-    TabItem
+    TabItem,
+    Toast
   },
   data() {
     return {
@@ -89,9 +90,10 @@ export default {
           .then(res => {
             console.log(res.data);
             if (res.data.msg === "请求成功") {
-              this.show1 = !this.show1;
+              // this.show1 = !this.show1;
               localStorage.setItem("user_name", this.info.user_name);
               this.$router.replace("/");
+              localStorage.setItem("token", this.info.user_name);
             } else {
               this.text = "账号或密码错误";
               this.show = !this.show;

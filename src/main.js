@@ -3,7 +3,7 @@
 import Vue from "vue";
 import axios from "axios";
 //import './assets/icon/iconfont.css'
-import './assets/icon//iconfont.js'
+import "./assets/icon//iconfont.js";
 
 import FastClick from "fastclick";
 import VueRouter from "vue-router";
@@ -48,7 +48,6 @@ Vue.component("flexbox", Flexbox);
 Vue.component("flexbox-item", FlexboxItem);
 Vue.component("x-header", XHeader);
 
-
 Vue.prototype.axios = axios;
 axios.defaults.baseURL = "/api"; //关键代码
 Vue.config.productionTip = false;
@@ -59,10 +58,14 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    component: Main
+    component: Main,
+    meta: {
+      needLogin: true //需要加校检判断的路由
+    }
   },
   {
     path: "/login",
+    name: "login",
     component: Login
   },
   {
@@ -177,6 +180,24 @@ const routes = [
 
 const router = new VueRouter({
   routes
+});
+
+router.beforeEach(function(to, from, next) {
+  if (to.meta.needLogin) {
+    //页面是否登录
+    if (localStorage.getItem("token")) {
+      //本地存储中是否有token(uid)数据
+      next(); //表示已经登录
+    } else {
+      //next可以传递一个路由对象作为参数 表示需要跳转到的页面
+      next({
+        name: "login"
+      });
+    }
+  } else {
+    //表示不需要登录
+    next(); //继续往后走
+  }
 });
 
 FastClick.attach(document.body);

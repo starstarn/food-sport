@@ -99,6 +99,7 @@ export default {
     },
     tc(){
       console.log("退出");
+      localStorage.setItem("token",'');
     }
   }
 };
