@@ -102,7 +102,7 @@
       <div style="margin:20px 0;">
         <div>
           <li>
-            <img :src="imgUrl" />
+            <img :src="addsport.image" />
 
             <span
               style="font-size:16px;position:absolute;left:78px;top:15px;"

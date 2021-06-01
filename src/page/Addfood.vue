@@ -107,7 +107,7 @@
       <div style="margin:20px 0;">
         <div>
           <li>
-            <img class="img_food" :src="imgUrl" />
+            <img class="img_food" :src="addfood.image" />
 
             <span
               style="font-size:16px;position:absolute;left:78px;top:15px;"
