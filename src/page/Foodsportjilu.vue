@@ -1,7 +1,7 @@
 <template lang="">
   <div>
     <div
-      style="width:100%;height:50px;background-color:green;line-height:50px;color:white;font-size:16px;"
+      style="position:fixed;top:0;width:100%;z-index:3;height:50px;background-color:green;line-height:50px;color:white;font-size:16px;"
     >
       <span
         @click="onReturn()"
@@ -186,7 +186,18 @@
         @on-cancel="onCancel"
         @on-confirm="onConfirm"
       >
-        <p style="text-align:center;">确定要删除吗？</p>
+        <p v-if="type == '早餐'" style="text-align:center;">
+          确定要删除早餐-（{{ del_food.breakfast }}）的记录吗？
+        </p>
+        <p v-else-if="type == '午餐'" style="text-align:center;">
+          确定要删除午餐-（{{ del_food.lunch }}）的记录吗？
+        </p>
+        <p v-else-if="type == '晚餐'" style="text-align:center;">
+          确定要删除晚餐-（{{ del_food.dinner }}）的记录吗？
+        </p>
+        <p v-else-if="type == '运动'" style="text-align:center;">
+          确定要删除运动-（{{ del_food.sport }}）的记录吗？
+        </p>
       </confirm>
     </div>
   </div>
@@ -308,34 +319,8 @@ export default {
         console.log(user_sport.data);
 
         this.breaks = user_break.data;
-        /* this.breaks.forEach(node => {
-          //node.image = require(`../images/${node.image}.jpg`);
-          try {
-            node.image = require(`../images/${node.image}.jpg`);
-          } catch (err) {
-            node.image = require(`../images/${node.image}.png`);
-          }
-        }); */
-
         this.lunchs = user_lunch.data;
-        /* this.lunchs.forEach(node => {
-          //node.image = require(`../images/${node.image}.jpg`);
-          try {
-            node.image = require(`../images/${node.image}.jpg`);
-          } catch (err) {
-            node.image = require(`../images/${node.image}.png`);
-          }
-        }); */
         this.dinners = user_dinner.data;
-        /* this.dinners.forEach(node => {
-          //node.image = require(`../images/${node.image}.jpg`);
-          try {
-            node.image = require(`../images/${node.image}.jpg`);
-          } catch (err) {
-            node.image = require(`../images/${node.image}.png`);
-          }
-        }); */
-
         this.sports = user_sport.data;
 
         const addDuration = arr => {
@@ -498,6 +483,7 @@ hr {
   flex-direction: row;
   margin: 20px auto;
   margin-bottom: 10px;
+  margin-top: 60px;
 }
 .img_food {
   width: 45px;
