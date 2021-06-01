@@ -16,7 +16,7 @@
       <span style="position:absolute;left:45%;">添加运动</span>
     </div>
 
-    <search
+  <!--   <search
       @result-click="resultClick"
       @on-change="getResult"
       :results="results"
@@ -28,7 +28,7 @@
       @on-cancel="onCancel"
       @on-submit="onSubmit"
       ref="search"
-    ></search>
+    ></search> -->
 
     <van-tabs
       v-model="activeName"
@@ -45,7 +45,7 @@
             <hr />
             <div v-for="item in foodlist" :key="item" @click="add(item)">
               <li>
-                <img :src="imgUrl" />
+                <img class="img_food" :src="item.image" />
 
                 <span
                   style="font-size:16px;position:absolute;left:78px;top:15px;"
@@ -76,7 +76,7 @@
         </div>
         <div v-for="item in usportlist" :key="item" @click="add(item)">
           <li>
-            <img class="img_food" src="../images/set_sport.jpg" />
+            <img class="img_food" :src="item.image" />
 
             <span
               style="font-size:16px;position:absolute;left:78px;top:15px;"
@@ -197,7 +197,8 @@ export default {
       addsport: {
         danwei: "分钟",
         name: "爬山",
-        rl: "1436"
+        rl: "1436",
+        image: "11"
       },
       show: false,
       num: 1,
@@ -206,6 +207,7 @@ export default {
       /* sportnames: [],
       reliangs: [], */
       tiji: 0,
+      image: null,
       type: null,
       time: null,
       month: null,
@@ -222,6 +224,15 @@ export default {
       console.log(res.data);
       this.foodlist = res.data;
       console.log(this.foodlist);
+
+      this.foodlist.forEach(node => {
+        //node.image = require(`../images/${node.image}.jpg`);
+        try {
+          node.image = require(`../images/${node.image}.jpg`);
+        } catch (err) {
+          node.image = require(`../images/${node.image}.png`);
+        }
+      });
 
       var data = new Date();
       this.month =
@@ -242,6 +253,14 @@ export default {
     }).then(res => {
       console.log(res.data);
       this.usportlist = res.data;
+      this.usportlist.forEach(node => {
+        //node.image = require(`../images/${node.image}.jpg`);
+        try {
+          node.image = require(`../images/${node.image}.jpg`);
+        } catch (err) {
+          node.image = require(`../images/${node.image}.png`);
+        }
+      });
     });
   },
   methods: {
@@ -252,13 +271,16 @@ export default {
       console.log("添加");
       // console.log(item);
       // this.addsport = item;
-      this.addsport.name = item.name;
+      /* this.addsport.name = item.name;
       this.addsport.rl = item.rl / 6;
       this.addsport.danwei = item.danwei;
+      this.addsport.image = item.image; */
+      this.addsport = item;
       console.log(this.addsport);
       this.show = !this.show;
       this.sportname = this.addsport.name;
       this.reliang = this.addsport.rl * this.num;
+      this.image = this.addsport.image;
       this.tiji = 10 * this.num;
     },
     close() {
@@ -276,7 +298,8 @@ export default {
         user_name: user_name,
         sport: this.sportname,
         rl: this.reliang,
-        time: this.time
+        time: this.time,
+        image: this.image
       };
       this.axios({
         method: "post",

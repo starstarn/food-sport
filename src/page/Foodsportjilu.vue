@@ -60,7 +60,8 @@
       @click="deleteBreak(item)"
     >
       <li>
-        <img class="img_food" :src="img_foods" />
+        <!-- <img class="img_food" :src="img_foods" /> -->
+        <img class="img_food" :src="item.image" />
 
         <span
           style="font-size:14px;font-weight:600;position:absolute;left:78px;top:15px;"
@@ -88,7 +89,7 @@
       @click="deleteLunch(item)"
     >
       <li>
-        <img class="img_food" :src="img_foods" />
+        <img class="img_food" :src="item.image" />
 
         <span
           style="font-size:14px;font-weight:600;position:absolute;left:78px;top:15px;"
@@ -116,7 +117,7 @@
       @click="deleteDinner(item)"
     >
       <li>
-        <img class="img_food" :src="img_foods" />
+        <img class="img_food" :src="item.image" />
 
         <span
           style="font-size:14px;font-weight:600;position:absolute;left:78px;top:15px;"
@@ -144,7 +145,7 @@
       @click="deleteSport(item)"
     >
       <li>
-        <img class="img_food" :src="img_foods" />
+        <img class="img_food" :src="item.image" />
 
         <span
           style="font-size:14px;font-weight:600;position:absolute;left:78px;top:15px;"
@@ -307,8 +308,34 @@ export default {
         console.log(user_sport.data);
 
         this.breaks = user_break.data;
+        /* this.breaks.forEach(node => {
+          //node.image = require(`../images/${node.image}.jpg`);
+          try {
+            node.image = require(`../images/${node.image}.jpg`);
+          } catch (err) {
+            node.image = require(`../images/${node.image}.png`);
+          }
+        }); */
+
         this.lunchs = user_lunch.data;
+        /* this.lunchs.forEach(node => {
+          //node.image = require(`../images/${node.image}.jpg`);
+          try {
+            node.image = require(`../images/${node.image}.jpg`);
+          } catch (err) {
+            node.image = require(`../images/${node.image}.png`);
+          }
+        }); */
         this.dinners = user_dinner.data;
+        /* this.dinners.forEach(node => {
+          //node.image = require(`../images/${node.image}.jpg`);
+          try {
+            node.image = require(`../images/${node.image}.jpg`);
+          } catch (err) {
+            node.image = require(`../images/${node.image}.png`);
+          }
+        }); */
+
         this.sports = user_sport.data;
 
         const addDuration = arr => {

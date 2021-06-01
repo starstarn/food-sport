@@ -1,21 +1,5 @@
 <template lang="">
   <div>
-    <!-- <x-header
-      v-if="type == '早饭'"
-      style="background-color:green; color:white;"
-      title="添加早餐"
-    ></x-header>
-    <x-header
-      v-else-if="type == '午饭'"
-      style="background-color:green; color:white;"
-      title="添加午饭"
-    ></x-header>
-    <x-header
-      v-else
-      style="background-color:green; color:white;"
-      title="添加晚饭"
-    ></x-header> -->
-
     <div
       v-if="type == '早饭'"
       style="width:100%;height:50px;background-color:green;line-height:50px;color:white;font-size:16px;"
@@ -66,11 +50,7 @@
           <hr />
           <div v-for="item in foodlist" :key="item" @click="add(item)">
             <li>
-              <img class="img_food" src="../images/egg.jpg" />
-              <!---<img class="img_food" :src="eval(require(`${item.image}`))" />--->
-              <!-- <img class="img_food" :src="item.image" /> -->
-              <!---<img class="img_food" :src="require(`../images/egg.jpg`)" /> -->
-
+              <img class="img_food" :src="item.image" />
               <span
                 style="font-size:16px;position:absolute;left:78px;top:15px;"
                 >{{ item.name }}</span
@@ -98,7 +78,7 @@
         </div>
         <div v-for="item in ufoodlist" :key="item" @click="add(item)">
           <li>
-            <img class="img_food" src="../images/set_food.jpg" />
+            <img class="img_food" :src="item.image" />
 
             <span
               style="font-size:16px;position:absolute;left:78px;top:15px;"
@@ -225,13 +205,15 @@ export default {
       addfood: {
         danwei: "克",
         name: "午餐肉",
-        rl: "366"
+        rl: "366",
+        image: "11"
       },
       show: false,
       num: 1,
       foodname: null,
       ufoodlist: null,
       reliang: 0,
+      image: null,
       tiji: 0,
       type: null,
       time: null,
@@ -246,6 +228,14 @@ export default {
     this.axios.post("/foodlist").then(res => {
       console.log(res.data);
       this.foodlist = res.data;
+      this.foodlist.forEach(node => {
+        //node.image = require(`../images/${node.image}.jpg`);
+        try {
+          node.image = require(`../images/${node.image}.jpg`);
+        } catch (err) {
+          node.image = require(`../images/${node.image}.png`);
+        }
+      });
       /* this.foodlist = res.data.map(i => {
         return {
           name: i.name,
@@ -278,6 +268,15 @@ export default {
     }).then(res => {
       console.log(res.data);
       this.ufoodlist = res.data;
+
+      this.ufoodlist.forEach(node => {
+        //node.image = require(`../images/${node.image}.jpg`);
+        try {
+          node.image = require(`../images/${node.image}.jpg`);
+        } catch (err) {
+          node.image = require(`../images/${node.image}.png`);
+        }
+      });
     });
   },
   methods: {
@@ -292,6 +291,7 @@ export default {
       this.show = !this.show;
       this.foodname = this.addfood.name;
       this.reliang = this.addfood.rl * this.num;
+      this.image = this.addfood.image;
       this.tiji = 100 * this.num;
     },
     close() {
@@ -311,7 +311,8 @@ export default {
           user_name: user_name,
           breakfast: this.foodname,
           rl: this.reliang,
-          time: this.time
+          time: this.time,
+          image: this.image
         };
         this.axios({
           method: "post",
@@ -331,7 +332,8 @@ export default {
           user_name: user_name,
           lunch: this.foodname,
           rl: this.reliang,
-          time: this.time
+          time: this.time,
+          image: this.image
         };
         this.axios({
           method: "post",
@@ -351,7 +353,8 @@ export default {
           user_name: user_name,
           dinner: this.foodname,
           rl: this.reliang,
-          time: this.time
+          time: this.time,
+          image: this.image
         };
         this.axios({
           method: "post",

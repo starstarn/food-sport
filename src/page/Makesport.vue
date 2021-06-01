@@ -93,7 +93,8 @@ export default {
           name: this.f_name,
           rl: parseInt(this.f_rl),
           danwei: this.f_danwei,
-          user_name: user_name
+          user_name: user_name,
+          image:"set_sport"
         };
 
         this.axios({
