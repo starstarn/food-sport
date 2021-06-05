@@ -23,7 +23,8 @@
 
     <div v-for="item in food" :key="item" @click="look(item)">
       <li class="li1">
-        <img :src="food_img" class="food_img" />
+        <!-- <img :src="food_img" class="food_img" /> -->
+        <img :src="item.image" class="food_img" />
         <span style="font-size:16px;position:absolute;left:78px;top:15px;">{{
           item.name
         }}</span>
@@ -62,6 +63,14 @@ export default {
       .then(res => {
         console.log(res.data);
         this.food = res.data;
+        this.food.forEach(node => {
+          //node.image = require(`../images/${node.image}.jpg`);
+          try {
+            node.image = require(`../images/${node.image}.jpg`);
+          } catch (err) {
+            node.image = require(`../images/${node.image}.png`);
+          }
+        });
         localStorage.setItem("user_name", user_name);
       })
       .catch(error => {

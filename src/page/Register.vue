@@ -93,6 +93,7 @@ export default {
     register() {
       let reg = /^[0-9a-zA-Z]+$/;
 
+      //校验输入
       if (
         !this.info.nick_name ||
         !this.info.user_name ||

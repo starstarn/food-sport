@@ -25,26 +25,26 @@
       <template #content>
         <div v-if="active === 0" class="panel">
           <li @click="fruits_low()">
-            <img :src="imgss" />
+            <img src="../images/drl.jpg" />
             <span>低热量—水果类</span>
             <label>></label>
           </li>
           <hr />
           <li @click="zhushi_low()">
-            <img :src="imgss" />
+            <img src="../images/drl.jpg" />
             <span>低热量—主食类</span>
             <label>></label>
           </li>
         </div>
         <div v-if="active === 1" class="panel">
           <li @click="fruits_c()">
-            <img :src="imgss" />
+            <img src="../images/wssc.jpg" />
             <span>高维生素C—水果类</span>
             <label>></label>
           </li>
           <hr />
           <li @click="vegetables_c()">
-            <img :src="imgss" />
+            <img src="../images/wssc.jpg" />
             <span>高维生素C—蔬菜类</span>
             <label>></label>
           </li>

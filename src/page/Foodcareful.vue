@@ -16,7 +16,8 @@
       <span style="position:absolute;left:45%;">食物详情</span>
     </div>
     <div class="foodheader">
-      <img :src="food_img" class="shiwu" />
+      <!--  <img :src="food_img" class="shiwu" /> -->
+      <img :src="food.image" class="shiwu" />
       <span style="position:absolute;top:65px;">{{ food.name }}</span>
     </div>
     <!-- 热量 -->
@@ -74,7 +75,7 @@
         style="position:relative;color:gray;width:100%;height:55px;line-height:55px;"
       >
         <span style="position:absolute;left:60px;">碳水化合物</span
-        ><span style="position:absolute;right:60px;">{{ food.shhf}}克</span>
+        ><span style="position:absolute;right:60px;">{{ food.shhf }}克</span>
       </div>
       <hr />
       <div
@@ -135,7 +136,6 @@ export default {
     console.log(this.food);
     /* const sum = this.food.dbz + this.food.zf + this.food.shhf;
     this.dbz = fomatFloat(this.food.dbz/sum*100, 1); */
-    
   },
   methods: {
     renderChart({ chart }) {

@@ -98,7 +98,8 @@ export default {
       active: "search",
       show: false,
       imgUrl: require("../images/mika.jpg"),
-      imgs: require("../images/mika.jpg")
+      imgs: require("../images/mika.jpg"),
+      food: []
     };
   },
 
@@ -139,14 +140,26 @@ export default {
       })
         .then(res => {
           console.log(res.data);
-          localStorage.setItem("food", JSON.stringify(res.data));
+          this.food.push(res.data);
+
+          this.food.forEach(node => {
+            //node.image = require(`../images/${node.image}.jpg`);
+            try {
+              node.image = require(`../images/${node.image}.jpg`);
+            } catch (err) {
+              node.image = require(`../images/${node.image}.png`);
+            }
+          });
+          const obj = {...this.food};
+          console.log(obj[0]);
+          localStorage.setItem("food", JSON.stringify(obj[0]));
           this.$router.replace("/food-careful");
         })
         .catch(error => {
           console.log(error);
         });
     },
-    jlMood(){
+    jlMood() {
       this.$router.replace("/mood");
     }
   }

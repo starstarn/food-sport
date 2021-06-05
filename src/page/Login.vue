@@ -90,7 +90,6 @@ export default {
           .then(res => {
             console.log(res.data);
             if (res.data.msg === "请求成功") {
-              // this.show1 = !this.show1;
               localStorage.setItem("user_name", this.info.user_name);
               this.$router.replace("/");
               localStorage.setItem("token", this.info.user_name);
