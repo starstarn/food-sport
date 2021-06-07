@@ -1,11 +1,35 @@
 <template lang="">
   <div>
-    <van-search
+    <!-- <van-search
       v-model="value"
       shape="round"
       background="#4fc08d"
       placeholder="请输入搜索关键词"
-    />
+      @search="onSearch"
+      @cancel="onCancel"
+    /> -->
+    <div
+      style="width:100%;height:50px;background-color:#4fc08d;position:relative;"
+    >
+      <label
+        ><svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-sousuo"></use></svg
+      ></label>
+      <input
+        class="sr"
+        v-model="value"
+        placeholder="请输入搜索关键词"
+        onkeydown="onSearch(event)"
+        oninput="change()"
+      />
+    </div>
+
+    <!--展示数据-->
+    <!-- <ul v-for="item in allArea" :key="item.communityId">
+      <li v-if="allNewArea.length != 0">{{ item.name }}</li>
+      <li v-else>{{ item.name }}</li>
+    </ul> -->
+
     <p>食物推荐榜 <button class="button" @click="more()">更多></button></p>
 
     <badge
@@ -99,10 +123,16 @@ export default {
       show: false,
       imgUrl: require("../images/mika.jpg"),
       imgs: require("../images/mika.jpg"),
-      food: []
+      food: [],
+      value: null
     };
   },
-
+  created() {
+    this.getAreaDetail();
+  },
+  /*   mounted() {
+    window.addEventListener("touchmove", func, { passive: false });
+  }, */
   methods: {
     more() {
       console.log("更多");
@@ -150,7 +180,7 @@ export default {
               node.image = require(`../images/${node.image}.png`);
             }
           });
-          const obj = {...this.food};
+          const obj = { ...this.food };
           console.log(obj[0]);
           localStorage.setItem("food", JSON.stringify(obj[0]));
           this.$router.replace("/food-careful");
@@ -161,11 +191,67 @@ export default {
     },
     jlMood() {
       this.$router.replace("/mood");
-    }
+    },
+    onSearch() {
+      /* var evt = window.event || e;
+      if (evt.keyCode == 13) {
+        //回车后要干的业务代码
+        
+      } */
+      console.log(this.value);
+    },
+    /* getAreaDetail() {
+      // 获取数据
+      this.axios.post("/foodlist").then(res => {
+        console.log(res.data);
+        this.allArea = res.data;
+        this.allNewArea = res.data;
+      });
+    } */
+    /* autoSearch() {
+      // 模糊搜索加节流（500ms触发一次）
+      var allowPass = true;
+      if (!allowPass) {
+        return;
+      }
+      setTimeout(() => {
+        allowPass = false;
+        this.allArea = [];
+        this.allNewArea.filter(item => {
+          if (item.name.indexOf(this.value) !== -1) {
+            // 此处也可使用js的 search 方法实现indexOf 一样效果
+            this.allArea.push(item);
+          }
+        });
+      }, 500);
+      console.log(this.allNewArea);
+    } */
   }
 };
 </script>
 <style lang="css" scoped>
+.sr {
+  width: 93%;
+  height: 35px;
+
+  background-color: white;
+  border: none;
+  border-radius: 20px;
+  position: absolute;
+  margin: auto;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
+input::-webkit-input-placeholder {
+  /* placeholder颜色  */
+  color: rgb(190, 187, 187);
+  /* placeholder字体大小  */
+  font-size: 14px;
+  /* placeholder位置  */
+  text-indent: 30px;
+}
 .button {
   background-color: white;
   font-size: 14px;
@@ -193,5 +279,16 @@ img {
   height: 60px;
   border-radius: 50%;
   border: 2px white solid;
+}
+.icon {
+  width: 0.8em;
+  height: 0.8em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+  position: absolute;
+  z-index: 3;
+  left: 22px;
+  top: 17px;
 }
 </style>

@@ -13,6 +13,7 @@
           @on-blur="onBlur"
           @on-focus="onFocus"
           @on-change="change"
+          title="账号"
           placeholder="请输入账号"
           v-model="info.user_name"
           style="font-size:18px; background-color:rgb(236, 238, 240);margin: 25px auto;width: 90%;  height:30px; border-radius:20px;"

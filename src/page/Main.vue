@@ -371,7 +371,7 @@ export default {
     onMood() {
       this.$router.replace("/mood");
     },
-    jlMood(){
+    jlMood() {
       this.$router.replace("/mood");
     }
   }

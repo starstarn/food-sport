@@ -2,7 +2,9 @@
   <div>
     <flexbox orient="vertical">
       <div style="background-color:green;width:100%;height:50px;color:white;">
-        <span @click="zc()" style="position:absolute;left:20px;font-size:16px;height:50px;line-height:50px;"
+        <span
+          @click="zc()"
+          style="position:absolute;left:20px;font-size:16px;height:50px;line-height:50px;"
           >返回登录</span
         >
         <span style="position:absolute;right:40%;">注册</span>
@@ -12,6 +14,7 @@
           @on-blur="onBlur"
           @on-focus="onFocus"
           @on-change="change"
+          title="昵称"
           placeholder="请输入昵称"
           v-model="info.nick_name"
           style="font-size:18px; background-color:rgb(236, 238, 240);margin: 25px auto;width: 90%;  height:30px; border-radius:20px;"
@@ -20,6 +23,7 @@
           @on-blur="onBlur"
           @on-focus="onFocus"
           @on-change="change"
+          title="账号"
           placeholder="请输入账号"
           v-model="info.user_name"
           style="font-size:18px; background-color:rgb(236, 238, 240);margin: 25px auto;width: 90%;  height:30px; border-radius:20px;"
@@ -115,14 +119,45 @@ export default {
         this.show = !this.show;
       } else {
         console.log(this.info);
+        const name_pass = {
+          user_name: this.info.user_name,
+          user_password: this.info.user_password
+        };
 
-        const user_name = this.info.user_name;
+        this.axios({
+          method: "post",
+          url: "/info/double",
+          data: name_pass
+        })
+          .then(res => {
+            console.log(res.data);
+            if (res.data.msg === "请求成功") {
+              const user_name = this.info.user_name;
+              const nick_name = this.info.nick_name;
+              const user_password = this.info.user_password;
+              localStorage.setItem("user_name", user_name); //将变量存储到height字段
+              localStorage.setItem("nick_name", nick_name); //将变量imgs存储到sex字段
+              localStorage.setItem("user_password", user_password); //将变量imgs存储到sex字段
+              this.$router.replace("/sex-tall");
+            } else if (res.data.msg === "该用户名已存在") {
+              alert("该用户名已存在！");
+            } else {
+              this.text = "账号或密码错误";
+              this.show = !this.show;
+              console.log(error);
+            }
+          })
+          .catch(error => {
+            console.log(error);
+          });
+
+        /* const user_name = this.info.user_name;
         const nick_name = this.info.nick_name;
         const user_password = this.info.user_password;
         localStorage.setItem("user_name", user_name); //将变量存储到height字段
         localStorage.setItem("nick_name", nick_name); //将变量imgs存储到sex字段
         localStorage.setItem("user_password", user_password); //将变量imgs存储到sex字段
-        this.$router.replace("/sex-tall");
+        this.$router.replace("/sex-tall"); */
       }
     }
   }
