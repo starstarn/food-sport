@@ -57,6 +57,7 @@
       ></x-button>
     </flexbox>
     <toast v-model="show" type="cancel">{{ text }}</toast>
+    <toast v-model="show1" type="cancel" >该用户名已经被注册！</toast>
   </div>
 </template>
 <script>
@@ -78,7 +79,8 @@ export default {
         nick_name: null
       },
       text: null,
-      show: false
+      show: false,
+      show1:false
     };
   },
   methods: {
@@ -140,7 +142,8 @@ export default {
               localStorage.setItem("user_password", user_password); //将变量imgs存储到sex字段
               this.$router.replace("/sex-tall");
             } else if (res.data.msg === "该用户名已存在") {
-              alert("该用户名已存在！");
+              //alert("该用户名已存在！");
+              this.show1 = !this.show1;
             } else {
               this.text = "账号或密码错误";
               this.show = !this.show;

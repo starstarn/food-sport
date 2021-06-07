@@ -93,10 +93,11 @@
 
     <!-- 弹出记录体重 -->
     <jl-weight v-show="shows"></jl-weight>
+    <toast v-model="show1" type="cancel" >食物不存在！</toast>
   </div>
 </template>
 <script>
-import { Badge } from "vux";
+import { Badge, Toast } from "vux";
 import Vue from "vue";
 import { Search, Tabbar, TabbarItem, Icon, Popup } from "vant";
 import "vant/lib/index.css";
@@ -113,7 +114,8 @@ Vue.use(Search);
 export default {
   components: {
     Badge,
-    jlWeight
+    jlWeight,
+    Toast
   },
   data() {
     return {
@@ -124,7 +126,8 @@ export default {
       imgUrl: require("../images/mika.jpg"),
       imgs: require("../images/mika.jpg"),
       food: [],
-      value: null
+      value: null,
+      show1: false
     };
   },
   created() {
@@ -227,7 +230,8 @@ export default {
         })
         .catch(error => {
           console.log(error);
-          alert('不存在');
+          //alert("不存在");
+          this.show1 = !this.show1;
         });
     },
     change() {
