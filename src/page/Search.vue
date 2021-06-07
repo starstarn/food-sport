@@ -1,14 +1,13 @@
 <template lang="">
   <div>
-    <!-- <van-search
+    <van-search
       v-model="value"
       shape="round"
       background="#4fc08d"
       placeholder="请输入搜索关键词"
       @search="onSearch"
-      @cancel="onCancel"
-    /> -->
-    <div
+    />
+    <!-- <div
       style="width:100%;height:50px;background-color:#4fc08d;position:relative;"
     >
       <label
@@ -19,10 +18,11 @@
         class="sr"
         v-model="value"
         placeholder="请输入搜索关键词"
-        onkeydown="onSearch(event)"
-        oninput="change()"
+      
+        
+        oninput="change"
       />
-    </div>
+    </div> -->
 
     <!--展示数据-->
     <!-- <ul v-for="item in allArea" :key="item.communityId">
@@ -199,7 +199,40 @@ export default {
         
       } */
       console.log(this.value);
+      const foodname = {
+        name: this.value
+      };
+
+      this.axios({
+        method: "post",
+        url: "/s_name",
+        data: foodname
+      })
+        .then(res => {
+          console.log(res.data);
+          this.food.push(res.data);
+
+          this.food.forEach(node => {
+            //node.image = require(`../images/${node.image}.jpg`);
+            try {
+              node.image = require(`../images/${node.image}.jpg`);
+            } catch (err) {
+              node.image = require(`../images/${node.image}.png`);
+            }
+          });
+          const obj = { ...this.food };
+          console.log(obj[0]);
+          localStorage.setItem("food", JSON.stringify(obj[0]));
+          this.$router.replace("/food-careful");
+        })
+        .catch(error => {
+          console.log(error);
+          alert('不存在');
+        });
     },
+    change() {
+      console.log(this.value);
+    }
     /* getAreaDetail() {
       // 获取数据
       this.axios.post("/foodlist").then(res => {
@@ -243,6 +276,7 @@ export default {
   top: 0;
   right: 0;
   bottom: 0;
+  font-size: 14px;
 }
 input::-webkit-input-placeholder {
   /* placeholder颜色  */
