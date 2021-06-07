@@ -11,7 +11,7 @@
         <!-- 设置按钮 -->
         <img src="../images/set.png" class="set" @click="set()" />
       </div>
-      <div style="margin:40px 0;">
+      <div style="margin:60px 0;">
         <group
           title="我的健康资料"
           style="background-color:white; border-radius:10px; padding: 10px 0; width: 330px"
@@ -19,19 +19,19 @@
           <cell
             @click.native="basic()"
             title="基本信息"
-            style="padding:20px 15px;"
+            style="padding:30px 15px;"
             is-link
           >
             <div class="badge-value">
               <span class="vertical-middle">&nbsp;</span>
             </div>
           </cell>
-          <cell title="健康报告" style="padding:20px 15px;" is-link>
-            <div class="badge-value">
-              <span class="vertical-middle">&nbsp;</span>
-            </div>
-          </cell>
-          <cell title="基本信息" style="padding:20px 15px;" is-link>
+          <cell
+            @click.native="bmi()"
+            title="健康报告"
+            style="padding:30px 15px;"
+            is-link
+          >
             <div class="badge-value">
               <span class="vertical-middle">&nbsp;</span>
             </div>
@@ -141,12 +141,15 @@ export default {
       this.shows = !this.shows;
       this.show = !this.show;
     },
-    set(){
+    set() {
       console.log("设置");
       this.$router.replace("/set");
     },
-    jlMood(){
+    jlMood() {
       this.$router.replace("/mood");
+    },
+    bmi(){
+      this.$router.replace("/bmi");
     }
   }
 };

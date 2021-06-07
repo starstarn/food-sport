@@ -37,6 +37,7 @@ import Makefood from "./page/Makefood";
 import MakeSport from "./page/Makesport";
 import FoodCareful from "./page/Foodcareful";
 import Mood from "./page/Mood";
+import Bmi from "./page/Bmi";
 // 在入口文件全局引入
 import { XHeader, Flexbox, FlexboxItem, XProgress, XButton } from "vux";
 
@@ -175,6 +176,10 @@ const routes = [
   {
     path: "/mood",
     component: Mood
+  },
+  {
+    path: "/bmi",
+    component: Bmi
   }
 ];
 

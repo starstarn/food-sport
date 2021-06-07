@@ -41,11 +41,11 @@ export default {
         kll = weight * 38;
       }
       //正常 18.5-23.9
-      if (bmi >= 18.5 || bmi <= 23.9) {
+      if (bmi >= 18.5 && bmi <= 23.9) {
         kll = weight * 36;
       }
       //过胖 24.0-27.9
-      if (bmi >= 24.0 || bmi <= 27.9) {
+      if (bmi >= 24.0 && bmi <= 27.9) {
         kll = weight * 34;
       }
       //肥胖 >=28.0
