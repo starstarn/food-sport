@@ -5,7 +5,7 @@
         <!-- 头像 -->
         <img class="img1" :src="imgUrl" />
         <!--   昵称 -->
-        <span class="call">tiamo</span>
+        <span class="call">米卡</span>
         <!-- 修改个人信息按钮 -->
         <img :src="bj" class="xiugai" @click="update()" />
         <!-- 设置按钮 -->

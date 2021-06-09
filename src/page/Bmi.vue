@@ -8,7 +8,7 @@
         style="margin:15px;font-size:15px;color:rgb(223, 226, 226);"
         ><img :src="fh" class="fanhui" /> 返回</span
       >
-      <span style="position:absolute;left:45%;">个人信息</span>
+      <span style="position:absolute;left:45%;">健康报告</span>
     </div>
     <div style="margin:80px auto;text-align:center;">
       <span>{{ nickname }}</span>
@@ -16,6 +16,9 @@
       <span><span style="font-size:18px;">您的bmi是 </span>{{ bmi }}</span>
       <br />
       <span><span style="font-size:18px;">您的体质属于</span>{{ degree }}</span>
+    </div>
+    <div style="text-align:center;">
+      <img src="../images/bmi.png" />
     </div>
   </div>
 </template>
@@ -33,8 +36,7 @@ export default {
         backgroundRepeat: "no-repeat",
         backgroundSize: "100% 100%",
         width: "100%",
-        height: "620px",
-        marginTop: "50px"
+        height: "670px"
       }
     };
   },

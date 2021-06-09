@@ -11,15 +11,10 @@
       <span style="position:absolute;left:45%;">个人信息</span>
     </div>
     <group style="font-size:18px;">
-      <cell
-        title="头像"
-        :value="imgUrl"
-        is-link
-        style="padding:25px 15px;"
-      ></cell>
+      
       <cell
         :link="{ path: '/user-name' }"
-        title="用户名/昵称"
+        title="昵称"
         :value="nick_name"
         is-link
         style="padding:15px 15px;"

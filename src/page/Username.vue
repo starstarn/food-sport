@@ -5,7 +5,7 @@
       title="完善个人信息"
     ></x-header>
     <flexbox orient="vertical">
-      <h4>用户名/昵称</h4>
+      <h4>昵称</h4>
       <div>
         <group>
           <x-input

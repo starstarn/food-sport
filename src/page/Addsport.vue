@@ -16,7 +16,7 @@
       <span style="position:absolute;left:45%;">添加运动</span>
     </div>
 
-  <!--   <search
+    <!--   <search
       @result-click="resultClick"
       @on-change="getResult"
       :results="results"
@@ -85,7 +85,7 @@
             <span
               style="font-size:12px;color:gray;position:absolute;left:78px;top:45px;"
               ><span style="color:red;">{{ item.rl }}</span
-              >千卡/100{{ item.danwei }}</span
+              >千卡/60{{ item.danwei }}</span
             >
           </li>
           <hr />
@@ -111,7 +111,7 @@
             <span
               style="font-size:12px;color:gray;position:absolute;left:78px;top:45px;"
               ><span style="color:red;">{{ addsport.rl }}</span
-              >千卡/10{{ addsport.danwei }}</span
+              >千卡/60{{ addsport.danwei }}</span
             >
           </li>
           <hr />
@@ -279,9 +279,9 @@ export default {
       console.log(this.addsport);
       this.show = !this.show;
       this.sportname = this.addsport.name;
-      this.reliang = this.addsport.rl * this.num;
+      this.reliang = (this.addsport.rl / 60) * this.num;
       this.image = this.addsport.image;
-      this.tiji = 10 * this.num;
+      this.tiji = this.num;
     },
     close() {
       this.show = !this.show;
@@ -349,8 +349,8 @@ export default {
     },
     changeNum() {
       console.log(this.num);
-      this.reliang = this.addsport.rl * this.num;
-      this.tiji = 10 * this.num;
+      this.reliang = (this.addsport.rl / 60) * this.num;
+      this.tiji = this.num;
     },
     makeSport() {
       console.log("tianjia");
