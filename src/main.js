@@ -184,9 +184,12 @@ const routes = [
 ];
 
 const router = new VueRouter({
+  mode: 'history',
+  base: process.env.BASE_URL,
   routes
 });
 
+//全局导航守卫
 router.beforeEach(function(to, from, next) {
   if (to.meta.needLogin) {
     //页面是否登录
