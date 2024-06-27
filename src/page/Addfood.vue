@@ -125,7 +125,7 @@
 
       <div>
         <br />
-        <!-- 数量选择 -->
+        <!-- 数量选择器-->
         <div>
           <div style="text-align:center;">
             <p style="font-size:16px;color:gray;margin:0 0 5px 0;">
