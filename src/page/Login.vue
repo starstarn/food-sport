@@ -80,7 +80,7 @@ export default {
     login() {
       console.log(this.info);
       if (!this.info.user_name || !this.info.user_password) {
-        this.text = "账号或密码不能为空";
+        this.text = "账号或密码不能为空！";
         this.show = !this.show;
       } else {
         this.axios({

@@ -73,19 +73,19 @@
         <div class="xiang" @click="onMood()">
           <label>心情------{{ mood }}</label>
           <br />
-          <label v-if="mood == '开心'"
+          <label v-if="mood == '开心 '"
             >：<svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-kaixin"></use></svg
           ></label>
-          <label v-if="mood == '不开心'"
+          <label v-if="mood == '不开心 '"
             >：<svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-bukaixin"></use></svg
           ></label>
-          <label v-if="mood == '伤心'"
+          <label v-if="mood == '伤心 '"
             >：<svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-shangxinbiaoqing"></use></svg
           ></label>
-          <label v-if="mood == '无语'"
+          <label v-if="mood == '无语 '"
             >：<svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-wuyu"></use></svg
           ></label>

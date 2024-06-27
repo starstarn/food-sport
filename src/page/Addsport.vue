@@ -13,7 +13,7 @@
         style="margin:15px;font-size:15px;color:rgb(223, 226, 226);"
         ><img :src="fh" class="fanhui" /> 返回</span
       >
-      <span style="position:absolute;left:45%;">添加运动</span>
+      <span style="position:absolute;left:45%;">添加-运动</span>
     </div>
 
     <!--   <search
